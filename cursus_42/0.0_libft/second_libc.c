@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/04/21 19:08:38 by omontero         ###   ########.fr       */
+/*   Updated: 2022/04/21 19:17:31 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void *ft_memset(void *p, int n, size_t len)
 	size_t	i;
 
 	i = 0;
-	while (i < len && *p)
+	while (i < len && *p != '')
 	{
 		
 	}
