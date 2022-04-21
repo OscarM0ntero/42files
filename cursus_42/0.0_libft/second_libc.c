@@ -25,13 +25,18 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-void *ft_memset(void *p, int n, size_t len)
+void	*ft_memset(void *p, int n, size_t len)
 {
 	size_t	i;
+	void	*o;
 
+	o = p;
 	i = 0;
-	while (i < len && *p != '')
+	while (i < len && ((char *)p || (int *)p))
 	{
-		
+		*p = n;
+		i++;
+		p++;
 	}
+	return (*o);
 }
