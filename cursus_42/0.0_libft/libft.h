@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 09:26:06 by omontero          #+#    #+#             */
-/*   Updated: 2022/04/21 16:23:04 by omontero         ###   ########.fr       */
+/*   Updated: 2022/04/21 19:03:01 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	ft_isalpha(int n);
 int	ft_isdigit(int n);
 int	ft_isalnum(int n);
 int	ft_isascii(int n);
+int	ft_isprintf(int n);
 
 
 #endif

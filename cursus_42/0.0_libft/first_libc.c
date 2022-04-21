@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/04/21 16:40:01 by omontero         ###   ########.fr       */
+/*   Updated: 2022/04/21 18:49:07 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_isascii(int n)
 	return (0);
 }
 
-int	isprintf(int n)
+int	ft_isprintf(int n)
 {
 	if (n >= 32 && n <= 126)
 		return (1);
