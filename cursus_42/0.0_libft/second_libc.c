@@ -28,15 +28,24 @@ size_t	ft_strlen(const char *s)
 void	*ft_memset(void *p, int n, size_t len)
 {
 	size_t	i;
-	void	*o;
+	size_t	j;
 
-	o = p;
+	j = ft_strlen((char *)p);
 	i = 0;
-	while (i < len && ((char *)p || (int *)p))
+	while (i < len && i < j)
 	{
-		*p = n;
+		((char *)p)[i] = (char)c;
 		i++;
-		p++;
 	}
-	return (*o);
+	return (p);
+}
+
+void	bzero(void *s, size_t n)
+{
+	ft_memset(s, '\0', n);
+}
+
+void	*memcpy(void *dest, const void *src, size_t n)
+{
+	
 }
