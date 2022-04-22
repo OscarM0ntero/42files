@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 09:26:06 by omontero          #+#    #+#             */
-/*   Updated: 2022/04/22 11:59:59 by omontero         ###   ########.fr       */
+/*   Updated: 2022/04/22 12:17:32 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <sys/types.h>
 # include <sys/uio.h>
 # include <unistd.h>
+# include <string.h>
 
 int		ft_isalpha(int n);
 int		ft_isdigit(int n);
@@ -28,8 +29,8 @@ int		ft_isprintf(int n);
 
 size_t	ft_strlen(const char *s);
 void	*ft_memset(void *p, int n, size_t len);
-void	bzero(void *s, size_t n);
-void	*memcpy(void *dest, const void *src, size_t len);
+void	ft_bzero(void *s, size_t n);
+void	*ft_memcpy(void *dest, const void *src, size_t len);
 void	*ft_memmove(void *dest, const void *src, size_t len);
 
 
