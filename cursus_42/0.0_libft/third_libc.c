@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   third_libc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/04/22 12:15:43 by omontero         ###   ########.fr       */
+/*   Updated: 2022/04/24 21:12:46 by oscar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,7 @@ size_t	ft_strlcat(char *dest, char *src, size_t nb)
 	return (i);
 }
 
-
-
-/*int	ft_toupper(int n)
+int	ft_toupper(int n)
 {
 	
-}*/
+}

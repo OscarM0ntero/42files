@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   second_libc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/04/22 12:18:45 by omontero         ###   ########.fr       */
+/*   Updated: 2022/04/24 21:11:53 by oscar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,4 @@ void	*ft_memmove(void *dest, const void *src, size_t len)
 		}
 	}
 	return (dest);
-}
-
-int main(void)
-{
-	char   csrc[100] = "Geeksfor";
-    printf("%lu ", ft_strlen(csrc) + 1);
-    printf("%s ", csrc + 5);
-    memmove(csrc + 5, csrc, ft_strlen(csrc) + 1);
-    printf("%s", csrc);
-	return 0;
 }

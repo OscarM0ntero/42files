@@ -3,22 +3,26 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: omontero <omontero@student.42.fr>          +#+  +:+       +#+         #
+#    By: oscar <oscar@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/07 11:03:12 by omontero          #+#    #+#              #
-#    Updated: 2022/04/07 14:40:39 by omontero         ###   ########.fr        #
+#    Updated: 2022/04/24 21:00:06 by oscar            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = bsq
-SRC = main.c matrix_assigners.c checkers.c assist.c assist2.c
+NAME = libft.a
+SRC = first_libc.c second_libc.c third_libc.c fourth_libc.c fifth_libc.c
+OBJS = $(SRC:.c-.o)
 
 all: $(NAME)
 
-$(NAME):
-	gcc -Wall -Werror -Wextra -o $(NAME) $(SRC)
+$(NAME):	$(OBJS)
+	ar rcs $(NAME) $(OBJS)
 
-fclean:
+clean:
+	rm -f $(OBJS)
+
+fclean:	clean
 	rm -f $(NAME)
 
 re: fclean all
