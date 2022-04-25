@@ -6,7 +6,7 @@
 /*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/04/24 21:12:46 by oscar            ###   ########.fr       */
+/*   Updated: 2022/04/25 09:30:30 by oscar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,16 @@ size_t	ft_strlcat(char *dest, char *src, size_t nb)
 	return (i);
 }
 
-int	ft_toupper(int n)
+int	ft_toupper(int c)
 {
-	
+	if (c >= 'a' && c <= 'z')
+		c -= 32;
+	return (c);
+}
+
+int	ft_tolower(int c)
+{
+	if (c >= 'A' && c <= 'Z')
+		c += 32;
+	return (c);
 }

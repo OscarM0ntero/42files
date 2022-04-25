@@ -3,11 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   fourth_libc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/04/21 10:05:36 by omontero         ###   ########.fr       */
+/*   Updated: 2022/04/25 09:37:13 by oscar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+char	*strrchr(const char *s, int c)
+{
+	char	*p;
+
+	p = s;
+	while (*p != c && *p)
+	{
+		p++;
+	}
+	if (*p != c)
+		p = NULL;
+	return (p);
+}
