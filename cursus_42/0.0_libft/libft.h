@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 09:26:06 by omontero          #+#    #+#             */
-/*   Updated: 2022/04/25 10:35:02 by omontero         ###   ########.fr       */
+/*   Updated: 2022/04/26 10:48:50 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,38 @@
 # include <unistd.h>
 # include <string.h>
 
-int		ft_isalpha(int n);
-int		ft_isdigit(int n);
-int		ft_isalnum(int n);
-int		ft_isascii(int n);
-int		ft_isprintf(int n);
+// first_libc.c
+int			ft_isalpha(int n);
+int			ft_isdigit(int n);
+int			ft_isalnum(int n);
+int			ft_isascii(int n);
+int			ft_isprintf(int n);
 
-size_t	ft_strlen(const char *s);
-void	*ft_memset(void *p, int n, size_t len);
-void	ft_bzero(void *s, size_t n);
-void	*ft_memcpy(void *dest, const void *src, size_t len);
-void	*ft_memmove(void *dest, const void *src, size_t len);
+// second_libc.c
+size_t		ft_strlen(const char *s);
+void		*ft_memset(void *p, int n, size_t len);
+void		ft_bzero(void *s, size_t n);
+void		*ft_memcpy(void *dest, const void *src, size_t len);
+void		*ft_memmove(void *dest, const void *src, size_t len);
 
-size_t	ft_strlcpy(char *dest, char *src, size_t size);
-size_t	ft_strlcat(char *dest, char *src, size_t nb);
-int		ft_toupper(int c);
-int		ft_tolower(int c);
+// third_libc.c
+size_t		ft_strlcpy(char *dest, char *src, size_t size);
+size_t		ft_strlcat(char *dest, char *src, size_t nb);
+int			ft_toupper(int c);
+int			ft_tolower(int c);
 
+// fourth_libc.c
+char		*ft_strchr(const char *s, int c);
+char		*ft_strrchr(const char *s, int c);
+int			ft_strncmp(const char *s1, const char *s2, size_t n);
+void		*ft_memchr(const void *s, int c, size_t n);
+
+// fifth_libc.c
+static int	ft_check_little(char *p, const char *little, const size_t len);
+char		*ft_strnstr(const char *big, const char *little, size_t len);
+static int	ft_neg(int num, int x);
+int			ft_atoi(const char *nptr);
+
+// sixth_libc.c
 
 #endif

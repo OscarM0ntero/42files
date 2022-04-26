@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/04/25 13:42:32 by omontero         ###   ########.fr       */
+/*   Updated: 2022/04/26 10:44:22 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	*ft_memchr(const void *s, int c, size_t n)
 	unsigned char	*p;
 
 	p = (unsigned char *)s;
+	n--;
 	while (*p != (unsigned char)c && *p && n)
 	{
 		n--;
@@ -72,12 +73,4 @@ void	*ft_memchr(const void *s, int c, size_t n)
 	if (*p != (unsigned char)c)
 		p = NULL;
 	return (p);
-}
-
-int	main(void)
-{
-	char	src[] = "hola me llamo ralph";
-
-	printf("%s", ft_strchr(src, 'l'));
-	printf("%s", ft_strrchr(src, 'l'));
 }

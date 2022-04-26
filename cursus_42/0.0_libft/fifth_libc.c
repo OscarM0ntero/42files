@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fifth_libc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/04/26 09:23:38 by oscar            ###   ########.fr       */
+/*   Updated: 2022/04/26 10:32:45 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	ft_check_little(char *p, const char *little, const size_t len)
 	return (1);
 }
 
-char	*ft_nptrnnptr(const char *big, const char *little, size_t len)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
 	char	*p;
 
@@ -55,7 +55,7 @@ char	*ft_nptrnnptr(const char *big, const char *little, size_t len)
 
 /* ************************************************* */
 // Atoi malo, arreglar || Maybe already fixed -> To check
-const int	ft_neg(int num, int x)
+static int	ft_neg(int num, int x)
 {
 	if (x % 2 == 1)
 	{
