@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/04/26 10:32:45 by omontero         ###   ########.fr       */
+/*   Updated: 2022/04/26 10:53:22 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	return (NULL);
 }
 
-/* ************************************************* */
-// Atoi malo, arreglar || Maybe already fixed -> To check
 static int	ft_neg(int num, int x)
 {
 	if (x % 2 == 1)
