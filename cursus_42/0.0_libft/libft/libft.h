@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 09:26:06 by omontero          #+#    #+#             */
-/*   Updated: 2022/04/26 10:48:50 by omontero         ###   ########.fr       */
+/*   Updated: 2022/04/26 11:27:46 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,7 @@ static int	ft_neg(int num, int x);
 int			ft_atoi(const char *nptr);
 
 // sixth_libc.c
+void		*ft_calloc(size_t nmemb, size_t size);
+char		*ft_strdup(const char *s1);
 
 #endif

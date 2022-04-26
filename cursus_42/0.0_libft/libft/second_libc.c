@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   second_libc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/04/24 21:11:53 by oscar            ###   ########.fr       */
+/*   Updated: 2022/04/26 12:24:03 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ size_t	ft_strlen(const char *s)
 
 void	*ft_memset(void *p, int n, size_t len)
 {
-	size_t	i;
-	size_t	j;
+	size_t			i;
+	unsigned char	*c;
 
-	j = ft_strlen((char *)p);
+	c = (unsigned char *)p;
 	i = 0;
-	while (i < len && i < j)
+	while (i < len)
 	{
-		((char *)p)[i] = (char)n;
+		c[i] = n;
 		i++;
 	}
 	return (p);
@@ -49,7 +49,7 @@ void	*ft_memcpy(void *dest, const void *src, size_t len)
 {
 	size_t	i;
 
-	if (!dest)
+	if (!dest && !src)
 		return (NULL);
 	i = 0;
 	while (i < len)
@@ -64,7 +64,7 @@ void	*ft_memmove(void *dest, const void *src, size_t len)
 {
 	size_t	i;
 
-	if (!dest || !src)
+	if (!dest && !src)
 		return (NULL);
 	if (dest > src)
 	{
