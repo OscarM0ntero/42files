@@ -6,7 +6,7 @@
 #    By: oscar <oscar@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/07 11:03:12 by omontero          #+#    #+#              #
-#    Updated: 2022/04/27 10:25:53 by oscar            ###   ########.fr        #
+#    Updated: 2022/04/27 10:46:04 by oscar            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,4 +32,4 @@ re: fclean all
 
 so:
 	$(CC) -nostartfiles -fPIC $(CFLAGS) $(SRC)
-	gcc -nostartfiles -shared -o libft.so $(OBJ)
+	gcc -nostartfiles -shared -o libft.so $(OBJS)

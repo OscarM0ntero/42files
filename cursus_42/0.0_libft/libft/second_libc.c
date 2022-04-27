@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   second_libc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/04/26 12:24:03 by omontero         ###   ########.fr       */
+/*   Updated: 2022/04/27 10:41:19 by oscar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	*ft_memmove(void *dest, const void *src, size_t len)
 	if (dest > src)
 	{
 		i = len - 1;
-		while (i >= 0)
+		while (i > 0)
 		{
 			((char *)dest)[i] = ((char *)src)[i];
 			i--;

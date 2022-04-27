@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   first_libc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/04/21 18:49:07 by omontero         ###   ########.fr       */
+/*   Updated: 2022/04/27 10:40:06 by oscar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_isdigit(int n)
 
 int	ft_isalnum(int n)
 {
-	if (ft_isalpha || ft_isdigit)
+	if (!(ft_isalpha(n) || ft_isdigit(n)))
 		return (1);
 	return (0);
 }
