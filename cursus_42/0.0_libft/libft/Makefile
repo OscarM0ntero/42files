@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: omontero <omontero@student.42.fr>          +#+  +:+       +#+         #
+#    By: oscar <oscar@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/07 11:03:12 by omontero          #+#    #+#              #
-#    Updated: 2022/04/26 12:06:50 by omontero         ###   ########.fr        #
+#    Updated: 2022/04/27 10:10:07 by oscar            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,3 +27,7 @@ fclean:	clean
 	rm -f $(NAME)
 
 re: fclean all
+
+so:
+	gcc -fPIC -Wall -Werror -Wextra $(SRC)
+	gcc -shared -o libft.so $(OBJS)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 09:26:06 by omontero          #+#    #+#             */
-/*   Updated: 2022/04/26 11:27:46 by omontero         ###   ########.fr       */
+/*   Updated: 2022/04/27 10:12:38 by oscar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,7 @@ int			ft_strncmp(const char *s1, const char *s2, size_t n);
 void		*ft_memchr(const void *s, int c, size_t n);
 
 // fifth_libc.c
-static int	ft_check_little(char *p, const char *little, const size_t len);
 char		*ft_strnstr(const char *big, const char *little, size_t len);
-static int	ft_neg(int num, int x);
 int			ft_atoi(const char *nptr);
 
 // sixth_libc.c
