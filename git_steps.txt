@@ -1,0 +1,9 @@
+En este archivo voy a explicar los pasos para enlazar mi git repo a un nuevo ordenador.
+
+Primero la clave ssh, (ssh-keygen -t ed25519 -C "wilde.txt@gmail.com")
+
+Despues clonamos el repositorio o hacemos init del nuevo
+
+Guardamos los credenciales con (git config credential.helper store), el password sera nuestro token.
+
+Ya esta todo listo.
