@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   first_add.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:17:37 by omontero          #+#    #+#             */
-/*   Updated: 2022/04/28 11:32:42 by omontero         ###   ########.fr       */
+/*   Updated: 2022/04/28 12:02:07 by oscar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,19 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (str);
 }
 
-int	main(void)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char s[] = "hola soy manolo";
+	size_t	size;
+	size_t	i;
+	size_t	j;
+	char	*str;
 
-	printf("%s", ft_substr(s, 5, 7));
+	size = ft_strlen(s1) + ft_strlen(s2);
+	str = (char *)malloc(size * sizeof(char));
+	if (!str)
+		return (NULL);
+	i = 0;
+	ft_str
+	
+	return (str);
 }
