@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 09:25:56 by oscar             #+#    #+#             */
-/*   Updated: 2022/04/26 12:07:15 by omontero         ###   ########.fr       */
+/*   Updated: 2022/04/29 11:19:13 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*ft_strdup(const char *s1)
 	size_t	len;
 
 	len = ft_strlen(s1) + 1;
-	p = malloc(sizeof(char) * len);
+	p = (char *)malloc(len * sizeof(char));
 	if (!p)
 		return (NULL);
 	p = ft_memcpy(p, s1, len);

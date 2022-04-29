@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   second_add.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:17:37 by omontero          #+#    #+#             */
-/*   Updated: 2022/04/29 00:16:05 by oscar            ###   ########.fr       */
+/*   Updated: 2022/04/29 13:17:49 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	*ft_remfirst(const char *s, const char *set)
+/* static char	*ft_remfirst(const char *s, const char *set)
 {
 	char	*str;
 	int		x;
@@ -39,7 +39,7 @@ static char	*ft_remfirst(const char *s, const char *set)
 	return (ft_strdup(str));
 }
 
-static char	*ft_remlast_str2_finder(char *str2, const char *set)
+static char	*ft_remlast_end_finder(char *str2, const char *set)
 {
 	int		cut;
 	size_t	i;
@@ -69,20 +69,28 @@ static char	*ft_remlast(const char *s, const char *set)
 	char	*str;
 	char	*str2;
 
-	(void)str2;
 	str = ft_strdup(s);
 	str2 = &str[ft_strlen(str) - 1];
-	str2 = ft_remlast_str2_finder(str2, set);
-	*str2 = '\0';
+	str2 = ft_remlast_end_finder(str2, set);
+	ft_bzero(str2, ft_strlen(str2));
 	return (ft_strdup(str));
-}
+} */
 
 char	*ft_strtrim(const char *s1, char const *set)
 {
-	char	*str;
+	char			*str;
+	unsigned int	start;
+	unsigned int	end;
 
-	str = ft_remfirst(s1, set);
-	str = ft_remlast(str, set);
+	if (!s1 || !set)
+		return (ft_strdup(s1));
+	start = 0;
+	end = ft_strlen(s1) - 1;
+	while (ft_strchr(set, s1[start]))
+		start++;
+	while (ft_strchr(set, s1[end]))
+		end--;
+	str = ft_substr(s1, start + 1, end - start + 1);
 	if (!str)
 		return (NULL);
 	return (str);
@@ -90,7 +98,7 @@ char	*ft_strtrim(const char *s1, char const *set)
 
 int	main(void)
 {
-	char	s1[] = "abaaaaabbcchola me llamo oscaraabcabbbccabcbc";
+	char	s1[] = "abcacbhola abbcaabc";
 	char	set[] = "abc";
 
 	printf("%s", ft_strtrim(s1, set));

@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: oscar <oscar@student.42.fr>                +#+  +:+       +#+         #
+#    By: omontero <omontero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/07 11:03:12 by omontero          #+#    #+#              #
-#    Updated: 2022/04/27 10:46:04 by oscar            ###   ########.fr        #
+#    Updated: 2022/04/29 09:35:28 by omontero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
-SRC = first_libc.c second_libc.c third_libc.c fourth_libc.c fifth_libc.c sixth_libc.c
+SRC = first_libc.c second_libc.c third_libc.c fourth_libc.c fifth_libc.c sixth_libc.c first_add.c second_add.c
 OBJS = $(SRC:.c=.o)
 RM = rm -f
 CC = gcc
@@ -27,6 +27,7 @@ clean:
 
 fclean:	clean
 	rm -f $(NAME)
+	rm -f a.out
 
 re: fclean all
 
