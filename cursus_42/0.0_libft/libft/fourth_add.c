@@ -6,7 +6,7 @@
 /*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:17:37 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/03 14:51:06 by oscar            ###   ########.fr       */
+/*   Updated: 2022/05/03 22:50:50 by oscar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,8 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 		i++;
 	}
 }
-// fix type conversion
+
+void	ft_putchar_fd(char c, int fd)
+{
+	
+}
