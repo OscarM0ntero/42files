@@ -6,7 +6,7 @@
 /*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:17:37 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/03 01:05:22 by oscar            ###   ########.fr       */
+/*   Updated: 2022/05/03 10:00:23 by oscar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,83 +78,3 @@ char	*ft_strtrim(const char *s1, char const *set)
 
 	printf("%s", ft_strtrim(s1, set));
 } */
-
-static size_t	ft_count_words(char const *s, char c)
-{
-	size_t	i;
-	size_t	n_words;
-
-	n_words = 0;
-	i = 0;
-	while (s[i] == c)
-		i++;
-	while (s[i])
-	{
-		while (s[i] != c && s[i])
-			i++;
-		if ((s[i] == c || s[i] == '\0') && s[i - 1] != c)
-			n_words++;
-		while (s[i] == c && s[i])
-			i++;
-	}
-	return (n_words);
-}
-
-static void	ft_assign_next_coords(char const *s, size_t *start, size_t *end, char c)
-{
-	*start = *end;
-	while (s[*start] == c && s[*start])
-		start++;
-	*end = *start;
-	while (s[*end] != c && s[*end])
-		end++;
-}
-// "  hola soy  oscar "
-static int	ft_assign_words(char const *s, char c, char **list, size_t n_words)
-{
-	size_t	start;
-	size_t	end;
-	size_t	i;
-	char	*word;
-
-	i = 0;
-	start = 0;
-	end = 0;
-	ft_assign_next_coords(s, &start, &end, c);
-	while (i < n_words)
-	{
-		word = (char *)malloc((end - start) * sizeof(char));
-		if (!word)
-			return (1);
-		word = ft_substr(s, start, end - start);
-		list[i] = word;
-		free(word);
-		ft_assign_next_coords(s, &start, &end, c);
-		i++;
-	}
-	word = (char *)malloc(1 * sizeof(char));
-	word = NULL;
-	list[n_words] = word;
-	free (word);
-	return (0);
-}
-// " hola  soy oscar"
-char	**ft_split(char const *s, char c)
-{
-	size_t	n_words;
-	char	**list;
-
-	n_words = ft_count_words(s, c);
-	list = (char **)malloc((n_words + 1) * sizeof(char *));
-	if (ft_assign_words(s, c, list, n_words) || !list)
-		return (NULL);
-	return (list);
-}
-
-int	main(void)
-{
-	char	str[] = " hola soy oscar  ";
-
-	printf("%s\n", ft_split(str, ' ')[0]);
-}
-// Deberia funcionar, toca depurar errores (Seg. Fault)
