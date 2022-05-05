@@ -6,7 +6,7 @@
 /*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:17:37 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/03 11:12:49 by oscar            ###   ########.fr       */
+/*   Updated: 2022/05/04 10:14:05 by oscar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,3 +85,24 @@ char	*ft_itoa(int n)
 	printf("Num. = %d$\n", n);
 	printf("itoa = %s$\n", ft_itoa(n));
 } */
+
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+{
+	unsigned int	i;
+	char			*p;
+
+	i = 0;
+	if (!s || (!s && !f))
+		return (ft_strdup(""));
+	else if (!f)
+		return (ft_strdup(s));
+	p = ft_strdup(s);
+	if (!p)
+		return (p = NULL);
+	while (s[i])
+	{
+		p[i] = (*f)(i, s[i]);
+		i++;
+	}
+	return (p);
+}

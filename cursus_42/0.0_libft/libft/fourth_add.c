@@ -6,32 +6,11 @@
 /*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:17:37 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/03 22:50:50 by oscar            ###   ########.fr       */
+/*   Updated: 2022/05/04 10:14:31 by oscar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
-{
-	unsigned int	i;
-	char			*p;
-
-	i = 0;
-	if (!s || (!s && !f))
-		return (ft_strdup(""));
-	else if (!f)
-		return (ft_strdup(s));
-	p = ft_strdup(s);
-	if (!p)
-		return (p = NULL);
-	while (s[i])
-	{
-		p[i] = (*f)(i, s[i]);
-		i++;
-	}
-	return (p);
-}
 
 void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
@@ -49,5 +28,33 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 
 void	ft_putchar_fd(char c, int fd)
 {
-	
+	write(fd, &c, 1);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		write(fd, &s[i], 1);
+		i++;
+	}
+}
+
+void	ft_putendl_fd(char *s, int fd)
+{
+	if (!s)
+		return ;
+	ft_putstr_fd(s, fd);
+	write(fd, "\n", 1);
+}
+
+void	ft_putnbr_fd(int n, int fd)
+{
+	char	*s;
+
+	s = ft_itoa(n);
+	ft_putstr_fd(s, fd);
 }
