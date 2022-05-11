@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/04/26 10:44:22 by omontero         ###   ########.fr       */
+/*   Updated: 2022/05/11 13:29:24 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ char	*ft_strrchr(const char *s, int c)
 	char	*p;
 
 	i = (char *)s;
+	if (c == '\0')
+		return (NULL);
 	p = (char *)s;
 	while (*i)
 	{
