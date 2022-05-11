@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   second_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 09:26:06 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/10 09:32:37 by oscar            ###   ########.fr       */
+/*   Updated: 2022/05/10 11:01:54 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft_bonus.h"
+#include "libft.h"
 
 void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
@@ -47,12 +47,14 @@ void	ft_lstiter(t_list *lst, void (*f)(void *))
 		lst = tmp;
 	}
 }
+
 /*
 Itera la lista lst y aplica f al content de cada
 nodo. Crea la lista resultante de aplicar f a cada
 nodo y la devuelve. del se usa para eliminar
 contenido de un nodo si fuera necesario.
 */
+
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
 	t_list	*list;

@@ -3,19 +3,21 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: oscar <oscar@student.42.fr>                +#+  +:+       +#+         #
+#    By: omontero <omontero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/07 11:03:12 by omontero          #+#    #+#              #
-#    Updated: 2022/05/10 09:05:05 by oscar            ###   ########.fr        #
+#    Updated: 2022/05/10 10:58:11 by omontero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 SRC =	first_libc.c second_libc.c third_libc.c fourth_libc.c fifth_libc.c sixth_libc.c\
 		first_add.c second_add.c third_add.c fourth_add.c\
-		fist_bonus.c second_bonus.c\
+		
+SRC_BONUS = fist_bonus.c second_bonus.c\
 		
 OBJS = $(SRC:.c=.o)
+OBJS_BONUS = $(SRC_BONUS:.c=.o)
 RM = rm -f
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -I.
@@ -25,8 +27,11 @@ all: $(NAME)
 $(NAME):	$(OBJS)
 	ar rcs $(NAME) $(OBJS)
 
+bonus:	$(OBJS_BONUS)
+	ar rcs $(NAME) $(OBJS_BONUS)
+	
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(OBJS_BONUS)
 
 fclean:	clean
 	rm -f $(NAME)
@@ -34,9 +39,8 @@ fclean:	clean
 
 re: fclean all
 
-bonus:
-
-
 so:
 	$(CC) -nostartfiles -fPIC $(CFLAGS) $(SRC)
 	gcc -nostartfiles -shared -o libft.so $(OBJS)
+
+.PHONY: re bonus
