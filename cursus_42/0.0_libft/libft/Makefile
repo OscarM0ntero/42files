@@ -6,7 +6,7 @@
 #    By: omontero <omontero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/07 11:03:12 by omontero          #+#    #+#              #
-#    Updated: 2022/05/10 10:58:11 by omontero         ###   ########.fr        #
+#    Updated: 2022/05/12 19:05:58 by omontero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = libft.a
 SRC =	first_libc.c second_libc.c third_libc.c fourth_libc.c fifth_libc.c sixth_libc.c\
 		first_add.c second_add.c third_add.c fourth_add.c\
 		
-SRC_BONUS = fist_bonus.c second_bonus.c\
+SRC_BONUS = first_bonus.c second_bonus.c\
 		
 OBJS = $(SRC:.c=.o)
 OBJS_BONUS = $(SRC_BONUS:.c=.o)

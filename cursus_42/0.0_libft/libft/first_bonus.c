@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 09:26:06 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/10 11:02:05 by omontero         ###   ########.fr       */
+/*   Updated: 2022/05/12 12:19:51 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,41 @@ void	ft_lstadd_front(t_list **lst, t_list *new)
 
 int	ft_lstsize(t_list *lst)
 {
-	int	i;
+	t_list	*tmp;
+	int		i;
 
-	i = 0;
-	while (lst[i].next != NULL)
+	if (!lst)
+		return (0);
+	tmp = lst;
+	i = 1;
+	while (tmp->next != NULL)
+	{
 		i++;
+		tmp = tmp->next;
+	}
 	return (i);
 }
 
 t_list	*ft_lstlast(t_list *lst)
 {
-	return (&lst[ft_lstsize(lst) - 1]);
+	t_list	*tmp;
+
+	if (!lst)
+		return (NULL);
+	tmp = lst;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	return (tmp);
 }
 
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {
+	if (new == NULL)
+		return ;
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
 	ft_lstlast(*lst)->next = new;
 }

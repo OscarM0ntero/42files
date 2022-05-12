@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 09:26:06 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/10 11:01:54 by omontero         ###   ########.fr       */
+/*   Updated: 2022/05/12 19:01:47 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,12 @@ void	ft_lstiter(t_list *lst, void (*f)(void *))
 
 	if (!lst || !f)
 		return ;
-	while (lst)
+	f(lst->content);
+	tmp = lst;
+	while (tmp->next != NULL)
 	{
-		tmp = lst->next;
-		f(tmp);
-		lst = tmp;
+		tmp = tmp->next;
+		f(tmp->content);
 	}
 }
 
@@ -59,27 +60,51 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
 	t_list	*list;
 	t_list	*tmp;
+	t_list	*new;
+
+	if (!lst || !f || !del)
+		return (NULL);
+	tmp = lst;
+	list = ft_lstnew(lst->content);
+	while (tmp->next != NULL)
+	{
+		new = ft_lstnew((*f)(tmp->content));
+		if (!new)
+			return (NULL);
+		ft_lstadd_back(list, new);
+		(*del)(new->content);
+		free(new);
+		tmp = tmp->next;
+	}
+	return (list);
+}
+
+/* t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
+{
+	t_list	*list;
+	t_list	*tmp;
+	t_list	*new;
 
 	if (!f || !del)
 		return (NULL);
-	list = NULL;
+	new = NULL;
 	while (lst)
 	{
 		tmp = ft_lstnew((*f)(lst->content));
 		if (!tmp)
 		{
-			while (list)
+			while (new)
 			{
-				tmp = list->next;
-				(*del)(list->content);
-				free(list);
-				list = tmp;
+				tmp = new->next;
+				(*del)(new->content);
+				free(new);
+				new = tmp;
 			}
 			lst = NULL;
 			return (NULL);
 		}
-		ft_lstadd_back(&list, tmp);
+		ft_lstadd_back(&new, tmp);
 		lst = lst->next;
 	}
 	return (list);
-}
+} */

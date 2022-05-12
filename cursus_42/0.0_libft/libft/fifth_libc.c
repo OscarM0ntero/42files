@@ -6,11 +6,16 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/04/26 10:53:22 by omontero         ###   ########.fr       */
+/*   Updated: 2022/05/12 11:12:17 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+/* int	ft_memcmp(const void *s1, const void *s2, size_t n)
+{
+	
+}*/
 
 static int	ft_check_little(char *p, const char *little, const size_t len)
 {
