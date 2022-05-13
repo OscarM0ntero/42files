@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/11 13:29:24 by omontero         ###   ########.fr       */
+/*   Updated: 2022/05/13 10:25:18 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,11 @@ char	*ft_strrchr(const char *s, int c)
 	char	*p;
 
 	i = (char *)s;
-	if (c == '\0')
-		return (NULL);
 	p = (char *)s;
-	while (*i)
+	while (*i++)
 	{
 		if (*i == (char)c)
 			p = i;
-		i++;
 	}
 	if (*p != (char)c)
 		p = NULL;
@@ -50,11 +47,11 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	size_t	i;
 
 	i = 0;
-	while ((s1[i] || s2[i]) && i < n)
+	while (((unsigned char)s1[i] || (unsigned char)s2[i]) && i < n)
 	{
-		if (s1[i] > s2[i])
+		if ((unsigned char)s1[i] > (unsigned char)s2[i])
 			return (1);
-		else if (s1[i] < s2[i])
+		else if ((unsigned char)s1[i] < (unsigned char)s2[i])
 			return (-1);
 		i++;
 	}

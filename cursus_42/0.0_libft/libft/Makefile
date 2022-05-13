@@ -6,7 +6,7 @@
 #    By: omontero <omontero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/07 11:03:12 by omontero          #+#    #+#              #
-#    Updated: 2022/05/12 19:05:58 by omontero         ###   ########.fr        #
+#    Updated: 2022/05/13 13:37:42 by omontero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,5 +42,8 @@ re: fclean all
 so:
 	$(CC) -nostartfiles -fPIC $(CFLAGS) $(SRC)
 	gcc -nostartfiles -shared -o libft.so $(OBJS)
+
+norm:
+	norminette $(SRC) $(SRC_BONUS)
 
 .PHONY: re bonus

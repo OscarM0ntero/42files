@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   second_libc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/04/27 10:41:19 by oscar            ###   ########.fr       */
+/*   Updated: 2022/05/13 13:42:38 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,27 +62,18 @@ void	*ft_memcpy(void *dest, const void *src, size_t len)
 
 void	*ft_memmove(void *dest, const void *src, size_t len)
 {
-	size_t	i;
+	unsigned char		*c;
+	const unsigned char	*s;
 
-	if (!dest && !src)
-		return (NULL);
-	if (dest > src)
-	{
-		i = len - 1;
-		while (i > 0)
-		{
-			((char *)dest)[i] = ((char *)src)[i];
-			i--;
-		}
-	}
+	if (!len || dest == src)
+		return (dest);
+	s = (const unsigned char *)src;
+	c = (unsigned char *)dest;
+	if (s < c)
+		while (len--)
+			*(c + len) = *(s + len);
 	else
-	{
-		i = 0;
-		while (i < len)
-		{
-			((char *)dest)[i] = ((char *)src)[i];
-			i++;
-		}
-	}
+		while (len--)
+			*c++ = *s++;
 	return (dest);
 }

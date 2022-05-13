@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   second_add.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:17:37 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/03 11:13:39 by oscar            ###   ########.fr       */
+/*   Updated: 2022/05/13 13:39:08 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,16 +93,15 @@ char	**ft_split(char const *s, char c)
 
 /* int	main(void)
 {
-	char	str[] = " hola soy oscar y  tengo 19 anios   ";
+	char	str[] = "NrQg9t T7V EeHjY0PS8Cn Zx7wDMsT2gzvVi85l vWto mxqLzQIe5sra3X2h lX847k Lm8yr O84SR bnYcxT0u6ADSfQ8I EKX l7fMHCbw1r GcFB znfT6ICyJog4vwYeN IjTfwHL ZO9gDaoR";
 	size_t	i;
 	char	**list;
 	char	c;
 
-	printf("%s", str);
 	c = ' ';
 	list = ft_split(str, c);
 	i = 0;
-	while (i < ft_count_words(str, c) + 1)
+	while (i < ft_count_words(str, c) + 6)
 	{
 		printf("Word %ld = %s$\n", i, list[i]);
 		i++;

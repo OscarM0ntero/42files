@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 09:26:06 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/12 19:01:47 by omontero         ###   ########.fr       */
+/*   Updated: 2022/05/13 09:58:05 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,52 +59,23 @@ contenido de un nodo si fuera necesario.
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
 	t_list	*list;
-	t_list	*tmp;
 	t_list	*new;
+	t_list	*tmp;
 
-	if (!lst || !f || !del)
+	if (lst == NULL)
 		return (NULL);
 	tmp = lst;
-	list = ft_lstnew(lst->content);
-	while (tmp->next != NULL)
+	list = NULL;
+	while (tmp)
 	{
 		new = ft_lstnew((*f)(tmp->content));
-		if (!new)
+		if (new == NULL)
+		{
+			ft_lstclear(&new, del);
 			return (NULL);
-		ft_lstadd_back(list, new);
-		(*del)(new->content);
-		free(new);
+		}
+		ft_lstadd_back(&list, new);
 		tmp = tmp->next;
 	}
 	return (list);
 }
-
-/* t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
-{
-	t_list	*list;
-	t_list	*tmp;
-	t_list	*new;
-
-	if (!f || !del)
-		return (NULL);
-	new = NULL;
-	while (lst)
-	{
-		tmp = ft_lstnew((*f)(lst->content));
-		if (!tmp)
-		{
-			while (new)
-			{
-				tmp = new->next;
-				(*del)(new->content);
-				free(new);
-				new = tmp;
-			}
-			lst = NULL;
-			return (NULL);
-		}
-		ft_lstadd_back(&new, tmp);
-		lst = lst->next;
-	}
-	return (list);
-} */

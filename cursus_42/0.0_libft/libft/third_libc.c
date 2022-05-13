@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/04/25 10:35:18 by omontero         ###   ########.fr       */
+/*   Updated: 2022/05/13 10:49:16 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,12 @@ size_t	ft_strlcat(char *dest, char *src, size_t nb)
 
 	i = 0;
 	j = 0;
-	while (dest[i])
-		i++;
-	while (src[j] && j < nb)
+	while (dest[i++] != '\0')
+		;
+	while (src[j++] && j < nb)
 	{
 		dest[i] = src[j];
 		i++;
-		j++;
 	}
 	dest[i] = '\0';
 	return (i);
