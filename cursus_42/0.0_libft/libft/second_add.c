@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:17:37 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/13 13:39:08 by omontero         ###   ########.fr       */
+/*   Updated: 2022/05/17 18:44:31 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	ft_assign_words(char const *s, char c, char **list, size_t n_words)
 		word = (char *)malloc((end - start) * sizeof(char));
 		if (!word)
 			return (1);
-		word = ft_substr(s, start + 1, end - start);
+		word = ft_substr(s, start, end - start);
 		list[i] = ft_strdup(word);
 		free(word);
 		ft_assign_coords(s, &start, &end, c);
@@ -84,8 +84,20 @@ char	**ft_split(char const *s, char c)
 	size_t	n_words;
 	char	**list;
 
+	if (!s)
+		return (NULL);
+	if (!c)
+	{
+		list = (char **)malloc(sizeof(char *));
+		if (!list)
+			return (NULL);
+		*list = ft_strdup(s);
+		return (list);
+	}
 	n_words = ft_count_words(s, c);
 	list = (char **)malloc((n_words + 1) * sizeof(char *));
+	if (!list)
+		return (NULL);
 	if (ft_assign_words(s, c, list, n_words) || !list)
 		return (NULL);
 	return (list);
@@ -93,15 +105,18 @@ char	**ft_split(char const *s, char c)
 
 /* int	main(void)
 {
-	char	str[] = "NrQg9t T7V EeHjY0PS8Cn Zx7wDMsT2gzvVi85l vWto mxqLzQIe5sra3X2h lX847k Lm8yr O84SR bnYcxT0u6ADSfQ8I EKX l7fMHCbw1r GcFB znfT6ICyJog4vwYeN IjTfwHL ZO9gDaoR";
+	//char	str[] = "NrQg9t T7V EeHjY0PS8Cn Zx7wDMsT2gzvVi85l vWto 
+	mxqLzQIe5sra3X2h lX847k Lm8yr O84SR bnYcxT0u6ADSfQ8I EKX l7fMHCbw1r 
+	GcFB znfT6ICyJog4vwYeN IjTfwHL ZO9gDaoR";
+	char	str[] = "\0aa\0bbb";
 	size_t	i;
 	char	**list;
 	char	c;
 
-	c = ' ';
+	c = '\0';
 	list = ft_split(str, c);
 	i = 0;
-	while (i < ft_count_words(str, c) + 6)
+	while (i < ft_count_words(str, c))
 	{
 		printf("Word %ld = %s$\n", i, list[i]);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/13 10:49:16 by omontero         ###   ########.fr       */
+/*   Updated: 2022/05/17 16:54:58 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,36 @@ size_t	ft_strlcpy(char *dest, char *src, size_t size)
 
 size_t	ft_strlcat(char *dest, char *src, size_t nb)
 {
-	size_t	i;
-	size_t	j;
+	size_t	a;
+	size_t	b;
 
-	i = 0;
-	j = 0;
-	while (dest[i++] != '\0')
-		;
-	while (src[j++] && j < nb)
+	a = 0;
+	b = 0;
+	while (dest[a])
+		a++;
+	if (nb < a)
 	{
-		dest[i] = src[j];
-		i++;
+		while (src[b])
+			b++;
+		return (nb + b);
 	}
-	dest[i] = '\0';
-	return (i);
+	while (src[b] && nb > 0 && a < nb - 1)
+		dest[a++] = src[b++];
+	dest[a] = '\0';
+	while (src[b++])
+		a++;
+	return (a);
 }
+
+/* int	main(void)
+{
+	char	a[] = "hola ";
+	char	b[] = "soy oscar";
+
+	printf("Tam = %ld\n", ft_strlcat(a, b, 0));
+	printf("%s$", a);
+	return (0);
+} */
 
 int	ft_toupper(int c)
 {

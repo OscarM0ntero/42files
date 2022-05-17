@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   first_add.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:17:37 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/03 10:00:23 by oscar            ###   ########.fr       */
+/*   Updated: 2022/05/17 18:09:15 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,22 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	char	*str;
 	size_t	i;
 
-	str = (char *)malloc(len * sizeof(char));
+	if (!s)
+		return (NULL);
+	if (start > ft_strlen(s))
+	{
+		str = (char *)malloc(sizeof(char));
+		if (!str)
+			return (NULL);
+		return (str);
+	}
+	str = (char *)malloc((len + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
 	i = 0;
 	while (i < len)
 	{
-		str[i] = s[start + i - 1];
+		str[i] = s[start + i];
 		i++;
 	}
 	str[i] = '\0';
@@ -51,21 +60,25 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (str);
 }
 
-char	*ft_strtrim(const char *s1, char const *set)
+char	*ft_strtrim(char const *s1, char const *set)
 {
 	char			*str;
 	unsigned int	start;
 	unsigned int	end;
 
-	if (!s1 || !set)
-		return (ft_strdup(s1));
+	if (!s1)
+		return (NULL);
+	if (!set)
+		return (NULL);
 	start = 0;
-	end = ft_strlen(s1) - 1;
-	while (ft_strchr(set, s1[start]))
+	end = ft_strlen(s1);
+	while (ft_strchr(set, s1[start]) && start < end)
 		start++;
-	while (ft_strchr(set, s1[end]))
+	while (ft_strchr(set, s1[end]) && end > 0)
 		end--;
-	str = ft_substr(s1, start + 1, end - start + 1);
+	if (start > end)
+		return (ft_strdup(""));
+	str = ft_substr(s1, start, end - start + 1);
 	if (!str)
 		return (NULL);
 	return (str);
@@ -73,8 +86,10 @@ char	*ft_strtrim(const char *s1, char const *set)
 
 /* int	main(void)
 {
-	char	s1[] = "abcacb hola abbcaabc";
-	char	set[] = "abc";
+	char	s1[] = "a";
+	char	set[] = "a";
 
 	printf("%s", ft_strtrim(s1, set));
+
+	//printf("%s$", ft_substr(s1, 21, 4));
 } */

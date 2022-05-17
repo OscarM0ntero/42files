@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/13 10:15:49 by omontero         ###   ########.fr       */
+/*   Updated: 2022/05/17 18:10:00 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ static int	ft_neg(int num, int x)
 
 int	ft_atoi(const char *nptr)
 {
-	int	x;
-	int	i;
-	int	num;
+	int			x;
+	int			i;
+	long int	num;
 
 	i = 0;
 	num = 0;
