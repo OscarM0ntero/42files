@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:17:37 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/17 19:07:47 by omontero         ###   ########.fr       */
+/*   Updated: 2022/05/18 09:30:51 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,14 @@ char	*ft_itoa(int n)
 	return (s);
 }
 
-int	main(void)
+/* int	main(void)
 {
 	int	n;
 
 	n = -5859;
 	printf("Num. = %d$\n", n);
 	printf("itoa = %s$\n", ft_itoa(n));
-}
+} */
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {

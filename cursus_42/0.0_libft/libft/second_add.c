@@ -6,13 +6,14 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:17:37 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/17 18:44:31 by omontero         ###   ########.fr       */
+/*   Updated: 2022/05/18 10:01:09 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 // ft_split
+// "\0aaa\0bb"
 static size_t	ft_count_words(char const *s, char c)
 {
 	size_t	i;
@@ -20,6 +21,8 @@ static size_t	ft_count_words(char const *s, char c)
 
 	n_words = 0;
 	i = 0;
+	if (!*s)
+		return (0);
 	while (s[i] == c)
 		i++;
 	while (s[i])
@@ -86,18 +89,12 @@ char	**ft_split(char const *s, char c)
 
 	if (!s)
 		return (NULL);
-	if (!c)
-	{
-		list = (char **)malloc(sizeof(char *));
-		if (!list)
-			return (NULL);
-		*list = ft_strdup(s);
-		return (list);
-	}
 	n_words = ft_count_words(s, c);
 	list = (char **)malloc((n_words + 1) * sizeof(char *));
 	if (!list)
 		return (NULL);
+	if (n_words == 0)
+		return (list);
 	if (ft_assign_words(s, c, list, n_words) || !list)
 		return (NULL);
 	return (list);

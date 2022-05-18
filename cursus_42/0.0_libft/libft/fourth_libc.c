@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/13 10:25:18 by omontero         ###   ########.fr       */
+/*   Updated: 2022/05/18 10:15:35 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,14 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {
-	unsigned char	*p;
+	unsigned long	i;
 
-	p = (unsigned char *)s;
-	n--;
-	while (*p != (unsigned char)c && *p && n)
+	i = 0;
+	while (i < n)
 	{
-		n--;
-		p++;
+		if (((unsigned char *)s)[i] == (unsigned char)c)
+			return ((void *)&(s[i]));
+		i++;
 	}
-	if (*p != (unsigned char)c)
-		p = NULL;
-	return (p);
+	return (NULL);
 }
