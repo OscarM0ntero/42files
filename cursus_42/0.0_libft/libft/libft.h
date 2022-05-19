@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 09:26:06 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/19 11:46:47 by omontero         ###   ########.fr       */
+/*   Updated: 2022/05/19 22:45:33 by oscar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <sys/uio.h>
 # include <unistd.h>
 # include <string.h>
+# include <stdint.h>
 
 typedef struct s_list
 {
