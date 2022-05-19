@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/19 11:08:18 by omontero         ###   ########.fr       */
+/*   Updated: 2022/05/19 12:57:39 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	char	*str;
 	size_t	i;
 
-	if (!s)
+	if (!*s)
 		return (NULL);
 	if (start > ft_strlen(s))
 	{
@@ -30,12 +30,12 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (!str)
 		return (NULL);
 	i = 0;
-	while (i < len)
+	while (i < len && s[start + i])
 	{
 		str[i] = s[start + i];
 		i++;
 	}
-	str[i] = '\0';
+	str[i] = 0;
 	return (str);
 }
 
@@ -43,5 +43,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	s1[] = "aadbaholaffafa";
 
-	//printf("%s$", ft_substr(s1, 5, 4));
-} */
+	printf("%s$", ft_substr(s1, 5, 4));
+}
+ */
