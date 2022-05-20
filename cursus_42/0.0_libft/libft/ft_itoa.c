@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/19 11:36:38 by omontero         ###   ########.fr       */
+/*   Updated: 2022/05/20 11:15:54 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,13 @@ char	*ft_itoa(int n)
 	}
 	is_neg = 1;
 	if (n >= 0)
-		is_neg--;
+		is_neg = 0;
 	length = ft_int_length(n) + is_neg + 1;
 	s = (char *)malloc((length) * sizeof(char));
 	if (!(s))
 		return (NULL);
 	ft_assign_str(n, s, length, is_neg);
-	s[ft_int_length(n) + 1] = '\0';
+	s[ft_int_length(n) + is_neg] = '\0';
 	return (s);
 }
 
@@ -90,7 +90,8 @@ char	*ft_itoa(int n)
 {
 	int	n;
 
-	n = -5859;
+	n = 8124;
 	printf("Num. = %d$\n", n);
 	printf("itoa = %s$\n", ft_itoa(n));
-} */
+}
+ */

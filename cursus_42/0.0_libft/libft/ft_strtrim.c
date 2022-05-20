@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/19 11:35:25 by omontero         ###   ########.fr       */
+/*   Updated: 2022/05/20 11:27:19 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	unsigned int	start;
 	unsigned int	end;
 
-	if (!s1)
-		return (NULL);
-	if (!set)
+	if (!s1 || !set)
 		return (NULL);
 	start = 0;
 	end = ft_strlen(s1);
@@ -28,7 +26,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 		start++;
 	while (ft_strchr(set, s1[end]) && end > 0)
 		end--;
-	if (start > end)
+	if (start >= end && !start)
 		return (ft_strdup(""));
 	str = ft_substr(s1, start, end - start + 1);
 	if (!str)
@@ -38,8 +36,9 @@ char	*ft_strtrim(char const *s1, char const *set)
 
 /* int	main(void)
 {
-	char	s1[] = "abcacbholabacbabbc";
-	char	set[] = "abc";
+	char	s1[] = "abcdba";
+	char	set[] = "acb";
 
 	printf("%s", ft_strtrim(s1, set));
-} */
+}
+ */

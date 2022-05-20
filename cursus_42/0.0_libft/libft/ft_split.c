@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/19 12:52:58 by omontero         ###   ########.fr       */
+/*   Updated: 2022/05/20 10:57:08 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,10 @@ static int	ft_assign_words(char const *s, char c, char **list, size_t n_words)
 	ft_assign_coords(s, &start, &end, c);
 	while (i < n_words)
 	{
-		word = (char *)malloc((end - start) * sizeof(char));
+		word = ft_substr(s, start, end - start);
 		if (!word)
 			return (1);
-		word = ft_substr(s, start, end - start);
-		list[i] = ft_strdup(word);
-		free(word);
+		list[i] = word;
 		ft_assign_coords(s, &start, &end, c);
 		i++;
 	}
@@ -81,31 +79,39 @@ char	**ft_split(char const *s, char c)
 {
 	size_t	n_words;
 	char	**list;
+	size_t	i;
 
 	if (!s)
 		return (NULL);
 	n_words = ft_count_words(s, c);
-	list = (char **)malloc((n_words + 1) * sizeof(char *));
+	list = (char **)ft_calloc(sizeof(char *), (n_words + 1));
 	if (!list)
 		return (NULL);
-	if (n_words == 0)
-		return (list);
-	if (ft_assign_words(s, c, list, n_words) || !list)
+	if (ft_assign_words(s, c, list, n_words))
+	{
+		i = 0;
+		while (list[i])
+		{
+			free(list[i]);
+			i++;
+		}
+		free(list);
 		return (NULL);
+	}
 	return (list);
 }
 
 /* int	main(void)
 {
 	//char	str[] = "NrQg9t T7V EeHjY0PS8Cn Zx7wDMsT2gzvVi85l vWto 
-	mxqLzQIe5sra3X2h lX847k Lm8yr O84SR bnYcxT0u6ADSfQ8I EKX l7fMHCbw1r 
-	GcFB znfT6ICyJog4vwYeN IjTfwHL ZO9gDaoR";
-	char	str[] = "\0aa\0bbb";
+	//mxqLzQIe5sra3X2h lX847k Lm8yr O84SR bnYcxT0u6ADSfQ8I EKX l7fMHCbw1r 
+	//GcFB znfT6ICyJog4vwYeN IjTfwHL ZO9gDaoR";
+	char	str[] = "  tripouille  42";
 	size_t	i;
 	char	**list;
 	char	c;
 
-	c = '\0';
+	c = ' ';
 	list = ft_split(str, c);
 	i = 0;
 	while (i < ft_count_words(str, c))

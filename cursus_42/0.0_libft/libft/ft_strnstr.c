@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/19 10:52:17 by omontero         ###   ########.fr       */
+/*   Updated: 2022/05/20 11:37:18 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	ft_check_little(char *p, const char *little, const size_t len)
 	x = (size_t)len;
 	i = 0;
 	tmp = 0;
-	while (little[i] && x)
+	while (little[i] && x && p[i])
 	{
 		if (p[i] != little[i])
 			tmp = 1;
