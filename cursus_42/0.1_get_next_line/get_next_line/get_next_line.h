@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 09:26:06 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/18 16:47:52 by omontero         ###   ########.fr       */
+/*   Updated: 2022/05/23 11:40:07 by oscar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,8 @@ char	*ft_strchr(const char *s, int c);
 char	*ft_strdup(const char *s1);
 void	*ft_memmove(void *dest, const void *src, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
+
+//
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 #endif

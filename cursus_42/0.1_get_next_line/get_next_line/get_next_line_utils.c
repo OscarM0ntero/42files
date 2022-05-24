@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/18 16:13:40 by omontero         ###   ########.fr       */
+/*   Updated: 2022/05/23 11:38:25 by oscar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,43 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ft_memmove(str, s1, ft_strlen(s1));
 	ft_memmove(str + ft_strlen(s1), s2, ft_strlen(s2));
 	str[size] = '\0';
+	return (str);
+}
+
+//extra
+
+static void	ft_assign_i(char const *s, size_t *i, size_t len)
+{
+	*i = len;
+	if (len > ft_strlen(s))
+		*i = ft_strlen(s);
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char	*str;
+	size_t	i;
+
+	if (!s)
+		return (NULL);
+	if (start > ft_strlen(s))
+	{
+		str = (char *)malloc(sizeof(char));
+		if (!str)
+			return (NULL);
+		*str = 0;
+		return (str);
+	}
+	ft_assign_i(s, &i, len);
+	str = (char *)malloc((i + 1) * sizeof(char));
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (i < len && s[start + i])
+	{
+		str[i] = s[start + i];
+		i++;
+	}
+	str[i] = '\0';
 	return (str);
 }
