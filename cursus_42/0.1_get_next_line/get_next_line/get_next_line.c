@@ -6,118 +6,104 @@
 /*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 16:53:32 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/24 10:48:07 by oscar            ###   ########.fr       */
+/*   Updated: 2022/05/25 12:27:10 by oscar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	*ft_calloc(size_t count, size_t size)
-{
-	char	*str;
-	size_t	i;
-
-	i = 0;
-	str = (char *)malloc(count * size);
-	if (str == 0)
-		return (0);
-	while (i < count * size)
-	{
-		str[i] = 0;
-		i++;
-	}
-	return ((void *)str);
-}
-
 // "hola me llamo oscar \nque pasa por aqui?"
-static char	*ft_save_buffers(int fd, char *s, int *read_output)
+static char	*ft_save_buffers(int fd, char *s)
 {
 	char	*buff;
+	int		read_output;
 
 	buff = (char *)ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	if (!buff)
 		return (NULL);
+	read_output = 1;
 	while (!ft_strchr(buff, '\n') && read_output != 0)
 	{
-		*read_output = read(fd, buff, BUFFER_SIZE);
-		if (*read_output == -1)
+		read_output = read(fd, buff, BUFFER_SIZE);
+		if (read_output == -1)
 		{
 			free (buff);
 			return (NULL);
 		}
-		buff[*read_output] = 0;
+		//if (read_output > 0)
+		//{
+		//buff[read_output] = 0;
 		s = ft_strjoin(s, buff);
+		//}
 	}
 	free (buff);
 	return (s);
 }
+//fallo ultima linea
 
-static char	*ft_get_line(char *s)
+static char	*ft_set_next(char *s, int last_line)
+{
+	size_t	i;
+
+	if (!last_line)
+	{
+		i = 0;
+		while (s[i] != '\n' && s[i])
+			i++;
+		i++;
+		s = ft_substr(s, i, ft_strlen(s) - i);
+	}
+	else
+		s = "";
+	if (!s)
+		return (NULL);
+	s[ft_strlen(s)] = 0;
+	return (s);
+}
+
+static char	*ft_get_line(char *s, int *last_line)
 {
 	char	*line;
 	size_t	i;
 
 	i = 0;
-	while (s[i] != '\n' && s[i] != EOF && s[i])
+	while (s[i] != '\n' && s[i])
 		i++;
 	if (s[i] == '\n')
 	{
 		i++;
 		line = ft_substr(s, 0, i);
 	}
-	else if (s[i] == EOF)
+	else if (!s[i])
 	{
-		printf("xd");
-		i++;
+		//i++;
 		line = ft_substr(s, 0, i);
+		*last_line = 1;
 	}
+	//printf("-%s+", line);
+	if (!line)
+		return (NULL);
 	return (line);
-}
-
-static char	*ft_set_s(char *s, size_t line_len, int read_output)
-{
-	size_t	i;
-
-	if (read_output > 0)
-	{
-		s = ft_substr(s, line_len, read_output - line_len);
-		if (!s)
-			return (NULL);
-	}
-	else if (read_output == 0) //no se... sigue por aqui...
-	{
-		i = 0;
-		while (s[i] != '\n' && s[i] != EOF && s[i])
-			i++;
-		if (s[i] == EOF)
-		{
-			free (s);
-			return (NULL);
-		}
-		s = ft_substr(s, line_len, ft_strlen(s) - line_len);
-		if (!s)
-			return (NULL);
-	}
-	return (s);
 }
 
 char	*get_next_line(int fd)
 {
 	static char	*s;
 	char		*line;
-	int			read_output;
+	int			last_line;
 
 	if (fd <= 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	read_output = 1;
-	s = ft_save_buffers(fd, s, &read_output);
+	last_line = 0;
+	s = ft_save_buffers(fd, s);
 	if (!s)
 		return (NULL);
-	line = ft_get_line(s);
+	line = ft_get_line(s, &last_line);
 	if (!line)
 		return (NULL);
-	s = ft_set_s(s, ft_strlen(line), read_output);
-	printf(">%s<", s);
+	//printf("-%s+", line);
+	s = ft_set_next(s, last_line);
+	//printf("-%d+", last_line);
 	if (!s)
 		return (NULL);
 	return (line);
@@ -130,10 +116,9 @@ int	main(void)
 
 	i = 0;
 	fd = open("file.txt", O_RDONLY);
-	while (i < 6)
+	while (i < 8)
 	{
-		//printf("%d -> ", fd);
-		printf("|%s|", get_next_line(fd));
+		printf(">%s<\n", get_next_line(fd));
 		i++;
 	}
 	close(fd);

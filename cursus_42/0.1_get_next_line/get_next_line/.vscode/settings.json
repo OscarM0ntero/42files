@@ -2,6 +2,7 @@
 	"files.associations": {
 		"stdio.h": "c",
 		"type_traits": "c",
-		"iterator": "c"
+		"iterator": "c",
+		"get_next_line.h": "c"
 	}
 }

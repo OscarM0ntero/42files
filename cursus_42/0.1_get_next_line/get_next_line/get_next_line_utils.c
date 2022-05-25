@@ -6,11 +6,30 @@
 /*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/23 11:38:25 by oscar            ###   ########.fr       */
+/*   Updated: 2022/05/25 12:09:06 by oscar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	void	*p;
+	size_t	i;
+
+	i = 0;
+	if ((nmemb >= SIZE_MAX && size > 1) || (size >= SIZE_MAX && nmemb > 1))
+		return (NULL);
+	p = malloc(nmemb * size);
+	if (!p)
+		return (NULL);
+	while (i < nmemb * size)
+	{
+		((char *)p)[i] = 0;
+		i++;
+	}
+	return (p);
+}
 
 size_t	ft_strlen(const char *s)
 {
@@ -44,7 +63,7 @@ char	*ft_strdup(const char *s1)
 	size_t	i;
 
 	len = ft_strlen(s1) + 1;
-	p = (char *)malloc(len * sizeof(char));
+	p = (char *)ft_calloc(len, sizeof(char));
 	if (!p)
 		return (NULL);
 	if (!p && !s1)
@@ -88,7 +107,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (!s1 && s2)
 		return (ft_strdup(s2));
 	size = ft_strlen(s1) + ft_strlen(s2);
-	str = (char *)malloc(size * sizeof(char));
+	str = (char *)malloc((size + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
 	ft_memmove(str, s1, ft_strlen(s1));
@@ -115,14 +134,13 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (NULL);
 	if (start > ft_strlen(s))
 	{
-		str = (char *)malloc(sizeof(char));
+		str = (char *)ft_calloc(1, sizeof(char));
 		if (!str)
 			return (NULL);
-		*str = 0;
 		return (str);
 	}
 	ft_assign_i(s, &i, len);
-	str = (char *)malloc((i + 1) * sizeof(char));
+	str = (char *)ft_calloc((i + 1), sizeof(char));
 	if (!str)
 		return (NULL);
 	i = 0;
