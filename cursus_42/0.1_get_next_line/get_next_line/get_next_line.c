@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 16:53:32 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/25 12:27:10 by oscar            ###   ########.fr       */
+/*   Updated: 2022/05/25 14:35:50 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,21 @@ static char	*ft_save_buffers(int fd, char *s)
 	while (!ft_strchr(buff, '\n') && read_output != 0)
 	{
 		read_output = read(fd, buff, BUFFER_SIZE);
+		if (read_output == 0)
+		{
+			free (buff);
+			buff = (char *)ft_calloc(1, sizeof(char));
+		}
 		if (read_output == -1)
 		{
 			free (buff);
 			return (NULL);
 		}
-		//if (read_output > 0)
-		//{
-		//buff[read_output] = 0;
 		s = ft_strjoin(s, buff);
-		//}
 	}
 	free (buff);
 	return (s);
 }
-//fallo ultima linea
 
 static char	*ft_set_next(char *s, int last_line)
 {
@@ -54,7 +54,12 @@ static char	*ft_set_next(char *s, int last_line)
 		s = ft_substr(s, i, ft_strlen(s) - i);
 	}
 	else
-		s = "";
+	{
+		free(s);
+		s = ft_calloc(1, sizeof(char));
+		s = NULL;
+		return (s);
+	}
 	if (!s)
 		return (NULL);
 	s[ft_strlen(s)] = 0;
@@ -74,13 +79,12 @@ static char	*ft_get_line(char *s, int *last_line)
 		i++;
 		line = ft_substr(s, 0, i);
 	}
-	else if (!s[i])
+	else
 	{
-		//i++;
-		line = ft_substr(s, 0, i);
+		i++;
+		line = ft_strdup(s);
 		*last_line = 1;
 	}
-	//printf("-%s+", line);
 	if (!line)
 		return (NULL);
 	return (line);
@@ -97,29 +101,39 @@ char	*get_next_line(int fd)
 	last_line = 0;
 	s = ft_save_buffers(fd, s);
 	if (!s)
+	{
+		free (s);
 		return (NULL);
+	}
 	line = ft_get_line(s, &last_line);
 	if (!line)
+	{
+		free (s);
+		free (line);
 		return (NULL);
-	//printf("-%s+", line);
+	}
 	s = ft_set_next(s, last_line);
-	//printf("-%d+", last_line);
-	if (!s)
+	if (s == NULL && line[0] == 0)
+	{
+		free(line);
+		free(s);
 		return (NULL);
+	}
 	return (line);
 }
 
-int	main(void)
+/* int	main(void)
 {
 	int	fd;
 	int	i;
 
 	i = 0;
 	fd = open("file.txt", O_RDONLY);
-	while (i < 8)
+	while (i < 10)
 	{
 		printf(">%s<\n", get_next_line(fd));
 		i++;
 	}
 	close(fd);
 }
+ */

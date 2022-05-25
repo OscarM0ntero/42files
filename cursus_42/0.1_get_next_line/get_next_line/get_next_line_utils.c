@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/25 12:09:06 by oscar            ###   ########.fr       */
+/*   Updated: 2022/05/25 14:38:11 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,12 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	i = 0;
 	if ((nmemb >= SIZE_MAX && size > 1) || (size >= SIZE_MAX && nmemb > 1))
 		return (NULL);
-	p = malloc(nmemb * size);
+	p = (void *)malloc(nmemb * size);
 	if (!p)
+	{
+		free (p);
 		return (NULL);
+	}
 	while (i < nmemb * size)
 	{
 		((char *)p)[i] = 0;
