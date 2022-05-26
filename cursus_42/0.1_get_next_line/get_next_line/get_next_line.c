@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 16:53:32 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/25 14:35:50 by omontero         ###   ########.fr       */
+/*   Updated: 2022/05/26 10:49:30 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,13 @@ static char	*ft_save_buffers(int fd, char *s)
 	while (!ft_strchr(buff, '\n') && read_output != 0)
 	{
 		read_output = read(fd, buff, BUFFER_SIZE);
-		if (read_output == 0)
-		{
-			free (buff);
-			buff = (char *)ft_calloc(1, sizeof(char));
-		}
 		if (read_output == -1)
 		{
 			free (buff);
 			return (NULL);
 		}
-		s = ft_strjoin(s, buff);
+		if (read_output != 0)
+			s = ft_strjoin(s, buff);
 	}
 	free (buff);
 	return (s);
@@ -56,7 +52,6 @@ static char	*ft_set_next(char *s, int last_line)
 	else
 	{
 		free(s);
-		s = ft_calloc(1, sizeof(char));
 		s = NULL;
 		return (s);
 	}
@@ -114,15 +109,11 @@ char	*get_next_line(int fd)
 	}
 	s = ft_set_next(s, last_line);
 	if (s == NULL && line[0] == 0)
-	{
-		free(line);
-		free(s);
 		return (NULL);
-	}
 	return (line);
 }
 
-/* int	main(void)
+int	main(void)
 {
 	int	fd;
 	int	i;
@@ -136,4 +127,3 @@ char	*get_next_line(int fd)
 	}
 	close(fd);
 }
- */
