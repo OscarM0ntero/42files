@@ -6,13 +6,12 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 16:53:32 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/26 10:49:30 by omontero         ###   ########.fr       */
+/*   Updated: 2022/05/26 16:15:12 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-// "hola me llamo oscar \nque pasa por aqui?"
 static char	*ft_save_buffers(int fd, char *s)
 {
 	char	*buff;
