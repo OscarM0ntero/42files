@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/26 10:39:19 by omontero         ###   ########.fr       */
+/*   Updated: 2022/05/27 13:49:45 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,42 +116,5 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ft_memmove(str, s1, ft_strlen(s1));
 	ft_memmove(str + ft_strlen(s1), s2, ft_strlen(s2));
 	str[size] = '\0';
-	return (str);
-}
-
-//extra
-
-static void	ft_assign_i(char const *s, size_t *i, size_t len)
-{
-	*i = len;
-	if (len > ft_strlen(s))
-		*i = ft_strlen(s);
-}
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	char	*str;
-	size_t	i;
-
-	if (!s)
-		return (NULL);
-	if (start > ft_strlen(s))
-	{
-		str = (char *)ft_calloc(1, sizeof(char));
-		if (!str)
-			return (NULL);
-		return (str);
-	}
-	ft_assign_i(s, &i, len);
-	str = (char *)ft_calloc((i + 1), sizeof(char));
-	if (!str)
-		return (NULL);
-	i = 0;
-	while (i < len && s[start + i])
-	{
-		str[i] = s[start + i];
-		i++;
-	}
-	str[i] = '\0';
 	return (str);
 }
