@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 16:53:32 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/30 12:17:18 by omontero         ###   ########.fr       */
+/*   Updated: 2022/05/30 16:32:39 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ char	*get_next_line(int fd)
 	char	*c;
 
 	i = 0;
-	fd = open("file2.txt", O_RDONLY);
+	fd = open("lines_around_10.txt", O_RDONLY);
 	while (i < 10)
 	{
 		c = get_next_line(fd);
