@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 16:53:32 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/31 13:21:03 by omontero         ###   ########.fr       */
+/*   Updated: 2022/06/01 16:37:21 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 size_t	ft_strlen(const char *s)
 {
@@ -46,8 +46,8 @@ static char	*ft_save_buffers(int fd, char *s)
 			return (NULL);
 		}
 		buff[read_output] = 0;
-		c = s;
-		s = ft_strjoin(s, buff);
+		c = s[fd];
+		s[fd] = ft_strjoin(s[fd], buff);
 		free (c);
 	}
 	free (buff);
@@ -108,22 +108,22 @@ static char	*ft_get_line(char *s)
 
 char	*get_next_line(int fd)
 {
-	static char	*s;
+	static char	*s[256];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	s = ft_save_buffers(fd, s);
-	if (!s)
+	s[fd] = ft_save_buffers(fd, s[fd]);
+	if (!s[fd])
 		return (NULL);
-	line = ft_get_line(s);
+	line = ft_get_line(s[fd]);
 	if (!line)
 	{
-		free (s);
+		free (s[fd]);
 		return (NULL);
 	}
-	s = ft_set_next(s);
-	if (s == NULL && line == NULL)
+	s[fd] = ft_set_next(s[fd]);
+	if (s[fd] == NULL && line == NULL)
 		return (NULL);
 	return (line);
 }

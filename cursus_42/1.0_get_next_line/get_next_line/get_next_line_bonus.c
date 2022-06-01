@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 16:53:32 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/31 13:21:03 by omontero         ###   ########.fr       */
+/*   Updated: 2022/06/01 18:06:43 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 size_t	ft_strlen(const char *s)
 {
@@ -108,22 +108,24 @@ static char	*ft_get_line(char *s)
 
 char	*get_next_line(int fd)
 {
-	static char	*s;
+	static char	*s[256];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	s = ft_save_buffers(fd, s);
-	if (!s)
+	if (read(fd, 0, 0) < 0 && s[fd] != NULL)
+		free (s[fd]);
+	s[fd] = ft_save_buffers(fd, s[fd]);
+	if (!s[fd])
 		return (NULL);
-	line = ft_get_line(s);
+	line = ft_get_line(s[fd]);
 	if (!line)
 	{
-		free (s);
+		free (s[fd]);
 		return (NULL);
 	}
-	s = ft_set_next(s);
-	if (s == NULL && line == NULL)
+	s[fd] = ft_set_next(s[fd]);
+	if (s[fd] == NULL && line == NULL)
 		return (NULL);
 	return (line);
 }
@@ -131,17 +133,43 @@ char	*get_next_line(int fd)
 /* int	main(void)
 {
 	int		fd;
-	int		i;
 	char	*c;
 
-	i = 0;
 	fd = open("lines_around_10.txt", O_RDONLY);
-	while (i < 10)
+	c = get_next_line(fd);
+	printf("fd  = >%s<\n", c);
+	free (c);
+	c = get_next_line(fd);
+	printf("fd  = >%s<\n", c);
+	free (c);
+	close(fd);
+	char	*temp;
+	do
 	{
-		c = get_next_line(fd);
-		printf(">%s<\n", c);
-		free (c);
-		i++;
-	}
+		temp = get_next_line(fd);
+		free (temp);
+	} while (temp != NULL);
+	c = get_next_line(fd);
+	printf("fd  = >%s<\n", c);
+	free (c);
+	fd = open("lines_around_10.txt", O_RDONLY);
+	c = get_next_line(fd);
+	printf("fd  = >%s<\n", c);
+	free (c);
+	c = get_next_line(fd);
+	printf("fd  = >%s<\n", c);
+	free (c);
+	c = get_next_line(fd);
+	printf("fd  = >%s<\n", c);
+	free (c);
+	c = get_next_line(fd);
+	printf("fd  = >%s<\n", c);
+	free (c);
+	c = get_next_line(fd);
+	printf("fd  = >%s<\n", c);
+	free (c);
+	c = get_next_line(fd);
+	printf("fd  = >%s<\n", c);
+	free (c);
 	close(fd);
 } */
