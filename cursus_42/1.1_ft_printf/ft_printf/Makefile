@@ -3,47 +3,58 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: omontero <omontero@student.42.fr>          +#+  +:+       +#+         #
+#    By: oscar <oscar@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/07 11:03:12 by omontero          #+#    #+#              #
-#    Updated: 2022/06/03 13:35:40 by omontero         ###   ########.fr        #
+#    Updated: 2022/06/08 23:30:13 by oscar            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= libftprintf.a
-SRCS	=	ft_printf.c									       
-OBJS	=	$(SRCS:.c=.o)
-SRC_DIR	=	src/
-OBJ_DIR	=	obj/
-OBJF	=	.cache_exists
-CC		=	gcc
-RM		=	rm -f
-AR		=	ar rcs
-CFLAGS	=	-Wall -Wextra -Werror -I.
+#Variables
 
-all:	$(NAME)
+NAME		= libftprintf.a
+INCLUDE		= include
+LIBFT		= libft
+SRC_DIR		= src/
+OBJ_DIR		= obj/
+CC			= gcc
+CFLAGS		= -Wall -Werror -Wextra -I
+RM			= rm -f
+AR			= ar rcs
 
-$(NAME):	$(OBJS)	
-		@make -C libft
-		@cp libft/libft.a .
-		@mv libft.a $(NAME)
-		@$(AR) $(NAME) $(OBJS)
+SRC_FILES	=	ft_printf ft_printf_utils ft_printf_pointer ft_printf_unsigned ft_printf_hex
+
+
+SRC 		= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
+OBJ 		= 	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
+
+OBJF		=	.cache_exists
+
+all:		$(NAME)
+
+$(NAME):	$(OBJ)
+			@make -C $(LIBFT)
+			@cp libft/libft.a .
+			@mv libft.a $(NAME)
+			@$(AR) $(NAME) $(OBJ)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJF)
-			@$(CC) $(CFLAGS) include -c $< -o $@
+			@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 $(OBJF):
 			@mkdir -p $(OBJ_DIR)
-		
 
 clean:
 			@$(RM) -rf $(OBJ_DIR)
-			@make clean -C libft
+			@make clean -C $(LIBFT)
 
 fclean:		clean
 			@$(RM) -f $(NAME)
-			@$(RM) -f libft/libft.a
-			
+			@$(RM) -f $(LIBFT)/libft.a
+
 re:			fclean all
+
+norm:
+			@norminette $(SRC) $(INCLUDE) $(LIBFT) | grep -v Norme -B1 || true
 
 .PHONY:		all clean fclean re norm
