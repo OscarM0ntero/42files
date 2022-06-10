@@ -6,7 +6,7 @@
 /*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/06/09 00:43:18 by oscar            ###   ########.fr       */
+/*   Updated: 2022/06/10 15:13:47 by oscar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ int	ft_printf(char const *string, ...)
 	return (length);
 }
 
-/*int	main(void)
+int	main(void)
 {
 	int		a;
 
-	a = ft_printf(" %p %p ", (void *)0, (void *)0);
+	a = printf("%p %p", NULL, (void *)0);
 	ft_printf("\n%i", a);
-}*/
+}
