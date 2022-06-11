@@ -58,10 +58,10 @@ int	ft_printf(char const *string, ...)
 	return (length);
 }
 
-int	main(void)
+/*int	main(void)
 {
 	int		a;
 
 	a = printf("%p %p", NULL, (void *)0);
 	ft_printf("\n%i", a);
-}
+}*/
