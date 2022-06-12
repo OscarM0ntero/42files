@@ -6,7 +6,7 @@
 /*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/06/12 21:49:56 by oscar            ###   ########.fr       */
+/*   Updated: 2022/06/12 21:53:29 by oscar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,3 +66,5 @@ int	main(int argc, char **argv)
 	}
 	return (0);
 }
+
+//	Continuar con la instruccion rra en push_swap_reverse_rotate.c
