@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_pointer.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/06/10 15:13:06 by oscar            ###   ########.fr       */
+/*   Updated: 2022/06/10 18:30:53 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_printpointer(unsigned long long p)
 
 	length = 0;
 	if (p == 0)
-		length += ft_printstring("(nil)");
+		length += ft_printstring("0x0");
 	else
 	{
 		length += write(1, "0x", 2);

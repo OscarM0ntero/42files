@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/06/12 21:53:29 by oscar            ###   ########.fr       */
+/*   Updated: 2022/06/13 14:20:54 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ int	main(int argc, char **argv)
 	ft_assign_a(g);
 	//g = ft_sa(g);
 	g = ft_pb(g, 0);
-	//g = ft_pb(g, 0);
-	//g = ft_rr(g);
+	g = ft_pb(g, 0);
+	g = ft_rrr(g);
 	i = (int)g.a.size - 1;
 	while (i >= 0)
 	{

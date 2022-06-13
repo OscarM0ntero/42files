@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_rotate.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/06/12 21:47:00 by oscar            ###   ########.fr       */
+/*   Updated: 2022/06/13 14:16:36 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,11 @@ t_game	ft_ra(t_game g, int print)
 	int		tmp;
 
 	if (g.a.size == 2)
+	{
+		if (!print)
+			write(1, "ra\n", 3);
 		return (ft_sa(g, 1));
+	}
 	else if (g.a.size < 2)
 		return (g);
 	i = g.a.size - 1;
@@ -42,7 +46,11 @@ t_game	ft_rb(t_game g, int print)
 	int		tmp;
 
 	if (g.b.size == 2)
+	{
+		if (!print)
+			write(1, "rb\n", 3);
 		return (ft_sb(g, 1));
+	}
 	else if (g.b.size < 2)
 		return (g);
 	i = g.b.size - 1;

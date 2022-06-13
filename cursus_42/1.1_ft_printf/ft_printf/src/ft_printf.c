@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/06/10 15:13:47 by oscar            ###   ########.fr       */
+/*   Updated: 2022/06/10 18:27:27 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,11 @@ int	ft_printf(char const *string, ...)
 	return (length);
 }
 
-/*int	main(void)
+/* int	main(void)
 {
 	int		a;
 
 	a = printf("%p %p", NULL, (void *)0);
 	ft_printf("\n%i", a);
-}*/
+}
+ */

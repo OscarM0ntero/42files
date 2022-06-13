@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 13:08:08 by omontero          #+#    #+#             */
-/*   Updated: 2022/06/12 21:46:13 by oscar            ###   ########.fr       */
+/*   Updated: 2022/06/13 14:06:45 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,10 @@ t_game		ft_pb(t_game g, int print);
 t_game		ft_ra(t_game g, int print);
 t_game		ft_rb(t_game g, int print);
 t_game		ft_rr(t_game g);
+
+//			push_swap_reverse_rotate.c
+t_game		ft_rra(t_game g, int print);
+t_game		ft_rrb(t_game g, int print);
+t_game		ft_rrr(t_game g);
 
 #endif
