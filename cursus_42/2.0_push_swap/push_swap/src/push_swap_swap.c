@@ -6,7 +6,7 @@
 /*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/06/12 21:46:44 by oscar            ###   ########.fr       */
+/*   Updated: 2022/06/28 14:05:57 by oscar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ t_game	ft_sb(t_game g, int print)
 
 	if (g.b.size >= 2)
 	{
-		tmp = g.b.stk[0].val;
-		g.b.stk[0].val = g.b.stk[1].val;
-		g.b.stk[1].val = tmp;
+		tmp = g.b.stk[g.b.size - 1].val;
+		g.b.stk[g.b.size - 1].val = g.b.stk[g.b.size - 2].val;
+		g.b.stk[g.b.size - 2].val = tmp;
 		if (!print)
 			write(1, "sb\n", 3);
 	}
