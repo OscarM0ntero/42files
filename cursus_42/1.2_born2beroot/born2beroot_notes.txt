@@ -1,0 +1,8 @@
+#	Este archivo es una guia del born2beroot	#
+
+#	Delete the new rule: (This is for when you defend your Born2beroot)
+
+$ sudo ufw status numbered
+$ sudo ufw delete (that number, for example 5 or 6)
+
+#	password policy (3.0)
