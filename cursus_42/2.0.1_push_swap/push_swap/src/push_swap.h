@@ -20,47 +20,25 @@
 typedef struct s_value
 {
 	int		val;
-	size_t	pos;
+	int		pos;
 }	t_value;
 
 typedef struct s_stack
 {
 	t_value	*stk;
-	size_t	size;
+	int		size;
 }	t_stack;
 
-typedef struct s_game
+typedef struct s_data
 {
-	char	**argv;
-	t_stack	a;
-	t_stack	b;
-}	t_game;
-
-//			push_swap.c
-
-//			push_swap_utils.c
-t_stack		ft_assign_stack(t_stack old_stk, t_value new_val, int assign);
-t_game		ft_add_to_stack(t_game g, t_value new_val, int a, int b);
-t_stack		ft_remove(t_stack old_stk, size_t pos);
-t_game		ft_remove_from_stack(t_game g, size_t pos, int a, int b);
-
-//			push_swap_swap.c
-t_game		ft_sa(t_game game, int print);
-t_game		ft_sb(t_game game, int print);
-t_game		ft_ss(t_game game);
-
-//			push_swap_push.c
-t_game		ft_pa(t_game g, int print);
-t_game		ft_pb(t_game g, int print);
-
-//			push_swap_rotate.c
-t_game		ft_ra(t_game g, int print);
-t_game		ft_rb(t_game g, int print);
-t_game		ft_rr(t_game g);
-
-//			push_swap_reverse_rotate.c
-t_game		ft_rra(t_game g, int print);
-t_game		ft_rrb(t_game g, int print);
-t_game		ft_rrr(t_game g);
+	//	Se inicializan y van variando su valor en base al estado actual
+	//	de la ordenacion
+	int	lowest_number_in_order;
+	int numbers_in_order;
+	//	Se inicializan y no se cambia
+	int highest_number;
+	int	lowest_number;
+	int total_amount_of_numbers;
+}	t_data;
 
 #endif

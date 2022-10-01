@@ -12,122 +12,97 @@
 
 #include "push_swap.h"
 
-/*	Assign to game struct the values introduced by the user
-	and assign memory to the stacks */
-static t_game	ft_assign_values(int argc, char **argv)
+//	Esta funcion asigna los valores introduciodos por consola
+//	al stack A de inicio :)
+void assign_values(char ***argv, t_stack *a, t_data data)
 {
-	t_game	g;
-
-	g.argv = argv;
-	g.a.size = argc - 1;
-	g.b.size = 0;
-	g.a.stk = ft_calloc(g.a.size, sizeof(t_value));
-	return (g);
-}
-
-//	Assign on stack A the iput values
-static void	ft_assign_a(t_game g)
-{
-	size_t	i;
+	int	i;
 
 	i = 0;
-	while (i < g.a.size)
+	*a->size = data.total_amount_of_numbers;
+	*a->stk = ft_calloc(*a->size, sizeof(t_value));
+	while (i < data.total_amount_of_numbers)
 	{
-		g.a.stk[g.a.size - i - 1].val = ft_atoi(g.argv[i + 1]);
-		g.a.stk[g.a.size - i - 1].pos = g.a.size - i - 1;
+		a->stk[i].val = ft_atoi(argv[i + 1]);
+		a->stk[i].pos = i + 1;
 		i++;
 	}
 }
 
-/*int	ft_b_in_order(t_game g)
+//	Esta funcion simplemente imprime por pantalla el stack que le pasemos
+void read_stack(t_stack x)
 {
-	size_t	i;
+	int	i;
 
-	i = 1;
-	if (g.a.size == 0)
+	i = 0;
+	while (i < x.size)
 	{
-		while (i < g.b.size)
-		{
-			if (g.b.stk[i].val < g.b.stk[i - 1].val)
-				return (0);
-			i++;
-		}
-		return (1);
+		printf("Pos: %d		Value: %d\n", x.stk[i].val,x.stk[i].val);
+		i++;
 	}
-	return (0);
 }
 
-t_game	ft_alterate(t_game g)
+//	Busca el mayor numero dentro del Stack
+int search_higher(t_stack x)
 {
-	if (g.b.stk[g.b.size - 1].val < g.b.stk[g.b.size - 2].val)
-	{
-		g = ft_sb(g, 0);
-	}
-	g = ft_rb(g, 0);
-	return (g);
-}*/
+	int	i;
+	int	higher_number_found;
 
+	higher_number_found = x.stk[0].val;
+	i = 0;
+	while (i < x.size)
+	{
+		if (higher_number_found < x.stk[i].val)
+			higher_number_found = x.stk[i].val;
+		i++;
+	}
+	return (higher_number_found);
+}
+
+int search_lower(t_stack x)
+{
+	int	i;
+	int	lower_number_found;
+
+	lower_number_found = x.stk[0].val;
+	i = 0;
+	while (i < x.size)
+	{
+		if (lower_number_found > x.stk[i].val)
+			lower_number_found = x.stk[i].val;
+		i++;
+	}
+	return (lower_number_found);
+}
+
+t_stack	organize(t_stack a, t_stack b, t_data data)
+{
+	while (data.lowest_number_in_order != data.lowest_number)
+	{
+		
+	}
+	return (a);
+}
+
+//	./push_swap <nums separados por ' '>
 int	main(int argc, char **argv)
 {
-	t_game	g;
-	int		i;
+	t_stack a;
+	t_stack b;
+	t_data data;
 
-	g = ft_assign_values(argc, argv);
-	ft_assign_a(g);
-	i = 0;
-	/*while (i < 4)
-	{
-		g = ft_pb(g, 0);
-		i++;
-	}
-	while (!ft_b_in_order(g))
-		g = ft_alterate(g);*/
-	g = ft_pb(g, 0);
-	g = ft_pb(g, 0);
+	data.total_amount_of_numbers = argc - 1;
+	data.numbers_in_order = 0;
+	//	Asignamos los valores al stack A
+	assign_values(argc, *argv, *a, data);
+	read_stack(a);
+	data.highest_number = search_higher(a);
+	data.lowest_number = search_lower(a);
+	data.lowest_number_in_order = data.highest_number;
 
-	i = (int)g.a.size - 1;
-	while (i >= 0)
-	{
-		printf("A_pos %ld: %d\n", g.a.stk[i].pos, g.a.stk[i].val);
-		i--;
-	}
-	i = (int)g.b.size - 1;
-	if (i >= 0)
-		write(1, "\n", 1);
-	while (i >= 0)
-	{
-		printf("B_pos %ld: %d\n", g.b.stk[i].pos, g.b.stk[i].val);
-		i--;
-	}
+	a = organize(a, b, data);
+
+
 	return (0);
 }
 
-/*int	main(int argc, char **argv)
-{
-	t_game	g;
-	int		i;
-
-	g = ft_assign_values(argc, argv);
-	ft_assign_a(g);
-	//g = ft_sa(g);
-	g = ft_pb(g, 0);
-	g = ft_pb(g, 0);
-	g = ft_rrr(g);
-	i = (int)g.a.size - 1;
-	while (i >= 0)
-	{
-		printf("A_pos %ld: %d\n", g.a.stk[i].pos, g.a.stk[i].val);
-		i--;
-	}
-	i = (int)g.b.size - 1;
-	if (i >= 0)
-		write(1, "\n", 1);
-	while (i >= 0)
-	{
-		printf("B_pos %ld: %d\n", g.b.stk[i].pos, g.b.stk[i].val);
-		i--;
-	}
-	return (0);
-}*/
-
-//	Continuar con la instruccion rra en push_swap_reverse_rotate.c
