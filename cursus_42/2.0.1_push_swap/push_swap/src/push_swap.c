@@ -6,7 +6,7 @@
 /*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/10/02 02:08:46 by oscar            ###   ########.fr       */
+/*   Updated: 2022/10/02 13:40:32 by oscar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //	Esta funcion asigna los valores introduciodos por consola
 //	al stack A de inicio :)
 
-void	assign_values(char ***argv, t_stack *a, t_data data)
+void	assign_values(char **argv, t_stack *a, t_data data)
 {
 	int	i;
 
@@ -25,20 +25,24 @@ void	assign_values(char ***argv, t_stack *a, t_data data)
 	while (i < data.total_amount_of_numbers)
 	{
 		a->stk[i].val = ft_atoi(argv[i + 1]);
-		a->stk[i].pos = i + 1;
+		a->stk[i].pos = i;
 		i++;
 	}
 }
 
 //	Esta funcion simplemente imprime por pantalla el stack que le pasemos
-void	read_stack(t_stack x)
+void	read_stack(t_stack a, t_stack b)
 {
 	int	i;
 
 	i = 0;
-	while (i < x.size)
+	printf("	Stack: A			Stack: B\n");
+	while (i < a.size || i < b.size)
 	{
-		printf("Pos: %d		Value: %d\n", x.stk[i].val, x.stk[i].val);
+		if(a.stk[i].val)
+			printf("Pos: %d		Value: %d	", a.stk[i].pos, a.stk[i].val);
+		if(b.stk[i].val)
+			printf("	Pos: %d		Value: %d", b.stk[i].pos, b.stk[i].val);
 		i++;
 	}
 }
@@ -76,13 +80,13 @@ int	search_lower(t_stack x)
 	return (lower_number_found);
 }
 
-t_stack	organize(t_stack a, t_stack b, t_data data)
+/*t_stack	organize(t_stack a, t_stack b, t_data data)
 {
 	while (data.lowest_number_in_order != data.lowest_number)
 	{
 	}
 	return (a);
-}
+}*/
 
 //	./push_swap <nums separados por ' '>
 int	main(int argc, char **argv)
@@ -94,11 +98,13 @@ int	main(int argc, char **argv)
 	data.total_amount_of_numbers = argc - 1;
 	data.numbers_in_order = 0;
 	//	Asignamos los valores al stack A
-	assign_values(argc, *argv, *a, data);
-	read_stack(a);
-	data.highest_number = search_higher(a);
+	assign_values(argv, &a, data);
+	read_stack(a, b);
+	/*data.highest_number = search_higher(a);
 	data.lowest_number = search_lower(a);
 	data.lowest_number_in_order = data.highest_number;
-	a = organize(a, b, data);
+	a = organize(a, b, data);*/
 	return (0);
 }
+
+//		Hola me llamo Oscar
