@@ -6,7 +6,7 @@
 /*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/10/02 13:40:32 by oscar            ###   ########.fr       */
+/*   Updated: 2022/10/02 13:42:45 by oscar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,3 @@ int	main(int argc, char **argv)
 	a = organize(a, b, data);*/
 	return (0);
 }
-
-//		Hola me llamo Oscar
