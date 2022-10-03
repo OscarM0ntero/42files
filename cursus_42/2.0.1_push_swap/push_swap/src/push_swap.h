@@ -6,7 +6,7 @@
 /*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 13:08:08 by omontero          #+#    #+#             */
-/*   Updated: 2022/10/02 12:48:15 by oscar            ###   ########.fr       */
+/*   Updated: 2022/10/03 18:12:54 by oscar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,36 @@ typedef struct s_stack
 
 typedef struct s_data
 {
-	//	Se inicializan y van variando su valor en base al estado actual
-	//	de la ordenacion
-	int		lowest_number_in_order;
+	int		highest_number_disordered;
 	int		numbers_in_order;
-	//	Se inicializan y no se cambia
 	int		highest_number;
 	int		lowest_number;
 	int		total_amount_of_numbers;
 }			t_data;
+
+//	push_swap_utils.c
+t_stack		ft_add_to_stack(t_stack *stack, int new_val, int pos);
+t_stack		ft_remove_from_stack(t_stack *stack, int pos);
+
+//	push_swap_push.c
+void		ft_pa(t_stack *a, t_stack *b);
+void		ft_pb(t_stack *a, t_stack *b);
+
+//	push_swap_swap.c
+void		ft_sa(t_stack *a, int print);
+void		ft_sb(t_stack *b, int print);
+void		ft_ss(t_stack *a, t_stack *b);
+
+//	push_swap_rotate.c
+void		ft_ra(t_stack *a, int print);
+void		ft_rb(t_stack *b, int print);
+void		ft_rr(t_stack *a, t_stack *b);
+
+//	push_swap_reverse_rotate.c
+void		ft_rra(t_stack *a, int print);
+void		ft_rrb(t_stack *b, int print);
+void		ft_rrr(t_stack *a, t_stack *b);
+
+void		read_stack(t_stack a, t_stack b);
 
 #endif
