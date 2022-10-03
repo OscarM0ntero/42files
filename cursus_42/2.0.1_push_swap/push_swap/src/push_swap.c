@@ -6,7 +6,7 @@
 /*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/10/03 19:56:28 by oscar            ###   ########.fr       */
+/*   Updated: 2022/10/03 21:05:41 by oscar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,43 +93,42 @@ int	search_num_10_under(int num, t_stack *a, t_data *data)
 void	rotate_extract_10_higher(t_stack *a, t_stack *b, t_data *data)
 {
 	int	i;
-	int	j;
 	int	n_extracted;
 	int	low;
 
 	n_extracted = 0;
 	low = a->stk[search_num_10_under(data->highest_number_disordered, a, data)].val;
-	while (i < )
+	i = 0;
+	while (i < data->total_amount_of_numbers && n_extracted < 10)
 	{
-		i = 0;
-		while (i < data->total_amount_of_numbers)
+		if (a->stk[0].val >= low)
 		{
-			if (a->stk[0].val >= low)
-			{
-				ft_pb(a, b);
-				n_extracted++;
-			}
-			else
-				ft_ra(a, 1);
-			//read_stack(*a, *b);
-			//printf("x%d\n", n_extracted);
-			i++;
+			ft_pb(a, b);
+			n_extracted++;
 		}
+		else
+			ft_ra(a, 1);
+		//read_stack(*a, *b);
+		//printf("x%d\n", n_extracted);
+		i++;
 	}
 }
 
 void	organize(t_stack *a, t_stack *b, t_data *data)
 {
-	int	i;
+	//int	i;
 
-	i = data->highest_number;
-	while (data->numbers_in_order != data->total_amount_of_numbers && i > data->lowest_number)
+	//i = data->highest_number;
+	/*while (data->numbers_in_order != data->total_amount_of_numbers && i > data->lowest_number)
 	{
 		read_stack(*a, *b);
 		printf("i: %d\n", i);
 		rotate_extract_10_higher(a, b, data);
+		
 		i--;
-	}
+	}*/
+	rotate_extract_10_higher(a, b, data);
+	read_stack(*a, *b);
 }
 
 /*
