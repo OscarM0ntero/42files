@@ -6,7 +6,7 @@
 /*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 13:08:08 by omontero          #+#    #+#             */
-/*   Updated: 2022/10/04 18:42:08 by oscar            ###   ########.fr       */
+/*   Updated: 2022/10/04 20:03:18 by oscar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_data
 //	push_swap_utils.c
 t_stack		ft_add_to_stack(t_stack *stack, int new_val, int pos);
 t_stack		ft_remove_from_stack(t_stack *stack, int pos);
+void		read_stack(t_stack a, t_stack b);
 
 //	push_swap_push.c
 void		ft_pa(t_stack *a, t_stack *b);
@@ -62,6 +63,15 @@ void		ft_rra(t_stack *a, int print);
 void		ft_rrb(t_stack *b, int print);
 void		ft_rrr(t_stack *a, t_stack *b);
 
-void		read_stack(t_stack a, t_stack b);
+//	push_swap_sorter.c
+void		rotate_extract_10_higher(t_stack *a, t_stack *b, t_data *data);
+void		extract_in_order(t_stack *a, t_stack *b, t_data *data);
+
+//	push_swap_sorter_utils.c
+int			search_higher(t_stack x);
+int			search_higher_pos(t_stack x);
+int			search_lower(t_stack x);
+int			seach_num_pos(t_stack x, int val);
+int			search_higher_und_x(t_stack x, int max);
 
 #endif
