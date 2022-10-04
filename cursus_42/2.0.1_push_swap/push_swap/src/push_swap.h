@@ -6,7 +6,7 @@
 /*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 13:08:08 by omontero          #+#    #+#             */
-/*   Updated: 2022/10/03 18:12:54 by oscar            ###   ########.fr       */
+/*   Updated: 2022/10/04 18:42:08 by oscar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ typedef struct s_stack
 
 typedef struct s_data
 {
-	int		highest_number_disordered;
+	int		highest_number_dis;
+	int		lowest_number_ord;
 	int		numbers_in_order;
 	int		highest_number;
 	int		lowest_number;

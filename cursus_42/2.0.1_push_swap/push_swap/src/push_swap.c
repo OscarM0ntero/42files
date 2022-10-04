@@ -6,7 +6,7 @@
 /*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/10/03 21:05:41 by oscar            ###   ########.fr       */
+/*   Updated: 2022/10/04 18:48:06 by oscar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,27 @@ int	search_higher(t_stack x)
 	return (higher_number_found);
 }
 
+int	search_higher_pos(t_stack x)
+{
+	int	i;
+	int	higher_number_found;
+	int	pos;
+
+	higher_number_found = x.stk[0].val;
+	i = 0;
+	pos = 0;
+	while (i < x.size)
+	{
+		if (higher_number_found < x.stk[i].val)
+		{
+			higher_number_found = x.stk[i].val;
+			pos = x.stk[i].pos;
+		}
+		i++;
+	}
+	return (pos);
+}
+
 int	search_lower(t_stack x)
 {
 	int	i;
@@ -63,6 +84,32 @@ int	search_lower(t_stack x)
 	return (lower_number_found);
 }
 
+int	seach_num_pos(t_stack x, int val)
+{
+	int	i;
+
+	i = 0;
+	while (i < x.size && x.stk[i].val != val)
+		i++;
+	return (i);
+}
+
+int	search_higher_und_x(t_stack x, int max)
+{
+	int	i;
+	int	greater;
+
+	greater = search_lower(x);
+	i = 0;
+	while (i < x.size)
+	{
+		if (x.stk[i].val > greater && x.stk[i].val < max)
+			greater = x.stk[i].val;
+		i++;
+	}
+	return (greater);
+}
+
 //	Devuelve la posicion del numero que hay 10 veces menor encontrado, o -1
 int	search_num_10_under(int num, t_stack *a, t_data *data)
 {
@@ -71,6 +118,7 @@ int	search_num_10_under(int num, t_stack *a, t_data *data)
 	int	numbers_found;
 	int	pos;
 
+	pos = seach_num_pos(*a, num);
 	numbers_found = 0;
 	i = num - 1;
 	while (i >= data->lowest_number && numbers_found < 9)
@@ -90,6 +138,20 @@ int	search_num_10_under(int num, t_stack *a, t_data *data)
 	return (pos);
 }
 
+void	realloc_a(t_stack *a, t_data *data)
+{
+	int	low_n_ord_pos;
+
+	low_n_ord_pos = seach_num_pos(*a, data->lowest_number_ord);
+	while (a->stk[0].val != data->lowest_number_ord)
+	{
+		if (low_n_ord_pos <= a->size / 2)
+			ft_ra(a, 1);
+		else
+			ft_rra(a, 1);
+	}
+}
+
 void	rotate_extract_10_higher(t_stack *a, t_stack *b, t_data *data)
 {
 	int	i;
@@ -97,38 +159,56 @@ void	rotate_extract_10_higher(t_stack *a, t_stack *b, t_data *data)
 	int	low;
 
 	n_extracted = 0;
-	low = a->stk[search_num_10_under(data->highest_number_disordered, a, data)].val;
+	low = a->stk[search_num_10_under(data->highest_number_dis, a, data)].val;
 	i = 0;
 	while (i < data->total_amount_of_numbers && n_extracted < 10)
 	{
-		if (a->stk[0].val >= low)
+		if (a->stk[0].val >= low && a->stk[0].val <= data->highest_number_dis)
 		{
 			ft_pb(a, b);
 			n_extracted++;
 		}
 		else
 			ft_ra(a, 1);
-		//read_stack(*a, *b);
-		//printf("x%d\n", n_extracted);
 		i++;
+	}
+	if (data->highest_number_dis != data->lowest_number_ord)
+	{
+		realloc_a(a, data);
+	}
+}
+
+//	Devuelve los valores en orden del stack B al A
+void	extract_in_order(t_stack *a, t_stack *b, t_data *data)
+{
+	int	highest_in_b_pos;
+	int	highest_in_b;
+
+	data->lowest_number_ord = search_lower(*b);
+	data->highest_number_dis = search_higher_und_x(*a, data->lowest_number_ord);
+	while (b->size)
+	{
+		highest_in_b = search_higher(*b);
+		highest_in_b_pos = search_higher_pos(*b);
+		while (b->stk[0].val != highest_in_b)
+		{
+			if (highest_in_b_pos <= b->size / 2)
+				ft_rb(b, 1);
+			else
+				ft_rrb(b, 1);
+		}
+		ft_pa(a, b);
+		data->numbers_in_order++;
 	}
 }
 
 void	organize(t_stack *a, t_stack *b, t_data *data)
 {
-	//int	i;
-
-	//i = data->highest_number;
-	/*while (data->numbers_in_order != data->total_amount_of_numbers && i > data->lowest_number)
+	while (data->total_amount_of_numbers != data->numbers_in_order)
 	{
-		read_stack(*a, *b);
-		printf("i: %d\n", i);
 		rotate_extract_10_higher(a, b, data);
-		
-		i--;
-	}*/
-	rotate_extract_10_higher(a, b, data);
-	read_stack(*a, *b);
+		extract_in_order(a, b, data);
+	}
 }
 
 /*
@@ -147,8 +227,10 @@ int	main(int argc, char **argv)
 	assign_values(argv, &a, data);
 	data.highest_number = search_higher(a);
 	data.lowest_number = search_lower(a);
-	data.highest_number_disordered = data.highest_number;
+	data.highest_number_dis = data.highest_number;
+	data.lowest_number_ord = data.highest_number;
 	read_stack(a, b);
 	organize(&a, &b, &data);
+	read_stack(a, b);
 	return (0);
 }
