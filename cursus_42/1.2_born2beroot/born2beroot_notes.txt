@@ -1,5 +1,9 @@
 #	Este archivo es una guia del born2beroot	#
 
+#	Conectar a maquina desde consola	#
+
+ssh omontero@127.0.0.1 -p 4242
+
 #	Delete the new rule: (This is for when you defend your Born2beroot)
 
 $ sudo ufw status numbered
