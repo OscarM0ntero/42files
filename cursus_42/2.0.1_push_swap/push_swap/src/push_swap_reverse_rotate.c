@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_reverse_rotate.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/10/03 18:17:23 by oscar            ###   ########.fr       */
+/*   Updated: 2022/10/14 12:00:59 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void	ft_rrb(t_stack *b, int print)
 		ft_sb(b, 0);
 	else
 	{
-		tmp = b->stk[0].val;
-		*b = ft_remove_from_stack(b, 1);
-		*b = ft_add_to_stack(b, tmp, 0);
+		tmp = b->stk[b->size - 1].val;
+		*b = ft_remove_from_stack(b, 0);
+		*b = ft_add_to_stack(b, tmp, 1);
 	}
 	if (print)
 		write(1, "rrb\n", 4);
