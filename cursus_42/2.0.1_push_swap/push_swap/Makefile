@@ -6,7 +6,7 @@
 #    By: oscar <oscar@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/07 11:03:12 by omontero          #+#    #+#              #
-#    Updated: 2022/10/12 13:09:32 by oscar            ###   ########.fr        #
+#    Updated: 2022/10/18 19:19:22 by oscar            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,22 +30,18 @@ all: $(PUSH_NAME)
 $(PUSH_NAME): $(PUSH_OBJ)
 	@make -C $(LIB_DIR) --silent
 	@gcc -o $(PUSH_NAME) $(PUSH_OBJ) -L $(LIB_DIR) -lft
-	@echo "##### push_swap compiling finished! #####"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
-	@echo "##### Creating" [ $@ ] " #####"
 	@gcc $(FLAGS) -o $@ -c $< $(INC)
 
 clean:
 	@make -C $(LIB_DIR) clean  --silent
 	@rm -f $(PUSH_OBJ)
-	@echo "##### Removed object files #####"
 
 fclean: clean
 	@make -C $(LIB_DIR) fclean  --silent
 	@rm -f $(PUSH_NAME)
-	@echo "##### Removed binary files #####"
 
 re: fclean all
 
