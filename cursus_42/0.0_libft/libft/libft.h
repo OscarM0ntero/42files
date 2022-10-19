@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 09:26:06 by omontero          #+#    #+#             */
-/*   Updated: 2022/09/26 11:13:53 by omontero         ###   ########.fr       */
+/*   Updated: 2022/10/19 14:17:33 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_list
 }	t_list;
 
 int			ft_isalpha(int n);
+// ghfygfyttyry
 int			ft_isdigit(int n);
 int			ft_isalnum(int n);
 int			ft_isascii(int n);

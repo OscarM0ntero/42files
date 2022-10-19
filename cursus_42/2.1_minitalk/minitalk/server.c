@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/10/18 21:40:52 by oscar            ###   ########.fr       */
+/*   Updated: 2022/10/19 18:03:56 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-void	var_init(t_message *var)
+void	var_initialize(t_message *var)
 {
 	var->char_val = 0;
 	var->bit_pos = 0;
@@ -24,7 +24,7 @@ void	action(int sig, siginfo_t *info, void *context)
 
 	(void)context;
 	if (message.pid != info->si_pid)
-		var_init(&message);
+		var_initialize(&message);
 	if (info->si_pid)
 		message.pid = info->si_pid;
 	(message.char_val) = (message.char_val) | (sig == SIGUSR1);
@@ -36,7 +36,7 @@ void	action(int sig, siginfo_t *info, void *context)
 			return ;
 		}
 		ft_putchar_fd((message.char_val), 1);
-		kill(message.pid, SIGUSR1);
+		kill(message.pid, SIGUSR2);
 		var_init(&message);
 	}
 	else
@@ -45,18 +45,19 @@ void	action(int sig, siginfo_t *info, void *context)
 
 int	main(void)
 {
-	struct sigaction	sa;
-	pid_t				pid_server;
+	struct sigaction	sigact;
+	pid_t				pid_sv;
 
-	pid_server = getpid();
-	ft_putstr_fd("Server PID: ", STDOUT_FILENO);
-	ft_putnbr_fd(pid_server, STDOUT_FILENO);
+	pid_sv = getpid();
+	ft_putstr_fd("PID: ", STDOUT_FILENO);
+	ft_putnbr_fd(pid_sv, STDOUT_FILENO);
 	ft_putchar_fd('\n', STDOUT_FILENO);
-	sa.sa_sigaction = action;
-	sa.sa_flags = SA_SIGINFO;
-	sigaction(SIGUSR1, &sa, NULL);
-	sigaction(SIGUSR2, &sa, NULL);
+	sigact.sa_sigaction = action;
+	sigact.sa_flags = SA_SIGINFO | SA_RESTART;
+	sigaction(SIGUSR1, &sigact, NULL);
+	sigaction(SIGUSR2, &sigact, NULL);
 	ft_putchar_fd('\n', 1);
 	while (1)
 		pause();
+	return (0);
 }
