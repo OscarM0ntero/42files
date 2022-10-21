@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/10/14 12:08:20 by omontero         ###   ########.fr       */
+/*   Updated: 2022/10/21 16:24:45 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ void	organize(t_stack *a, t_stack *b, t_data *data)
 {
 	while (data->total_amount_of_numbers != data->numbers_in_order)
 	{
-		rotate_extract_10_higher(a, b, data);
+		if (data->total_amount_of_numbers - data->numbers_in_order > 100)
+			rotate_extract_100_higher(a, b, data);
+		else
+			rotate_extract_10_higher(a, b, data);
 		extract_in_order(a, b, data);
 	}
 }

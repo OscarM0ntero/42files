@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_sorter.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/10/04 20:00:42 by oscar            ###   ########.fr       */
+/*   Updated: 2022/10/21 17:51:37 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ void	realloc_a(t_stack *a, t_data *data)
 {
 	int	low_n_ord_pos;
 
-	low_n_ord_pos = seach_num_pos(*a, data->lowest_number_ord);
-	while (a->stk[0].val != data->lowest_number_ord)
+	low_n_ord_pos = search_num_pos(*a, data->lowest_number_ord);
+	while (a->stk[0].val != data->lowest_number_ord && a->stk)
 	{
-		if (low_n_ord_pos <= a->size / 2)
+		if (low_n_ord_pos < a->size / 2)
 			ft_ra(a, 1);
 		else
 			ft_rra(a, 1);
@@ -34,10 +34,10 @@ int	search_num_10_under(int num, t_stack *a, t_data *data)
 	int	numbers_found;
 	int	pos;
 
-	pos = seach_num_pos(*a, num);
+	pos = search_num_pos(*a, num);
 	numbers_found = 0;
 	i = num - 1;
-	while (i >= data->lowest_number && numbers_found < 9)
+	while (i >= data->lowest_number && numbers_found < 10)
 	{
 		j = 0;
 		while (j < a->size)
@@ -63,15 +63,17 @@ void	rotate_extract_10_higher(t_stack *a, t_stack *b, t_data *data)
 	n_extracted = 0;
 	low = a->stk[search_num_10_under(data->highest_number_dis, a, data)].val;
 	i = 0;
-	while (i < data->total_amount_of_numbers && n_extracted < 10)
+	while (i < data->total_amount_of_numbers && n_extracted < 11)
 	{
 		if (a->stk[0].val >= low && a->stk[0].val <= data->highest_number_dis)
 		{
 			ft_pb(a, b);
 			n_extracted++;
 		}
-		else
+		else if (data->numbers_in_order < data->total_amount_of_numbers / 2)
 			ft_ra(a, 1);
+		else if (search_num_pos(*a, data->highest_number) != a->size - 1)
+			ft_rra(a, 1);
 		i++;
 	}
 	if (data->highest_number_dis != data->lowest_number_ord)

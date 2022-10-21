@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_sorter_utils.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/10/04 20:00:07 by oscar            ###   ########.fr       */
+/*   Updated: 2022/10/21 17:32:42 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,15 @@ int	search_lower(t_stack x)
 	return (lower_number_found);
 }
 
-int	seach_num_pos(t_stack x, int val)
+int	search_num_pos(t_stack x, int val)
 {
 	int	i;
 
 	i = 0;
 	while (i < x.size && x.stk[i].val != val)
 		i++;
+	if (i == x.size)
+		i = -1;
 	return (i);
 }
 

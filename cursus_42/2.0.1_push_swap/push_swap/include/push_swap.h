@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 13:08:08 by omontero          #+#    #+#             */
-/*   Updated: 2022/10/10 13:07:44 by omontero         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:33:42 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,16 @@ void		ft_rrr(t_stack *a, t_stack *b);
 //	push_swap_sorter.c
 void		rotate_extract_10_higher(t_stack *a, t_stack *b, t_data *data);
 void		extract_in_order(t_stack *a, t_stack *b, t_data *data);
+void		realloc_a(t_stack *a, t_data *data);
+
+//	push_swap_sorter_large.c
+void		rotate_extract_100_higher(t_stack *a, t_stack *b, t_data *data);
 
 //	push_swap_sorter_utils.c
 int			search_higher(t_stack x);
 int			search_higher_pos(t_stack x);
 int			search_lower(t_stack x);
-int			seach_num_pos(t_stack x, int val);
+int			search_num_pos(t_stack x, int val);
 int			search_higher_und_x(t_stack x, int max);
 
 #endif
