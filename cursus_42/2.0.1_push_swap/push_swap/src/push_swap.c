@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/10/21 16:24:45 by omontero         ###   ########.fr       */
+/*   Updated: 2022/10/24 17:46:41 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,11 @@ void	organize(t_stack *a, t_stack *b, t_data *data)
 {
 	while (data->total_amount_of_numbers != data->numbers_in_order)
 	{
-		if (data->total_amount_of_numbers - data->numbers_in_order > 100)
-			rotate_extract_100_higher(a, b, data);
-		else
-			rotate_extract_10_higher(a, b, data);
+		// if (data->total_amount_of_numbers - data->numbers_in_order > 200)
+		// 	rotate_extract_100_higher(a, b, data);
+		// else
+		// 	rotate_extract_10_higher(a, b, data);
+		rotate_extract_x_higher(a, b, data);
 		extract_in_order(a, b, data);
 	}
 }
@@ -49,6 +50,7 @@ int	main(int argc, char **argv)
 	t_data	data;
 
 	data.total_amount_of_numbers = argc - 1;
+	data.x = data.total_amount_of_numbers / 2;
 	data.numbers_in_order = 0;
 	assign_values(argv, &a, data);
 	data.highest_number = search_higher(a);

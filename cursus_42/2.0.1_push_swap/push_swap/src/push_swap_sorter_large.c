@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/10/21 17:52:45 by omontero         ###   ########.fr       */
+/*   Updated: 2022/10/24 16:03:52 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	search_num_100_under(int num, t_stack *a, t_data *data)
 	pos = search_num_pos(*a, num);
 	numbers_found = 0;
 	i = num - 1;
-	while (i >= data->lowest_number && numbers_found < 99)
+	while (i >= data->lowest_number && numbers_found < 100)
 	{
 		j = 0;
 		while (j < a->size)
@@ -49,7 +49,7 @@ void	rotate_extract_100_higher(t_stack *a, t_stack *b, t_data *data)
 	n_extracted = 0;
 	low = a->stk[search_num_100_under(data->highest_number_dis, a, data)].val;
 	i = 0;
-	while (i < data->total_amount_of_numbers && n_extracted < 100)
+	while (i < data->total_amount_of_numbers && n_extracted <= 100)
 	{
 		if (a->stk[0].val >= low && a->stk[0].val <= data->highest_number_dis)
 		{

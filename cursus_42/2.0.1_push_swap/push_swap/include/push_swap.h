@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 13:08:08 by omontero          #+#    #+#             */
-/*   Updated: 2022/10/21 17:33:42 by omontero         ###   ########.fr       */
+/*   Updated: 2022/10/24 16:32:03 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_data
 	int		highest_number;
 	int		lowest_number;
 	int		total_amount_of_numbers;
+	int		x;
 }			t_data;
 
 //	push_swap_utils.c
@@ -70,6 +71,9 @@ void		realloc_a(t_stack *a, t_data *data);
 
 //	push_swap_sorter_large.c
 void		rotate_extract_100_higher(t_stack *a, t_stack *b, t_data *data);
+
+//	push_swap_sorter_large.c
+void		rotate_extract_x_higher(t_stack *a, t_stack *b, t_data *data);
 
 //	push_swap_sorter_utils.c
 int			search_higher(t_stack x);
