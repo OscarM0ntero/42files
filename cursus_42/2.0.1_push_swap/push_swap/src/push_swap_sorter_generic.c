@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/10/24 18:22:29 by omontero         ###   ########.fr       */
+/*   Updated: 2022/10/26 11:06:25 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,6 @@ void	rotate_extract_x_higher(t_stack *a, t_stack *b, t_data *data)
 		if (a->stk[0].val >= low && a->stk[0].val <= data->highest_number_dis)
 		{
 			ft_pb(a, b);
-			//	????
-			if (b->stk[0].val < b->stk[b->size - 1].val)
-				ft_rb(b, 1);
-			else if (b->stk[0].val < b->stk[1].val)
-				ft_sb(b, 1);
 			n_extracted++;
 		}
 		else if (data->numbers_in_order < data->total_amount_of_numbers / 2)
