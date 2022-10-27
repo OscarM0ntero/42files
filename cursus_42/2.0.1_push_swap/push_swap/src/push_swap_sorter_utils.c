@@ -6,14 +6,14 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/10/21 17:32:42 by omontero         ###   ########.fr       */
+/*   Updated: 2022/10/27 14:41:16 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 //	Busca el mayor numero dentro del Stack
-int	search_higher(t_stack x)
+int	s_h(t_stack x)
 {
 	int	i;
 	int	higher_number_found;

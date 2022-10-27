@@ -6,11 +6,21 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/10/24 16:04:04 by omontero         ###   ########.fr       */
+/*   Updated: 2022/10/27 14:42:10 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+void	order_a(t_stack *a, t_data *data)
+{
+	while (a->stk[0].val != data->lowest_number)
+		if (search_num_pos(*a, search_lower(*a))
+			> data->total_amount_of_numbers / 2)
+			ft_rra(a, 1);
+	else
+		ft_ra(a, 1);
+}
 
 void	realloc_a(t_stack *a, t_data *data)
 {
@@ -92,7 +102,7 @@ void	extract_in_order(t_stack *a, t_stack *b, t_data *data)
 	data->highest_number_dis = search_higher_und_x(*a, data->lowest_number_ord);
 	while (b->size)
 	{
-		highest_in_b = search_higher(*b);
+		highest_in_b = s_h(*b);
 		highest_in_b_pos = search_higher_pos(*b);
 		while (b->stk[0].val != highest_in_b)
 		{

@@ -3,6 +3,21 @@
 		"array": "c",
 		"string_view": "c",
 		"initializer_list": "c",
-		"utility": "c"
+		"utility": "c",
+		"__hash_table": "c",
+		"__split_buffer": "c",
+		"__tree": "c",
+		"bitset": "c",
+		"deque": "c",
+		"list": "c",
+		"map": "c",
+		"queue": "c",
+		"random": "c",
+		"regex": "c",
+		"set": "c",
+		"stack": "c",
+		"string": "c",
+		"unordered_map": "c",
+		"vector": "c"
 	}
 }
