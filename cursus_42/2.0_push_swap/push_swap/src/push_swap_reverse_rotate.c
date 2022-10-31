@@ -6,72 +6,51 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/06/13 14:21:22 by omontero         ###   ########.fr       */
+/*   Updated: 2022/10/14 12:00:59 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_game	ft_rra(t_game g, int print)
+void	ft_rra(t_stack *a, int print)
 {
-	size_t	i;
-	int		tmp;
+	int	tmp;
 
-	if (g.a.size == 2)
+	if (a->size < 2)
+		return ;
+	else if (a->size == 2)
+		ft_sa(a, 0);
+	else
 	{
-		if (!print)
-			write(1, "rra\n", 4);
-		return (ft_sa(g, 1));
+		tmp = a->stk[a->size - 1].val;
+		*a = ft_remove_from_stack(a, 0);
+		*a = ft_add_to_stack(a, tmp, 1);
 	}
-	else if (g.a.size < 2)
-		return (g);
-	i = 0;
-	tmp = g.a.stk[0].val;
-	while (i < g.a.size - 1)
-	{
-		g.a.stk[i].val = g.a.stk[i + 1].val;
-		g.a.stk[i].pos = i;
-		i++;
-	}
-	g.a.stk[i].val = tmp;
-	g.a.stk[i].pos = i;
-	if (!print)
+	if (print)
 		write(1, "rra\n", 4);
-	return (g);
 }
 
-t_game	ft_rrb(t_game g, int print)
+void	ft_rrb(t_stack *b, int print)
 {
-	size_t	i;
-	int		tmp;
+	int	tmp;
 
-	if (g.b.size == 2)
+	if (b->size < 2)
+		return ;
+	else if (b->size == 2)
+		ft_sb(b, 0);
+	else
 	{
-		if (!print)
-			write(1, "rrb\n", 4);
-		return (ft_sb(g, 1));
+		tmp = b->stk[b->size - 1].val;
+		*b = ft_remove_from_stack(b, 0);
+		*b = ft_add_to_stack(b, tmp, 1);
 	}
-	else if (g.b.size < 2)
-		return (g);
-	i = 0;
-	tmp = g.b.stk[0].val;
-	while (i < g.b.size - 1)
-	{
-		g.b.stk[i].val = g.b.stk[i + 1].val;
-		g.b.stk[i].pos = i;
-		i++;
-	}
-	g.b.stk[i].val = tmp;
-	g.b.stk[i].pos = i;
-	if (!print)
+	if (print)
 		write(1, "rrb\n", 4);
-	return (g);
 }
 
-t_game	ft_rrr(t_game g)
+void	ft_rrr(t_stack *a, t_stack *b)
 {
-	g = ft_rra(g, 1);
-	g = ft_rrb(g, 1);
+	ft_rra(a, 0);
+	ft_rrb(b, 0);
 	write(1, "rrr\n", 4);
-	return (g);
 }

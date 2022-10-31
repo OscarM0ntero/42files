@@ -6,48 +6,41 @@
 /*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/06/28 14:05:57 by oscar            ###   ########.fr       */
+/*   Updated: 2022/10/03 17:34:29 by oscar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_game	ft_sa(t_game g, int print)
+void	ft_sa(t_stack *a, int print)
 {
 	int	tmp;
 
-	if (g.a.size >= 2)
-	{
-		tmp = g.a.stk[g.a.size - 1].val;
-		g.a.stk[g.a.size - 1].val = g.a.stk[g.a.size - 2].val;
-		g.a.stk[g.a.size - 2].val = tmp;
-		if (!print)
-			write(1, "sa\n", 3);
-	}
-	return (g);
+	if (a->size < 2)
+		return ;
+	tmp = a->stk[0].val;
+	a->stk[0].val = a->stk[1].val;
+	a->stk[1].val = tmp;
+	if (print)
+		write(1, "sa\n", 3);
 }
 
-t_game	ft_sb(t_game g, int print)
+void	ft_sb(t_stack *b, int print)
 {
 	int	tmp;
 
-	if (g.b.size >= 2)
-	{
-		tmp = g.b.stk[g.b.size - 1].val;
-		g.b.stk[g.b.size - 1].val = g.b.stk[g.b.size - 2].val;
-		g.b.stk[g.b.size - 2].val = tmp;
-		if (!print)
-			write(1, "sb\n", 3);
-	}
-	return (g);
+	if (b->size < 2)
+		return ;
+	tmp = b->stk[0].val;
+	b->stk[0].val = b->stk[1].val;
+	b->stk[1].val = tmp;
+	if (print)
+		write(1, "sb\n", 3);
 }
 
-t_game	ft_ss(t_game g)
+void	ft_ss(t_stack *a, t_stack *b)
 {
-	if (g.a.size >= 2)
-		ft_sa(g, 1);
-	if (g.b.size >= 2)
-		ft_sb(g, 1);
+	ft_sa(a, 0);
+	ft_sa(b, 0);
 	write(1, "ss\n", 3);
-	return (g);
 }

@@ -3,58 +3,46 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: oscar <oscar@student.42.fr>                +#+  +:+       +#+         #
+#    By: omontero <omontero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/07 11:03:12 by omontero          #+#    #+#              #
-#    Updated: 2022/06/08 23:30:13 by oscar            ###   ########.fr        #
+#    Updated: 2022/10/24 16:34:08 by omontero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-#Variables
+PUSH_NAME = push_swap
+FLAGS = -Wall -Wextra -Werror
+INC = -Iinclude/ -I$(LIB_DIR)
 
-NAME		= libftprintf.a
-INCLUDE		= include
-LIBFT		= libft
-SRC_DIR		= src/
-OBJ_DIR		= obj/
-CC			= gcc
-CFLAGS		= -Wall -Werror -Wextra -I
-RM			= rm -f
-AR			= ar rcs
+PUSH_SRC_NAME = push_swap.c push_swap_utils.c push_swap_swap.c push_swap_sorter.c \
+				push_swap_sorter_utils.c push_swap_rotate.c push_swap_reverse_rotate.c \
+				push_swap_push.c push_swap_sorter_large.c push_swap_sorter_generic.c
 
-SRC_FILES	=	ft_printf ft_printf_utils ft_printf_pointer ft_printf_unsigned ft_printf_hex
+PUSH_OBJ_NAME = $(PUSH_SRC_NAME:.c=.o)
+PUSH_OBJ = $(addprefix $(OBJ_DIR),$(PUSH_OBJ_NAME))
 
+LIB_DIR = libft/
+SRC_DIR = src/
+OBJ_DIR = obj/
 
-SRC 		= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
-OBJ 		= 	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
+all: $(PUSH_NAME)
 
-OBJF		=	.cache_exists
+$(PUSH_NAME): $(PUSH_OBJ)
+	@make -C $(LIB_DIR) --silent
+	@gcc -o $(PUSH_NAME) $(PUSH_OBJ) -L $(LIB_DIR) -lft
 
-all:		$(NAME)
-
-$(NAME):	$(OBJ)
-			@make -C $(LIBFT)
-			@cp libft/libft.a .
-			@mv libft.a $(NAME)
-			@$(AR) $(NAME) $(OBJ)
-
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJF)
-			@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
-
-$(OBJF):
-			@mkdir -p $(OBJ_DIR)
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	@mkdir -p $(OBJ_DIR)
+	@gcc $(FLAGS) -o $@ -c $< $(INC)
 
 clean:
-			@$(RM) -rf $(OBJ_DIR)
-			@make clean -C $(LIBFT)
+	@make -C $(LIB_DIR) clean  --silent
+	@rm -f $(PUSH_OBJ)
 
-fclean:		clean
-			@$(RM) -f $(NAME)
-			@$(RM) -f $(LIBFT)/libft.a
+fclean: clean
+	@make -C $(LIB_DIR) fclean  --silent
+	@rm -f $(PUSH_NAME)
 
-re:			fclean all
+re: fclean all
 
-norm:
-			@norminette $(SRC) $(INCLUDE) $(LIBFT) | grep -v Norme -B1 || true
-
-.PHONY:		all clean fclean re norm
+.PHONY: all clean fclean re

@@ -6,85 +6,70 @@
 /*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/06/12 20:26:43 by oscar            ###   ########.fr       */
+/*   Updated: 2022/10/03 19:48:02 by oscar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-/*	Takes the old_stk and create a new one, adding a new
-	value on top if assign is true*/
-t_stack	ft_assign_stack(t_stack old_stk, t_value new_val, int assign)
+//	Lee los stack A y B y los imprime por pantalla
+void	read_stack(t_stack a, t_stack b)
 {
-	size_t	i;
-	t_stack	new_stk;
+	int	i;
 
-	new_stk.size = old_stk.size + assign;
-	new_stk.stk = ft_calloc(new_stk.size, sizeof(t_value));
 	i = 0;
-	while (i < new_stk.size - assign)
+	printf("	Stack: A				Stack: B\n");
+	while (i < a.size || i < b.size)
 	{
-		new_stk.stk[i].val = old_stk.stk[i].val;
-		new_stk.stk[i].pos = i;
+		if (i < a.size)
+			printf("Pos: %d		Value: %d		", a.stk[i].pos, a.stk[i].val);
+		else
+			printf("					");
+		if (i < b.size)
+			printf("Pos: %d		Value: %d", b.stk[i].pos, b.stk[i].val);
+		printf("\n");
 		i++;
 	}
-	if (assign)
-	{
-		new_stk.stk[i].val = new_val.val;
-		new_stk.stk[i].pos = i;
-	}
-	return (new_stk);
+	printf("\n");
 }
 
-/*	Adds a value on top of the stack, you have to mark if you 
-	want to add it to A, B or both by setting it to 1(y) or 0(n)*/
-t_game	ft_add_to_stack(t_game g, t_value new_val, int a, int b)
+//	Se le pasa un stack, un valor a aniadir y 1 si al principio o 0 al fin
+t_stack	ft_add_to_stack(t_stack *stack, int new_val, int pos)
 {
-	if (a && b)
-	{
-		g.a = ft_assign_stack(g.a, new_val, 1);
-		g.b = ft_assign_stack(g.b, new_val, 1);
-	}
-	else if (a && !b)
-		g.a = ft_assign_stack(g.a, new_val, 1);
-	else if (!a && b)
-		g.b = ft_assign_stack(g.b, new_val, 1);
-	return (g);
-}
+	t_stack	new_stack;
+	int		i;
 
-t_stack	ft_remove(t_stack old_stk, size_t pos)
-{
-	size_t	i;
-	size_t	j;
-	t_stack	new_stk;
-
-	new_stk.size = old_stk.size - 1;
-	new_stk.stk = ft_calloc(new_stk.size, sizeof(t_value));
-	i = 0;
-	j = 0;
-	while (i < old_stk.size)
+	new_stack.size = stack->size + 1;
+	new_stack.stk = ft_calloc(new_stack.size, sizeof(t_value));
+	i = pos;
+	while (i < new_stack.size)
 	{
-		if (i != pos)
-		{
-			new_stk.stk[j].val = old_stk.stk[i].val;
-			new_stk.stk[j].pos = j;
-			j++;
-		}
+		new_stack.stk[i].val = stack->stk[i - pos].val;
+		new_stack.stk[i].pos = i;
 		i++;
 	}
-	return (new_stk);
+	if (pos)
+		i = 1;
+	i--;
+	new_stack.stk[i].pos = i;
+	new_stack.stk[i].val = new_val;
+	return (new_stack);
 }
 
-t_game	ft_remove_from_stack(t_game g, size_t pos, int a, int b)
+//	Se pasa un stack y 1 si se borra el primer valor, o 0 si el ultimo
+t_stack	ft_remove_from_stack(t_stack *stack, int pos)
 {
-	if (a && b)
+	t_stack	new_stack;
+	int		i;
+
+	new_stack.size = stack->size - 1;
+	new_stack.stk = ft_calloc(new_stack.size, sizeof(t_value));
+	i = 0;
+	while (i < new_stack.size)
 	{
-		g.a = ft_remove(g.a, pos);
-		g.b = ft_remove(g.b, pos);
+		new_stack.stk[i].val = stack->stk[i + pos].val;
+		new_stack.stk[i].pos = i;
+		i++;
 	}
-	else if (a && !b)
-		g.a = ft_remove(g.a, pos);
-	else if (!a && b)
-		g.b = ft_remove(g.b, pos);
-	return (g);
+	return (new_stack);
 }

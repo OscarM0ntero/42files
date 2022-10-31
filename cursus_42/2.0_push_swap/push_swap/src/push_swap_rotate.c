@@ -3,75 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_rotate.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/06/13 14:16:36 by omontero         ###   ########.fr       */
+/*   Updated: 2022/10/03 17:57:44 by oscar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_game	ft_ra(t_game g, int print)
+void	ft_ra(t_stack *a, int print)
 {
-	size_t	i;
-	int		tmp;
+	int	tmp;
 
-	if (g.a.size == 2)
+	if (a->size < 2)
+		return ;
+	else if (a->size == 2)
+		ft_sa(a, 0);
+	else
 	{
-		if (!print)
-			write(1, "ra\n", 3);
-		return (ft_sa(g, 1));
+		tmp = a->stk[0].val;
+		*a = ft_remove_from_stack(a, 1);
+		*a = ft_add_to_stack(a, tmp, 0);
 	}
-	else if (g.a.size < 2)
-		return (g);
-	i = g.a.size - 1;
-	tmp = g.a.stk[g.a.size - 1].val;
-	while (i > 0)
-	{
-		g.a.stk[i].val = g.a.stk[i - 1].val;
-		g.a.stk[i].pos = i;
-		i--;
-	}
-	g.a.stk[i].val = tmp;
-	g.a.stk[i].pos = i;
-	if (!print)
+	if (print)
 		write(1, "ra\n", 3);
-	return (g);
 }
 
-t_game	ft_rb(t_game g, int print)
+void	ft_rb(t_stack *b, int print)
 {
-	size_t	i;
-	int		tmp;
+	int	tmp;
 
-	if (g.b.size == 2)
+	if (b->size < 2)
+		return ;
+	else if (b->size == 2)
+		ft_sb(b, 0);
+	else
 	{
-		if (!print)
-			write(1, "rb\n", 3);
-		return (ft_sb(g, 1));
+		tmp = b->stk[0].val;
+		*b = ft_remove_from_stack(b, 1);
+		*b = ft_add_to_stack(b, tmp, 0);
 	}
-	else if (g.b.size < 2)
-		return (g);
-	i = g.b.size - 1;
-	tmp = g.b.stk[g.b.size - 1].val;
-	while (i > 0)
-	{
-		g.b.stk[i].val = g.b.stk[i - 1].val;
-		g.b.stk[i].pos = i;
-		i--;
-	}
-	g.b.stk[i].val = tmp;
-	g.b.stk[i].pos = i;
-	if (!print)
+	if (print)
 		write(1, "rb\n", 3);
-	return (g);
 }
 
-t_game	ft_rr(t_game g)
+void	ft_rr(t_stack *a, t_stack *b)
 {
-	g = ft_ra(g, 1);
-	g = ft_rb(g, 1);
+	ft_ra(a, 0);
+	ft_rb(b, 0);
 	write(1, "rr\n", 3);
-	return (g);
 }

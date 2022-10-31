@@ -3,131 +3,120 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscar <oscar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/06/28 14:27:50 by oscar            ###   ########.fr       */
+/*   Updated: 2022/10/27 14:41:41 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-/*	Assign to game struct the values introduced by the user
-	and assign memory to the stacks */
-static t_game	ft_assign_values(int argc, char **argv)
-{
-	t_game	g;
+//	Esta funcion asigna los valores introduciodos por consola
+//	al stack A de inicio :)
 
-	g.argv = argv;
-	g.a.size = argc - 1;
-	g.b.size = 0;
-	g.a.stk = ft_calloc(g.a.size, sizeof(t_value));
-	return (g);
-}
-
-//	Assign on stack A the iput values
-static void	ft_assign_a(t_game g)
+void	assign_values(char **argv, t_stack *a, t_data data)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
-	while (i < g.a.size)
+	a->size = data.total_amount_of_numbers;
+	a->stk = ft_calloc(a->size, sizeof(t_value));
+	while (i < data.total_amount_of_numbers)
 	{
-		g.a.stk[g.a.size - i - 1].val = ft_atoi(g.argv[i + 1]);
-		g.a.stk[g.a.size - i - 1].pos = g.a.size - i - 1;
+		a->stk[i].val = ft_atoi(argv[i + 1]);
+		a->stk[i].pos = i;
 		i++;
 	}
 }
 
-/*int	ft_b_in_order(t_game g)
+void	organize_2(t_stack *a, t_data *data)
 {
-	size_t	i;
-
-	i = 1;
-	if (g.a.size == 0)
-	{
-		while (i < g.b.size)
-		{
-			if (g.b.stk[i].val < g.b.stk[i - 1].val)
-				return (0);
-			i++;
-		}
-		return (1);
-	}
-	return (0);
+	if (a->stk[0].val > a->stk[1].val)
+		ft_sa(a, 1);
+	data->numbers_in_order = 2;
+	data->highest_number_dis = search_lower(*a);
+	data->lowest_number_ord = data->highest_number_dis;
 }
 
-t_game	ft_alterate(t_game g)
+//	Devuelve 1 si A esta ordenado, 2 si hay orden pero empieza en medio,
+//	0 si no hay orden
+int	order(t_stack *a)
 {
-	if (g.b.stk[g.b.size - 1].val < g.b.stk[g.b.size - 2].val)
+	int	i;
+	int	j;
+	int	x;
+
+	if ((search_num_pos(*a, search_lower(*a)) != 0 && search_higher_pos(*a)
+			!= search_num_pos(*a, search_lower(*a)) - 1) || (search_num_pos(*a,
+				search_lower(*a)) == 0 && search_higher_pos(*a) != a->size - 1))
+		return (0);
+	else
 	{
-		g = ft_sb(g, 0);
+		i = a->size;
+		j = search_num_pos(*a, search_lower(*a));
+		while (i--)
+		{
+			x = 1;
+			if (j == a->size - 1)
+				x = -(a->size - 1);
+			if (a->stk[j].val > a->stk[j + x].val && a->stk[j].val != s_h(*a))
+				return (0);
+			j += x;
+		}
 	}
-	g = ft_rb(g, 0);
-	return (g);
-}*/
+	if (search_num_pos(*a, search_lower(*a)) == 0)
+		return (1);
+	return (2);
+}
+
+void	organize(t_stack *a, t_stack *b, t_data *data)
+{
+	if (order(a) == 1)
+		return ;
+	else if (order(a) == 2)
+		order_a(a, data);
+	else
+	{
+		while (data->total_amount_of_numbers != data->numbers_in_order
+			&& order(a) != 1)
+		{
+			if (order(a) == 2)
+				order_a(a, data);
+			else if (data->total_amount_of_numbers == 2)
+				organize_2(a, data);
+			else
+			{
+				rotate_extract_x_higher(a, b, data);
+				extract_in_order(a, b, data);
+			}
+		}
+	}
+}
 
 int	main(int argc, char **argv)
 {
-	t_game	g;
-	int		i;
+	t_stack	a;
+	t_stack	b;
+	t_data	data;
 
-	g = ft_assign_values(argc, argv);
-	ft_assign_a(g);
-	i = 0;
-	/*while (i < 4)
-	{
-		g = ft_pb(g, 0);
-		i++;
-	}
-	while (!ft_b_in_order(g))
-		g = ft_alterate(g);*/
-	g = ft_pb(g, 0);
-	g = ft_pb(g, 0);
-
-	i = (int)g.a.size - 1;
-	while (i >= 0)
-	{
-		printf("A_pos %ld: %d\n", g.a.stk[i].pos, g.a.stk[i].val);
-		i--;
-	}
-	i = (int)g.b.size - 1;
-	if (i >= 0)
-		write(1, "\n", 1);
-	while (i >= 0)
-	{
-		printf("B_pos %ld: %d\n", g.b.stk[i].pos, g.b.stk[i].val);
-		i--;
-	}
+	data.total_amount_of_numbers = argc - 1;
+	if (data.total_amount_of_numbers < 20)
+		data.x = data.total_amount_of_numbers;
+	else if (data.total_amount_of_numbers < 400)
+		data.x = data.total_amount_of_numbers / 5;
+	else if (data.total_amount_of_numbers < 1200)
+		data.x = data.total_amount_of_numbers / 10;
+	else
+		data.x = data.total_amount_of_numbers / 20;
+	data.numbers_in_order = 0;
+	assign_values(argv, &a, data);
+	data.highest_number = s_h(a);
+	data.lowest_number = search_lower(a);
+	data.highest_number_dis = data.highest_number;
+	data.lowest_number_ord = data.highest_number;
+	organize(&a, &b, &data);
 	return (0);
 }
 
-/*int	main(int argc, char **argv)
-{
-	t_game	g;
-	int		i;
-
-	g = ft_assign_values(argc, argv);
-	ft_assign_a(g);
-	//g = ft_sa(g);
-	g = ft_pb(g, 0);
-	g = ft_pb(g, 0);
-	g = ft_rrr(g);
-	i = (int)g.a.size - 1;
-	while (i >= 0)
-	{
-		printf("A_pos %ld: %d\n", g.a.stk[i].pos, g.a.stk[i].val);
-		i--;
-	}
-	i = (int)g.b.size - 1;
-	if (i >= 0)
-		write(1, "\n", 1);
-	while (i >= 0)
-	{
-		printf("B_pos %ld: %d\n", g.b.stk[i].pos, g.b.stk[i].val);
-		i--;
-	}
-	return (0);
-}*/
-
-//	Continuar con la instruccion rra en push_swap_reverse_rotate.c
+//read_stack(a, b);
