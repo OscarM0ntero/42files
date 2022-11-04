@@ -1,12 +1,9 @@
-#	Este archivo es una guia del born2beroot	#
+Como funciona una maquina virtual
 
-#	Conectar a maquina desde consola	#
+La eleccion de sistema operativo
 
-ssh omontero@127.0.0.1 -p 4242
+Diferencias entre CentOS y Debian
 
-#	Delete the new rule: (This is for when you defend your Born2beroot)
+El proposito de las maquinas virtuales
 
-$ sudo ufw status numbered
-$ sudo ufw delete (that number, for example 5 or 6)
-
-#	password policy (3.0)
+Diferencias entre aptitude y apt, que es APPArmor
