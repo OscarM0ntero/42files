@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 13:08:08 by omontero          #+#    #+#             */
-/*   Updated: 2022/10/27 14:41:21 by omontero         ###   ########.fr       */
+/*   Updated: 2022/11/10 16:30:30 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,8 @@ int			search_higher_pos(t_stack x);
 int			search_lower(t_stack x);
 int			search_num_pos(t_stack x, int val);
 int			search_higher_und_x(t_stack x, int max);
+
+//	push_swap_checkval
+long int	ft_atoi_long(const char *nptr);
 
 #endif

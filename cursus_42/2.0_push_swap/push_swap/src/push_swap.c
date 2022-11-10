@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/10/27 14:41:41 by omontero         ###   ########.fr       */
+/*   Updated: 2022/11/10 13:11:18 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //	Esta funcion asigna los valores introduciodos por consola
 //	al stack A de inicio :)
 
-void	assign_values(char **argv, t_stack *a, t_data data)
+int	assign_values(char **argv, t_stack *a, t_data data)
 {
 	int	i;
 
@@ -24,10 +24,15 @@ void	assign_values(char **argv, t_stack *a, t_data data)
 	a->stk = ft_calloc(a->size, sizeof(t_value));
 	while (i < data.total_amount_of_numbers)
 	{
+		if (!(argv[i + 1][0] >= 48 && argv[i + 1][0] <= 57) && !((argv[i
+					+ 1][0] == '-') && (argv[i + 1][1] >= 48 && argv[i
+					+ 1][1] <= 57)))
+			return (1);
 		a->stk[i].val = ft_atoi(argv[i + 1]);
 		a->stk[i].pos = i;
 		i++;
 	}
+	return (0);
 }
 
 void	organize_2(t_stack *a, t_data *data)
@@ -110,7 +115,8 @@ int	main(int argc, char **argv)
 	else
 		data.x = data.total_amount_of_numbers / 20;
 	data.numbers_in_order = 0;
-	assign_values(argv, &a, data);
+	if (assign_values(argv, &a, data))
+		return (write(1, "Error\n", 6));
 	data.highest_number = s_h(a);
 	data.lowest_number = search_lower(a);
 	data.highest_number_dis = data.highest_number;
