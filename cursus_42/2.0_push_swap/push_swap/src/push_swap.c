@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/11/10 13:11:18 by omontero         ###   ########.fr       */
+/*   Updated: 2022/11/17 14:09:55 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,22 @@
 //	Esta funcion asigna los valores introduciodos por consola
 //	al stack A de inicio :)
 
-int	assign_values(char **argv, t_stack *a, t_data data)
+int	assign_values(char **argv, t_stack *a, t_data *data)
 {
 	int	i;
 
 	i = 0;
-	a->size = data.total_amount_of_numbers;
+	a->size = data->total_amount_of_numbers;
 	a->stk = ft_calloc(a->size, sizeof(t_value));
-	while (i < data.total_amount_of_numbers)
+	while (i < data->total_amount_of_numbers)
 	{
 		if (!(argv[i + 1][0] >= 48 && argv[i + 1][0] <= 57) && !((argv[i
 					+ 1][0] == '-') && (argv[i + 1][1] >= 48 && argv[i
 					+ 1][1] <= 57)))
 			return (1);
-		a->stk[i].val = ft_atoi(argv[i + 1]);
+		a->stk[i].val = ft_atoi_long(argv[i + 1], data);
+		if (data->error)
+			return (1);
 		a->stk[i].pos = i;
 		i++;
 	}
@@ -99,12 +101,21 @@ void	organize(t_stack *a, t_stack *b, t_data *data)
 	}
 }
 
-int	main(int argc, char **argv)
+//	Hacer free en cada instruccion como he hecho en PUSH y seguir con memdetect
+int	main(void)
 {
 	t_stack	a;
 	t_stack	b;
 	t_data	data;
+	int		argc = 4;
+	char	**argv;
 
+	argv = ft_calloc(5, sizeof(char *));
+	argv[0] = ft_strdup("push_swap");
+	argv[1] = ft_strdup("7");
+	argv[2] = ft_strdup("5");
+	argv[3] = ft_strdup("4");
+	data.error = 0;
 	data.total_amount_of_numbers = argc - 1;
 	if (data.total_amount_of_numbers < 20)
 		data.x = data.total_amount_of_numbers;
@@ -115,13 +126,18 @@ int	main(int argc, char **argv)
 	else
 		data.x = data.total_amount_of_numbers / 20;
 	data.numbers_in_order = 0;
-	if (assign_values(argv, &a, data))
+	if (assign_values(argv, &a, &data) || ft_check_rep(&a, &data))
 		return (write(1, "Error\n", 6));
 	data.highest_number = s_h(a);
 	data.lowest_number = search_lower(a);
 	data.highest_number_dis = data.highest_number;
 	data.lowest_number_ord = data.highest_number;
 	organize(&a, &b, &data);
+	free (argv[0]);
+	free (argv[1]);
+	free (argv[2]);
+	free (argv[3]);
+	free (argv);
 	return (0);
 }
 

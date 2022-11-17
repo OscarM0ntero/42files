@@ -6,7 +6,7 @@
 #    By: omontero <omontero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/07 11:03:12 by omontero          #+#    #+#              #
-#    Updated: 2022/10/24 16:34:08 by omontero         ###   ########.fr        #
+#    Updated: 2022/11/17 10:50:58 by omontero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ INC = -Iinclude/ -I$(LIB_DIR)
 
 PUSH_SRC_NAME = push_swap.c push_swap_utils.c push_swap_swap.c push_swap_sorter.c \
 				push_swap_sorter_utils.c push_swap_rotate.c push_swap_reverse_rotate.c \
-				push_swap_push.c push_swap_sorter_large.c push_swap_sorter_generic.c
+				push_swap_push.c push_swap_sorter_large.c push_swap_sorter_generic.c \
+				push_swap_checkval.c
 
 PUSH_OBJ_NAME = $(PUSH_SRC_NAME:.c=.o)
 PUSH_OBJ = $(addprefix $(OBJ_DIR),$(PUSH_OBJ_NAME))

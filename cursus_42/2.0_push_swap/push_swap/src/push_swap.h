@@ -6,14 +6,14 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 13:08:08 by omontero          #+#    #+#             */
-/*   Updated: 2022/11/17 13:11:21 by omontero         ###   ########.fr       */
+/*   Updated: 2022/11/17 13:32:36 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# include "libft.h"
+# include "../libft/libft.h"
 # include <unistd.h>
 
 //		Structs
