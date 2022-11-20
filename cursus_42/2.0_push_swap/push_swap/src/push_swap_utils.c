@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/11/17 13:48:18 by omontero         ###   ########.fr       */
+/*   Updated: 2022/11/20 07:27:11 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@ void	read_stack(t_stack a, t_stack b)
 }
 
 //	Se le pasa un stack, un valor a aniadir y 1 si al principio o 0 al fin
-t_stack	ft_add_to_stack(t_stack *stack, int new_val, int pos)
+void	ft_add_to_stack(t_stack *stack, int new_val, int pos)
 {
 	t_stack	new_stack;
+	t_value	*tmp;
 	int		i;
 
 	new_stack.size = stack->size + 1;
@@ -53,13 +54,17 @@ t_stack	ft_add_to_stack(t_stack *stack, int new_val, int pos)
 	i--;
 	new_stack.stk[i].pos = i;
 	new_stack.stk[i].val = new_val;
-	return (new_stack);
+	tmp = stack->stk;
+	*stack = new_stack;
+	if (tmp)
+		free (tmp);
 }
 
 //	Se pasa un stack y 1 si se borra el primer valor, o 0 si el ultimo
-t_stack	ft_remove_from_stack(t_stack *stack, int pos)
+void	ft_remove_from_stack(t_stack *stack, int pos)
 {
 	t_stack	new_stack;
+	t_value	*tmp;
 	int		i;
 
 	new_stack.size = stack->size - 1;
@@ -71,5 +76,7 @@ t_stack	ft_remove_from_stack(t_stack *stack, int pos)
 		new_stack.stk[i].pos = i;
 		i++;
 	}
-	return (new_stack);
+	tmp = stack->stk;
+	*stack = new_stack;
+	free (tmp);
 }

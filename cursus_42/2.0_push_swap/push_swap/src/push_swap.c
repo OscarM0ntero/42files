@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/11/17 14:09:55 by omontero         ###   ########.fr       */
+/*   Updated: 2022/11/20 08:04:27 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 //	Esta funcion asigna los valores introduciodos por consola
 //	al stack A de inicio :)
-
+/**
+ * 
+*/
 int	assign_values(char **argv, t_stack *a, t_data *data)
 {
 	int	i;
@@ -101,20 +103,14 @@ void	organize(t_stack *a, t_stack *b, t_data *data)
 	}
 }
 
+// 63 89 94 55 31 54 36 39 33 60 27 76 3 17 88 0 67 22 25 64
 //	Hacer free en cada instruccion como he hecho en PUSH y seguir con memdetect
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_stack	a;
 	t_stack	b;
 	t_data	data;
-	int		argc = 4;
-	char	**argv;
 
-	argv = ft_calloc(5, sizeof(char *));
-	argv[0] = ft_strdup("push_swap");
-	argv[1] = ft_strdup("7");
-	argv[2] = ft_strdup("5");
-	argv[3] = ft_strdup("4");
 	data.error = 0;
 	data.total_amount_of_numbers = argc - 1;
 	if (data.total_amount_of_numbers < 20)
@@ -127,7 +123,88 @@ int	main(void)
 		data.x = data.total_amount_of_numbers / 20;
 	data.numbers_in_order = 0;
 	if (assign_values(argv, &a, &data) || ft_check_rep(&a, &data))
+		return (free (a.stk), free (b.stk), write(1, "Error\n", 6));
+	data.highest_number = s_h(a);
+	data.lowest_number = search_lower(a);
+	data.highest_number_dis = data.highest_number;
+	data.lowest_number_ord = data.highest_number;
+	organize(&a, &b, &data);
+	return (free(a.stk), free(b.stk), 0);
+}
+
+//read_stack(a, b);
+/*
+
+int	main(void)
+{
+	t_stack	a;
+	t_stack	b;
+	t_data	data;
+	int		argc = 21;
+	char	**argv;
+
+	argv = ft_calloc(21, sizeof(char *));
+	argv[0] = ft_strdup("push_swap");
+	argv[1] = ft_strdup("63");
+	argv[2] = ft_strdup("89");
+	argv[3] = ft_strdup("94");
+	argv[4] = ft_strdup("55");
+	argv[5] = ft_strdup("31");
+	argv[6] = ft_strdup("54");
+	argv[7] = ft_strdup("36");
+	argv[8] = ft_strdup("39");
+	argv[9] = ft_strdup("33");
+	argv[10] = ft_strdup("60");
+	argv[11] = ft_strdup("27");
+	argv[12] = ft_strdup("76");
+	argv[13] = ft_strdup("3");
+	argv[14] = ft_strdup("17");
+	argv[15] = ft_strdup("88");
+	argv[16] = ft_strdup("0");
+	argv[17] = ft_strdup("67");
+	argv[18] = ft_strdup("22");
+	argv[19] = ft_strdup("25");
+	argv[20] = ft_strdup("64");
+	data.error = 0;
+	data.total_amount_of_numbers = argc - 1;
+	if (data.total_amount_of_numbers < 20)
+		data.x = data.total_amount_of_numbers;
+	else if (data.total_amount_of_numbers < 400)
+		data.x = data.total_amount_of_numbers / 5;
+	else if (data.total_amount_of_numbers < 1200)
+		data.x = data.total_amount_of_numbers / 10;
+	else
+		data.x = data.total_amount_of_numbers / 20;
+	data.numbers_in_order = 0;
+	if (assign_values(argv, &a, &data) || ft_check_rep(&a, &data))
+	{
+		free (argv[0]);
+		free (argv[1]);
+		free (argv[2]);
+		free (argv[3]);
+		free (argv[4]);
+		free (argv[5]);
+		free (argv[6]);
+		free (argv[7]);
+		free (argv[8]);
+		free (argv[9]);
+		free (argv[10]);
+		free (argv[11]);
+		free (argv[12]);
+		free (argv[13]);
+		free (argv[14]);
+		free (argv[15]);
+		free (argv[16]);
+		free (argv[17]);
+		free (argv[18]);
+		free (argv[19]);
+		free (argv[20]);
+		free (argv[21]);
+		free (argv);
+		free (a.stk);
+		free (b.stk);
 		return (write(1, "Error\n", 6));
+	}
 	data.highest_number = s_h(a);
 	data.lowest_number = search_lower(a);
 	data.highest_number_dis = data.highest_number;
@@ -137,8 +214,31 @@ int	main(void)
 	free (argv[1]);
 	free (argv[2]);
 	free (argv[3]);
+	free (argv[4]);
+	free (argv[5]);
+	free (argv[6]);
+	free (argv[7]);
+	free (argv[8]);
+	free (argv[9]);
+	free (argv[10]);
+	free (argv[11]);
+	free (argv[12]);
+	free (argv[13]);
+	free (argv[14]);
+	free (argv[15]);
+	free (argv[16]);
+	free (argv[17]);
+	free (argv[18]);
+	free (argv[19]);
+	free (argv[20]);
+	free (argv[21]);
 	free (argv);
+	free (a.stk);
+	free (b.stk);
 	return (0);
 }
 
 //read_stack(a, b);
+
+
+*/

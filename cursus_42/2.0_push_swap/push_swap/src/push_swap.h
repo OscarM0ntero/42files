@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 13:08:08 by omontero          #+#    #+#             */
-/*   Updated: 2022/11/17 13:32:36 by omontero         ###   ########.fr       */
+/*   Updated: 2022/11/20 03:43:53 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ typedef struct s_data
 }			t_data;
 
 //	push_swap_utils.c
-t_stack		ft_add_to_stack(t_stack *stack, int new_val, int pos);
-t_stack		ft_remove_from_stack(t_stack *stack, int pos);
+void		ft_add_to_stack(t_stack *stack, int new_val, int pos);
+void		ft_remove_from_stack(t_stack *stack, int pos);
 void		read_stack(t_stack a, t_stack b);
 
 //	push_swap_push.c

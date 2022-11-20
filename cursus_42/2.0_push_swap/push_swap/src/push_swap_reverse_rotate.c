@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/10/14 12:00:59 by omontero         ###   ########.fr       */
+/*   Updated: 2022/11/20 03:44:18 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	ft_rra(t_stack *a, int print)
 	else
 	{
 		tmp = a->stk[a->size - 1].val;
-		*a = ft_remove_from_stack(a, 0);
-		*a = ft_add_to_stack(a, tmp, 1);
+		ft_remove_from_stack(a, 0);
+		ft_add_to_stack(a, tmp, 1);
 	}
 	if (print)
 		write(1, "rra\n", 4);
@@ -41,8 +41,8 @@ void	ft_rrb(t_stack *b, int print)
 	else
 	{
 		tmp = b->stk[b->size - 1].val;
-		*b = ft_remove_from_stack(b, 0);
-		*b = ft_add_to_stack(b, tmp, 1);
+		ft_remove_from_stack(b, 0);
+		ft_add_to_stack(b, tmp, 1);
 	}
 	if (print)
 		write(1, "rrb\n", 4);
