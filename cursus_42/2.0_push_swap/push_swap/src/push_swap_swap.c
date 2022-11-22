@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/11/20 03:28:56 by omontero         ###   ########.fr       */
+/*   Updated: 2022/11/22 14:36:43 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,6 @@ void	ft_sb(t_stack *b, int print)
 void	ft_ss(t_stack *a, t_stack *b)
 {
 	ft_sa(a, 0);
-	ft_sa(b, 0);
+	ft_sb(b, 0);
 	write(1, "ss\n", 3);
 }

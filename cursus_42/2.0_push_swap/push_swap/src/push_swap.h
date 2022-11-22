@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 13:08:08 by omontero          #+#    #+#             */
-/*   Updated: 2022/11/20 03:43:53 by omontero         ###   ########.fr       */
+/*   Updated: 2022/11/22 14:39:04 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,9 @@ void		order_a(t_stack *a, t_data *data);
 //	push_swap_sorter_large.c
 void		rotate_extract_100_higher(t_stack *a, t_stack *b, t_data *data);
 
-//	push_swap_sorter_large.c
+//	push_swap_sorter_generic.c
 void		rotate_extract_x_higher(t_stack *a, t_stack *b, t_data *data);
+void		organize_3(t_stack *a, t_data *data);
 
 //	push_swap_sorter_utils.c
 int			s_h(t_stack x);

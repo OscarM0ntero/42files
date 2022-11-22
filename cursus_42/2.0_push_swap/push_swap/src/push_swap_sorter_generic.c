@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/11/17 14:06:59 by omontero         ###   ########.fr       */
+/*   Updated: 2022/11/22 14:40:34 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	rotate_extract_x_higher(t_stack *a, t_stack *b, t_data *data)
 	n_extracted = 0;
 	low = a->stk[search_num_x_under(data->highest_number_dis, a, data)].val;
 	i = 0;
-	while (i < data->total_amount_of_numbers && n_extracted <= data->x
+	while (i < data->total_amount_of_numbers && n_extracted < data->x
 		&& data->highest_number_dis != data->lowest_number)
 	{
 		if (a->stk[0].val >= low && a->stk[0].val <= data->highest_number_dis)
@@ -68,3 +68,19 @@ void	rotate_extract_x_higher(t_stack *a, t_stack *b, t_data *data)
 		realloc_a(a, data);
 	}
 }
+
+void	organize_3(t_stack *a, t_data *data)
+{
+	if (a->stk[0].val < a->stk[2].val)
+	{
+		if (a->stk[1].val > a->stk[2].val)
+			ft_rra(a, 1);
+	}
+	else
+		ft_ra(a, 1);
+	ft_sa(a, 1);
+	data->numbers_in_order = 3;
+	data->highest_number_dis = search_lower(*a);
+	data->lowest_number_ord = data->highest_number_dis;
+}
+	
