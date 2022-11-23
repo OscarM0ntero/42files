@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 13:08:08 by omontero          #+#    #+#             */
-/*   Updated: 2022/11/22 14:39:04 by omontero         ###   ########.fr       */
+/*   Updated: 2022/11/23 11:57:44 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ typedef struct s_data
 	int		x;
 	int		error;
 }			t_data;
+
+//	push_swap.c
+int			order(t_stack *a);
 
 //	push_swap_utils.c
 void		ft_add_to_stack(t_stack *stack, int new_val, int pos);

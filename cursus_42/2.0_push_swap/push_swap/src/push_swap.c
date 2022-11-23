@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/11/22 14:40:02 by omontero         ###   ########.fr       */
+/*   Updated: 2022/11/23 12:21:18 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,9 @@ int	order(t_stack *a)
 
 void	organize(t_stack *a, t_stack *b, t_data *data)
 {
-	if (order(a) == 1)
-		return ;
-	else if (order(a) == 2)
-		order_a(a, data);
-	else
+	if (order(a) == 2)
+		return (order_a(a, data));
+	else if (order(a) == 0)
 	{
 		while (data->total_amount_of_numbers != data->numbers_in_order
 			&& order(a) != 1)
@@ -99,7 +97,11 @@ void	organize(t_stack *a, t_stack *b, t_data *data)
 			else
 			{
 				rotate_extract_x_higher(a, b, data);
+				if (data->total_amount_of_numbers < 20)
+					organize_3(a, data);
 				extract_in_order(a, b, data);
+				if (data->total_amount_of_numbers < 20)
+					order_a(a, data);
 			}
 		}
 	}
@@ -116,7 +118,7 @@ int	main(int argc, char **argv)
 	data.error = 0;
 	data.total_amount_of_numbers = argc - 1;
 	if (data.total_amount_of_numbers < 20)
-		data.x = data.total_amount_of_numbers;
+		data.x = data.total_amount_of_numbers - 4;
 	else if (data.total_amount_of_numbers < 400)
 		data.x = data.total_amount_of_numbers / 5;
 	else if (data.total_amount_of_numbers < 1200)

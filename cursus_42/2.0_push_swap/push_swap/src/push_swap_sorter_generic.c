@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/11/22 14:40:34 by omontero         ###   ########.fr       */
+/*   Updated: 2022/11/23 12:03:45 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	rotate_extract_x_higher(t_stack *a, t_stack *b, t_data *data)
 	n_extracted = 0;
 	low = a->stk[search_num_x_under(data->highest_number_dis, a, data)].val;
 	i = 0;
-	while (i < data->total_amount_of_numbers && n_extracted < data->x
+	while (i < data->total_amount_of_numbers && n_extracted <= data->x
 		&& data->highest_number_dis != data->lowest_number)
 	{
 		if (a->stk[0].val >= low && a->stk[0].val <= data->highest_number_dis)
@@ -71,6 +71,10 @@ void	rotate_extract_x_higher(t_stack *a, t_stack *b, t_data *data)
 
 void	organize_3(t_stack *a, t_data *data)
 {
+	if (order(a) == 1)
+		return ;
+	if (order(a) == 2)
+		return (order_a(a, data)) ;
 	if (a->stk[0].val < a->stk[2].val)
 	{
 		if (a->stk[1].val > a->stk[2].val)
