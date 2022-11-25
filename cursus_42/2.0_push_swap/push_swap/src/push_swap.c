@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/11/23 12:21:18 by omontero         ###   ########.fr       */
+/*   Updated: 2022/11/24 16:05:20 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,9 +120,9 @@ int	main(int argc, char **argv)
 	if (data.total_amount_of_numbers < 20)
 		data.x = data.total_amount_of_numbers - 4;
 	else if (data.total_amount_of_numbers < 400)
-		data.x = data.total_amount_of_numbers / 5;
+		data.x = data.total_amount_of_numbers / 4.5;
 	else if (data.total_amount_of_numbers < 1200)
-		data.x = data.total_amount_of_numbers / 10;
+		data.x = data.total_amount_of_numbers / 7.69;
 	else
 		data.x = data.total_amount_of_numbers / 20;
 	data.numbers_in_order = 0;

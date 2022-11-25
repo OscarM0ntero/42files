@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/11/23 12:03:45 by omontero         ###   ########.fr       */
+/*   Updated: 2022/11/24 13:04:53 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	organize_3(t_stack *a, t_data *data)
 	if (order(a) == 1)
 		return ;
 	if (order(a) == 2)
-		return (order_a(a, data)) ;
+		return (order_a(a, data));
 	if (a->stk[0].val < a->stk[2].val)
 	{
 		if (a->stk[1].val > a->stk[2].val)

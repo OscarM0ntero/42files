@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/11/23 11:37:13 by omontero         ###   ########.fr       */
+/*   Updated: 2022/11/24 17:57:20 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,53 @@ void	rotate_extract_10_higher(t_stack *a, t_stack *b, t_data *data)
 	}
 }
 
+void	organize_3_x(t_stack *a)
+{
+	ft_sa(a, 1);
+	ft_ra(a, 1);
+	ft_sa(a, 1);
+	ft_rra(a, 1);
+	if (a->stk[1].val > a->stk[2].val)
+		ft_sa(a, 1);
+}
+
 //	Devuelve los valores en orden del stack B al A
 void	extract_in_order(t_stack *a, t_stack *b, t_data *data)
+{
+	int	highest_in_b_pos;
+	int	highest_in_b;
+	int	under;
+
+	data->lowest_number_ord = search_lower(*b);
+	data->highest_number_dis = search_higher_und_x(*a, data->lowest_number_ord);
+	while (b->size)
+	{
+		under = 0;
+		highest_in_b = s_h(*b);
+		highest_in_b_pos = search_higher_pos(*b);
+		while (b->stk[0].val != highest_in_b)
+		{
+			if (b->stk[0].val == search_higher_und_x(*b, highest_in_b) && under < 2)
+			{
+				ft_pa(a, b);
+				under++;
+				data->numbers_in_order++;
+			}
+			if (highest_in_b_pos < b->size / 2)
+				ft_rb(b, 1);
+			else
+				ft_rrb(b, 1);
+		}
+		ft_pa(a, b);
+		if (under == 1)
+			ft_sa(a, 1);
+		else if (under == 2)
+			organize_3_x(a);
+		data->numbers_in_order++;
+	}
+}
+
+/*void	extract_in_order(t_stack *a, t_stack *b, t_data *data)
 {
 	int	highest_in_b_pos;
 	int	highest_in_b;
@@ -114,4 +159,4 @@ void	extract_in_order(t_stack *a, t_stack *b, t_data *data)
 		ft_pa(a, b);
 		data->numbers_in_order++;
 	}
-}
+}*/
