@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/11/24 17:57:20 by omontero         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:46:33 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	rotate_extract_10_higher(t_stack *a, t_stack *b, t_data *data)
 	}
 }
 
-void	organize_3_x(t_stack *a)
+/*void	organize_3_x(t_stack *a)
 {
 	ft_sa(a, 1);
 	ft_ra(a, 1);
@@ -136,9 +136,9 @@ void	extract_in_order(t_stack *a, t_stack *b, t_data *data)
 			organize_3_x(a);
 		data->numbers_in_order++;
 	}
-}
+}*/
 
-/*void	extract_in_order(t_stack *a, t_stack *b, t_data *data)
+void	extract_in_order(t_stack *a, t_stack *b, t_data *data)
 {
 	int	highest_in_b_pos;
 	int	highest_in_b;
@@ -159,4 +159,4 @@ void	extract_in_order(t_stack *a, t_stack *b, t_data *data)
 		ft_pa(a, b);
 		data->numbers_in_order++;
 	}
-}*/
+}
