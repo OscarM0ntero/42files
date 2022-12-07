@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:58 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/01 18:11:16 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/05 13:04:04 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,4 @@
 //# include "MLX42/include/MLX42/MLX42.h"
 
 //		Structs
-// typedef struct s_data
-// {
-// }			t_data;
-
 #endif
