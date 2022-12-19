@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fractol.h                                          :+:      :+:    :+:   */
+/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/01 16:27:58 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/19 13:39:46 by omontero         ###   ########.fr       */
+/*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
+/*   Updated: 2022/05/19 11:41:46 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FRACTOL_H
-# define FRACTOL_H
+#include "libft.h"
 
-# include "libft/libft.h"
-# include "MLX42/include/MLX42/MLX42.h"
-# include <unistd.h>
-//# include "MLX42/include/MLX42/MLX42.h"
+t_list	*ft_lstlast(t_list *lst)
+{
+	t_list	*tmp;
 
-//		Structs
-#endif
+	if (!lst)
+		return (NULL);
+	tmp = lst;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	return (tmp);
+}

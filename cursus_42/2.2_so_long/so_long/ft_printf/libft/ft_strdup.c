@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fractol.h                                          :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/01 16:27:58 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/19 13:39:46 by omontero         ###   ########.fr       */
+/*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
+/*   Updated: 2022/05/19 11:06:43 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FRACTOL_H
-# define FRACTOL_H
+#include "libft.h"
 
-# include "libft/libft.h"
-# include "MLX42/include/MLX42/MLX42.h"
-# include <unistd.h>
-//# include "MLX42/include/MLX42/MLX42.h"
+char	*ft_strdup(const char *s1)
+{
+	char	*p;
+	size_t	len;
 
-//		Structs
-#endif
+	len = ft_strlen(s1) + 1;
+	p = (char *)malloc(len * sizeof(char));
+	if (!p)
+		return (NULL);
+	p = ft_memcpy(p, s1, len);
+	return (p);
+}

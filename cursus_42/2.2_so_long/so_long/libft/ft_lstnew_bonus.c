@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fractol.h                                          :+:      :+:    :+:   */
+/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/01 16:27:58 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/19 13:39:46 by omontero         ###   ########.fr       */
+/*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
+/*   Updated: 2022/05/19 11:39:52 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FRACTOL_H
-# define FRACTOL_H
+#include "libft.h"
 
-# include "libft/libft.h"
-# include "MLX42/include/MLX42/MLX42.h"
-# include <unistd.h>
-//# include "MLX42/include/MLX42/MLX42.h"
+t_list	*ft_lstnew(void *content)
+{
+	t_list	*new_nodo;
 
-//		Structs
-#endif
+	new_nodo = malloc(sizeof(t_list));
+	if (!new_nodo)
+		return (NULL);
+	new_nodo->content = content;
+	new_nodo->next = NULL;
+	return (new_nodo);
+}

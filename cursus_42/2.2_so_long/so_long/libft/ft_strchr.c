@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fractol.h                                          :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/01 16:27:58 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/19 13:39:46 by omontero         ###   ########.fr       */
+/*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
+/*   Updated: 2022/05/19 10:50:14 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FRACTOL_H
-# define FRACTOL_H
+#include "libft.h"
 
-# include "libft/libft.h"
-# include "MLX42/include/MLX42/MLX42.h"
-# include <unistd.h>
-//# include "MLX42/include/MLX42/MLX42.h"
+char	*ft_strchr(const char *s, int c)
+{
+	char	*p;
 
-//		Structs
-#endif
+	p = (char *)s;
+	while (*p != (char)c && *p)
+		p++;
+	if (*p != (char)c)
+		p = NULL;
+	return (p);
+}

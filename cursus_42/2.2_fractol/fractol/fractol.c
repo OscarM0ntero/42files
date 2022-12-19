@@ -6,12 +6,11 @@
 /*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/07 14:32:14 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/19 13:40:45 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "fractol.h"
-#include "MLX42/include/MLX42/MLX42.h"
+#include "fractol.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -44,6 +43,7 @@ int	main(void)
 {
 	mlx_t	*mlx;
 
+	read_map(argv[1]);
 	mlx = mlx_init(WIDTH, HEIGHT, "Fract'ol", true);
 	if (!mlx)
 		exit(EXIT_FAILURE);
