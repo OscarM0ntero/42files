@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/19 16:03:00 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/20 00:48:07 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,16 @@ size_t	count_lines(char *p)
 	return (count);
 }
 
-void	check_line(char *line, t_map *new_map)
+int	all_ones(char *line)
+{
+	while (*line && *line == '1')
+		line++;
+	if (*line)
+		return (1);
+	return (0);
+}
+
+void	check_line(char *line, size_t n_lin, t_map *new_map)
 {
 	int	i;
 
@@ -74,6 +83,32 @@ void	check_line(char *line, t_map *new_map)
 	{
 		if (!ft_strchr("10PEC", line[i]))
 			new_map->error = 3;
+		i++;
+	}
+	if (n_lin == 0 && all_ones(line) && !new_map->error)
+		new_map->error = 4;
+	else if (n_lin == new_map->n_lines - 1 && all_ones(line) && !new_map->error)
+		new_map->error = 4;
+	else if ((line[0] != '1' || line[new_map->n_chars - 1] != '1')
+		&& !new_map->error)
+		new_map->error = 4;
+}
+
+void	print_map(t_map *map)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (i < map->n_lines)
+	{
+		j = 0;
+		while (j < map->n_lines)
+		{
+			write(1, &map->structure[i][j], 1);
+			j++;
+		}
+		write(1, "\n", 1);
 		i++;
 	}
 }
@@ -93,21 +128,23 @@ t_map	read_map(char *p)
 
 	n_lin = 0;
 	new_map.error = 0;
+	new_map.n_chars = 0;
 	new_map.path = ft_strdup(p);
 	new_map.n_lines = count_lines(new_map.path);
 	if (!new_map.n_lines)
 		new_map.error = 1;
+	if (new_map.error)
+		return (new_map);
 	new_map.structure = (char **)malloc(new_map.n_lines * sizeof(char *));
 	fd = open(new_map.path, O_RDONLY);
 	line = get_next_line(fd);
 	new_map.n_chars = ft_strlen(line);
-	check_line(line, &new_map);
+	//check_line(line, &new_map);
 	while (n_lin < new_map.n_lines && !new_map.error)
 	{
+		check_line(line, n_lin, &new_map);
 		new_map.structure[n_lin] = line;
 		line = get_next_line(fd);
-		if (line && ft_strlen(line) != new_map.n_chars)
-			new_map.error = 1;
 		n_lin++;
 	}
 	close(fd);
@@ -122,21 +159,30 @@ t_map	read_map(char *p)
 *	4 = Not surrounded by 1s (not closed)
 */
 
+int	error_handler(int error)
+{
+	if (error == 1)
+		return (printf("Error. Empty file.\n"), 1);
+	else if (error == 2)
+		return (printf("Error. Different lines lenghts.\n"), 1);
+	else if (error == 3)
+		return (printf("Error. Invalid char in map (Allowed: 01PEC).\n"), 1);
+	else if (error == 4)
+		return (printf("Error. Map not surrounded by 1's.\n"), 1);
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_map	map;
-	size_t	i;
 
 	if (argc != 2)
 		return (printf("Error: No map introduced.\n"), 1);
-	i = 0;
 	map = read_map(argv[1]);
+	error_handler(map.error);
 	printf("%s\n%ld\n%ld\n%i\n", map.path, map.n_chars, map.n_lines, map.error);
-	while (i < map.n_lines)
-	{
-		printf("%s\n", map.structure[i]);
-		i++;
-	}
+	print_map(&map);
+	//	Crear hook
 	return (0);
 }
 

@@ -43,7 +43,6 @@ int	main(void)
 {
 	mlx_t	*mlx;
 
-	read_map(argv[1]);
 	mlx = mlx_init(WIDTH, HEIGHT, "Fract'ol", true);
 	if (!mlx)
 		exit(EXIT_FAILURE);
