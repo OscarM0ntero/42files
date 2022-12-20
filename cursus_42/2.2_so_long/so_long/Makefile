@@ -6,11 +6,11 @@
 #    By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/07 11:03:12 by omontero          #+#    #+#              #
-#    Updated: 2022/12/19 13:18:45 by omontero         ###   ########.fr        #
+#    Updated: 2022/12/20 11:50:41 by omontero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = mainkeyhook.c utils/get_map.c gnl/*.c
+SRC = so_long.c get_next_line/*.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -28,26 +28,26 @@ GLFW = inc/libglfw3.a
 
 LIBFT = inc/libft.a
 
-all:            $(NAME)
-                $(CC) $(FLAGS) maincuadrao.c $(SRC) $(NAME) $(LIBFT) $(GLFW) $(MLX) $(INCLUDE) -o so_long
+all:			$(NAME)
+				$(CC) $(FLAGS) $(SRC) $(NAME) $(LIBFT) $(GLFW) $(MLX) $(INCLUDE) -o so_long
 
-$(NAME):        $(OBJ)
-                cd MLX42 && make all
-                $(CC) $(FLAGS) -c $(SRC)
-                ar rcs $(NAME) $(OBJ)
+$(NAME):		$(OBJ)
+				cd MLX42 && make all
+				$(CC) $(FLAGS) -c $(SRC)
+				ar rcs $(NAME) $(OBJ)
 
 clean:
-                $(RM) $(OBJS)
+				$(RM) $(OBJS)
 
-fclean:         clean
-                $(RM) $(NAME) so_long
+fclean:			clean
+				$(RM) $(NAME) so_long
 
-exe:            all
-                @./$(NAME)
+exe:			all
+				@./$(NAME)
 
-re:             fclean $(NAME)
+re:				fclean $(NAME)
 
 run:
-                ./so_long
+				./so_long
 
 .PHONY: all clean fclean re

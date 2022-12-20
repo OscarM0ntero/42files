@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/20 00:48:07 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/20 14:49:46 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,31 @@
 #include <memory.h>
 #define WIDTH 1280
 #define HEIGHT 768
-#define IMG_WIDTH 64
-#define IMG_HEIGHT 64
+#define IMG_W 100
+#define IMG_H 100
 
 mlx_image_t	*g_img;
+
+void	print_map(t_map *map)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (i < map->n_lines)
+	{
+		j = 0;
+		while (j < map->n_chars)
+		{
+			write(1, &map->structure[i][j], 1);
+			j++;
+		}
+		write(1, "\n", 1);
+		i++;
+	}
+	write(1, "\n", 1);
+	write(1, "\n", 1);
+}
 
 void	hook(void *param)
 {
@@ -30,14 +51,63 @@ void	hook(void *param)
 	mlx = param;
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
-	if (mlx_is_key_down(mlx, MLX_KEY_W))
-		g_img->instances[0].y -= 5;
-	if (mlx_is_key_down(mlx, MLX_KEY_S))
-		g_img->instances[0].y += 5;
-	if (mlx_is_key_down(mlx, MLX_KEY_A))
-		g_img->instances[0].x -= 5;
-	if (mlx_is_key_down(mlx, MLX_KEY_D))
-		g_img->instances[0].x += 5;
+}
+
+//	Comentar TODAS LAS FUNCIONES, continuar con el move para E y C, comprobar
+//	errores para que haya 1 E y minimo 1 C, asi como incluir enemigos y su movimiento
+
+void	move(int dir, t_map *map)
+{
+	if (dir == 1 && map->structure[map->p_y - 1][map->p_x] != '1')
+	{
+		map->structure[map->p_y][map->p_x] = '0';
+		map->p_y--;
+		map->structure[map->p_y][map->p_x] = 'P';
+		print_map(map);
+	}
+	else if (dir == 2 && map->structure[map->p_y][map->p_x + 1] != '1')
+	{
+		map->structure[map->p_y][map->p_x] = '0';
+		map->p_x++;
+		map->structure[map->p_y][map->p_x] = 'P';
+		print_map(map);
+	}
+	else if (dir == 3 && map->structure[map->p_y + 1][map->p_x] != '1')
+	{
+		map->structure[map->p_y][map->p_x] = '0';
+		map->p_y++;
+		map->structure[map->p_y][map->p_x] = 'P';
+		print_map(map);
+	}
+	else if (dir == 4 && map->structure[map->p_y][map->p_x - 1] != '1')
+	{
+		map->structure[map->p_y][map->p_x] = '0';
+		map->p_x--;
+		map->structure[map->p_y][map->p_x] = 'P';
+		print_map(map);
+	}
+}
+
+void	keyhook1(mlx_key_data_t keydata, void *param)
+{
+	t_map	*map;
+
+	map = param;
+	if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
+		move(1, map);
+	if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS)
+		move(2, map);
+	if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS)
+		move(3, map);
+	if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS)
+		move(4, map);
+	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_RELEASE)
+		puts("a");
+	if (keydata.key == MLX_KEY_K && keydata.action == MLX_REPEAT)
+		puts("!");
+	if (keydata.key == MLX_KEY_A && keydata.action == MLX_RELEASE
+		&& keydata.modifier == MLX_CONTROL)
+		puts("Mariwanero");
 }
 
 size_t	count_lines(char *p)
@@ -94,25 +164,6 @@ void	check_line(char *line, size_t n_lin, t_map *new_map)
 		new_map->error = 4;
 }
 
-void	print_map(t_map *map)
-{
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	while (i < map->n_lines)
-	{
-		j = 0;
-		while (j < map->n_lines)
-		{
-			write(1, &map->structure[i][j], 1);
-			j++;
-		}
-		write(1, "\n", 1);
-		i++;
-	}
-}
-
 /**
  * @brief Esta funcion lee el mapa
  * 
@@ -139,7 +190,6 @@ t_map	read_map(char *p)
 	fd = open(new_map.path, O_RDONLY);
 	line = get_next_line(fd);
 	new_map.n_chars = ft_strlen(line);
-	//check_line(line, &new_map);
 	while (n_lin < new_map.n_lines && !new_map.error)
 	{
 		check_line(line, n_lin, &new_map);
@@ -169,20 +219,62 @@ int	error_handler(int error)
 		return (printf("Error. Invalid char in map (Allowed: 01PEC).\n"), 1);
 	else if (error == 4)
 		return (printf("Error. Map not surrounded by 1's.\n"), 1);
+	else if (error == 5)
+		return (printf("Error. Player not found in map.\n"), 1);
+	else if (error == 6)
+		return (printf("Error. More than 1 player in map.\n"), 1);
 	return (0);
+}
+
+void	check_player_coords(t_map *map)
+{
+	int	i;
+	int	j;
+	int	count;
+
+	count = 0;
+	i = -1;
+	while (++i < (int)map->n_lines && !map->error)
+	{
+		j = -1;
+		while (++j < (int)map->n_chars && !map->error)
+		{
+			if (map->structure[i][j] == 'P' && !map->error)
+			{
+				if (++count == 1)
+				{
+					map->p_x = (size_t)j;
+					map->p_y = (size_t)i;
+				}
+				else if (count == 2)
+					map->error = 6;
+			}
+		}
+	}
+	if (!count && !map->error)
+		map->error = 5;
 }
 
 int	main(int argc, char **argv)
 {
 	t_map	map;
+	mlx_t	*mlx;
 
 	if (argc != 2)
 		return (printf("Error: No map introduced.\n"), 1);
 	map = read_map(argv[1]);
-	error_handler(map.error);
-	printf("%s\n%ld\n%ld\n%i\n", map.path, map.n_chars, map.n_lines, map.error);
-	print_map(&map);
-	//	Crear hook
+	check_player_coords(&map);
+	if (error_handler(map.error))
+		return (1);
+	printf("%s\n%ld\n%ld\n%i\np_x=%ld\np_y=%ld\n", map.path, map.n_chars, map.n_lines, map.error, map.p_x, map.p_y);
+	if (!map.error)
+		print_map(&map);
+	mlx = mlx_init(map.n_chars * IMG_W, map.n_lines * IMG_H, "So_Long", true);
+	if (!mlx)
+		exit(EXIT_FAILURE);
+	mlx_key_hook(mlx, &keyhook1, &map);
+	mlx_loop_hook(mlx, &hook, mlx);
+	mlx_loop(mlx);
 	return (0);
 }
 
