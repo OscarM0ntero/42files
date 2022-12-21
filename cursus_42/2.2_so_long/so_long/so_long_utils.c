@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/21 13:25:15 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/21 23:47:09 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,6 @@ void	print_map(t_map *map)
 		write(1, "\n", 1);
 	}
 }
-
-//	Comentar TODAS LAS FUNCIONES, continuar con el move para E y C, comprobar
-//	errores para que haya 1 E y minimo 1 C, asi como incluir enemigos y su movimiento
 
 size_t	count_lines(char *p)
 {

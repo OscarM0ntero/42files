@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long_start_map.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/21 16:02:41 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/22 00:40:22 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	assign_to_map(t_map *map, char *path)
 {
 	map->move = 1;
+	map->n_extra = 0;
 	map->img_assigned = 0;
 	map->error = 0;
 	map->n_chars = 0;
@@ -66,6 +67,6 @@ void	start(t_map *map, char *p)
 	*map = read_map(p);
 	check_player_coords(map);
 	map->n_coins = check_exit_and_coin(map);
-	map->image = (mlx_image_t **)malloc((map->n_images + map->n_coins
-				+ map->n_enemies + 2) * sizeof(mlx_image_t *));
+	map->n_total = map->n_images + map->n_coins + map->n_enemies + 1;
+	map->image = (mlx_image_t **)malloc((map->n_total) * sizeof(mlx_image_t *));
 }

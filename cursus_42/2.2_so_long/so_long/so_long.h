@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:58 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/21 15:47:39 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/22 00:40:02 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ typedef struct s_map
 	size_t		n_chars;
 	size_t		n_lines;
 	size_t		n_images;
+	size_t		n_total;
+	size_t		n_extra;
 	size_t		n_coins;
 	size_t		n_enemies;
 	int			error;
