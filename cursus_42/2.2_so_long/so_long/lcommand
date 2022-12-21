@@ -1,0 +1,1 @@
+gcc so_long.c MLX42linux/libmlx42.a get_next_line/*.c -lglfw -Wall -Wextra -Werror -o e
