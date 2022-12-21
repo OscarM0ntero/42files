@@ -1,1 +1,1 @@
-gcc so_long.c inc/* get_next_line/*.c -framework Cocoa -framework OpenGL -framework IOKit -Wall -Wextra -Werror
+gcc *.c inc/* get_next_line/*.c -framework Cocoa -framework OpenGL -framework IOKit -Wall -Wextra -Werror

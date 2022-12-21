@@ -6,11 +6,12 @@
 #    By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/07 11:03:12 by omontero          #+#    #+#              #
-#    Updated: 2022/12/20 11:50:41 by omontero         ###   ########.fr        #
+#    Updated: 2022/12/21 12:05:26 by omontero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = so_long.c get_next_line/*.c
+SRC = so_long.c so_long_utils.c so_long_movement.c so_long_new_itoa.c \
+		so_long_checkers.c so_long_start_map.c get_next_line/*.c
 
 OBJ = $(SRC:.c=.o)
 

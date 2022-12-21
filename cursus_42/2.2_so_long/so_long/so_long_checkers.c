@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long_checkers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/20 23:29:58 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/21 15:56:52 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,12 @@
 *	6 = More than one player (P) in map
 *	7 = No exit (E) in map
 *	8 = No coin (C) in map
-*	9 = No exit and no coin in map
 */
 
 int	error_handler(int error)
 {
 	if (error == 1)
-		return (printf("Error. Empty file.\n"), 1);
+		return (write(1, "Error. Empty file.\n", 19), 1);
 	else if (error == 2)
 		return (printf("Error. Different lines lenghts.\n"), 1);
 	else if (error == 3)
@@ -43,8 +42,6 @@ int	error_handler(int error)
 		return (printf("Error. Exit (E) not found in map.\n"), 1);
 	else if (error == 8)
 		return (printf("Error. Coin (C) not found in map.\n"), 1);
-	else if (error == 9)
-		return (printf("Error. Exit and coin not found in map.\n"), 1);
 	return (0);
 }
 
@@ -77,12 +74,12 @@ void	check_player_coords(t_map *map)
 		map->error = 5;
 }
 
-void	check_exit_and_coin(t_map *map)
+size_t	check_exit_and_coin(t_map *map)
 {
-	int	i;
-	int	j;
-	int	c_coin;
-	int	c_exit;
+	int		i;
+	int		j;
+	size_t	c_coin;
+	size_t	c_exit;
 
 	c_coin = 0;
 	c_exit = 0;
@@ -102,6 +99,5 @@ void	check_exit_and_coin(t_map *map)
 		map->error = 7;
 	else if (!c_coin && !map->error)
 		map->error = 8;
-	if (!c_coin && !c_exit)
-		map->error = 9;
+	return (c_coin);
 }
