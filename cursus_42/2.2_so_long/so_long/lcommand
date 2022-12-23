@@ -1,1 +1,1 @@
-gcc *.c MLX42linux/libmlx42.a get_next_line/*.c -lglfw -Wall -Wextra -Werror -o e
+gcc *.c MLX42linux/libmlx42.a get_next_line/*.c -ldl -lglfw -pthread -lm -Wall -Wextra -Werror -o e

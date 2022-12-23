@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/22 00:40:22 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/23 00:28:16 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,20 @@ void	assign_to_map(t_map *map, char *path)
 {
 	map->move = 1;
 	map->n_extra = 0;
+	map->n_extra_count = 0;
 	map->img_assigned = 0;
+	map->anim.frame_chest = 0;
+	map->anim.frame_enemy = 0;
+	map->anim.frame_player = 0;
 	map->error = 0;
 	map->n_chars = 0;
 	map->path = ft_strdup(path);
 	map->n_lines = count_lines(map->path);
+	map->coins.n_coins = 0;
+	map->coins.coin_taked = 0;
+	map->coins.coin_t_x = 0;
+	map->coins.coin_t_y = 0;
+	map->n_enemies = 0;
 	map->c_count = 0;
 	map->game_over = 0;
 	map->map_finished = 0;
@@ -66,7 +75,8 @@ void	start(t_map *map, char *p)
 {
 	*map = read_map(p);
 	check_player_coords(map);
-	map->n_coins = check_exit_and_coin(map);
-	map->n_total = map->n_images + map->n_coins + map->n_enemies + 1;
+	check_exit_and_coin(map);
+	check_enemies(map);
+	map->n_total = map->n_images + map->coins.n_coins + map->n_enemies + 1;
 	map->image = (mlx_image_t **)malloc((map->n_total) * sizeof(mlx_image_t *));
 }

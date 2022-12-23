@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/21 23:47:09 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/23 01:56:43 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	print_map(t_map *map)
 	size_t	j;
 
 	generate_map(map);
+	error_handler(map->error);
 	i = -1;
 	write(1, "\n\n\n\n", 4);
 	while (++i < map->n_lines)
@@ -36,6 +37,7 @@ void	print_map(t_map *map)
 		}
 		write(1, "\n", 1);
 	}
+	printf("\n\nA=%ld\nx=%ld y=%ld\n", map->anim.frame_chest, map->coins.coin_t_x, map->coins.coin_t_y);
 }
 
 size_t	count_lines(char *p)

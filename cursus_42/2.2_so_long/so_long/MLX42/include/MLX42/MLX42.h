@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   MLX42.h                                            :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: W2Wizard <w2.wizzard@gmail.com>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2021/12/28 00:33:01 by W2Wizard      #+#    #+#                 */
-/*   Updated: 2022/08/10 13:00:48 by lde-la-h      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   MLX42.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/28 00:33:01 by W2Wizard          #+#    #+#             */
+/*   Updated: 2022/12/23 01:14:57 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,6 +287,8 @@ void mlx_close_window(mlx_t* mlx);
  * @param[in] mlx The MLX instance handle.
  */
 void mlx_loop(mlx_t* mlx);
+void mlx_render_images(mlx_t* mlx);
+
 
 /**
  * Lets you set a custom image as the program icon.

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   mlx_loop.c                                         :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: W2Wizard <w2.wizzard@gmail.com>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2021/12/28 01:24:36 by W2Wizard      #+#    #+#                 */
-/*   Updated: 2022/06/27 18:07:04 by lde-la-h      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   mlx_loop.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/28 01:24:36 by W2Wizard          #+#    #+#             */
+/*   Updated: 2022/12/23 00:52:12 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void mlx_exec_loop_hooks(mlx_t* mlx)
 	}
 }
 
-static void mlx_render_images(mlx_t* mlx)
+void mlx_render_images(mlx_t* mlx)
 {
 	mlx_ctx_t* mlxctx = mlx->context;
 	mlx_list_t* imglst = mlxctx->images;

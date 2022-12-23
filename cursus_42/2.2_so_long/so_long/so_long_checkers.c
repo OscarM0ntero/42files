@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long_checkers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/21 15:56:52 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/23 00:26:29 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,10 @@ int	error_handler(int error)
 		return (printf("Error. Exit (E) not found in map.\n"), 1);
 	else if (error == 8)
 		return (printf("Error. Coin (C) not found in map.\n"), 1);
+	else if (error == 9)
+		return (printf("Fallo aqui xd\n"), 1);
+	else
+		printf("No fallo\n");
 	return (0);
 }
 
@@ -74,7 +78,7 @@ void	check_player_coords(t_map *map)
 		map->error = 5;
 }
 
-size_t	check_exit_and_coin(t_map *map)
+void	check_exit_and_coin(t_map *map)
 {
 	int		i;
 	int		j;
@@ -99,5 +103,22 @@ size_t	check_exit_and_coin(t_map *map)
 		map->error = 7;
 	else if (!c_coin && !map->error)
 		map->error = 8;
-	return (c_coin);
+	map->coins.n_coins = c_coin;
+}
+
+void	check_enemies(t_map *map)
+{
+	int		i;
+	int		j;
+
+	i = -1;
+	while (++i < (int)map->n_lines)
+	{
+		j = -1;
+		while (++j < (int)map->n_chars)
+		{
+			if (map->structure[i][j] == 'V')
+				map->n_enemies++;
+		}
+	}
 }
