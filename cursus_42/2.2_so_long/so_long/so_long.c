@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/23 02:26:01 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/23 14:05:17 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,18 @@ void	animhook(void *param)
 	if (map->coins.coin_taked && map->anim.frame_chest < 13 && map->anim.frame_chest % 2 == 0)
 	{
 		print_map(map);
-		//if (map->anim.frame_chest == 12)
-		//	usleep (1000000);
-		//else
-		//	usleep (300000);
-		usleep (1000000);
+		usleep (200000);
 	}
-	if (map->coins.coin_taked && map->anim.frame_chest++ == 13)
+	if (map->coins.coin_taked && map->anim.frame_chest++ == 14)
 	{
 		map->anim.frame_chest = 0;
 		map->coins.coin_taked = 0;
 		map->structure[map->coins.coin_t_y][map->coins.coin_t_x] = '0';
-		map->c_count++;
+		print_map(map);
+		map->coins.c_count++;
 		map->coins.coin_t_x = 0;
 		map->coins.coin_t_y = 0;
 		map->move = 1;
-		print_map(map);
 	}
 }
 
@@ -123,33 +119,29 @@ void	delete_map(t_map *map)
 
 mlx_texture_t	*extra_selector(t_map *map, char c, size_t x, size_t y)
 {
-	mlx_texture_t	*tx;
-
 	if (c == 'P')
-		tx = mlx_load_png("sprites/capybara.png");
+		return (mlx_load_png("sprites/capybara.png"));
 	else if (c == 'V')
-		tx = mlx_load_png("sprites/g1.png");
+		return (mlx_load_png("sprites/g1.png"));
 	else if (c == 'C')
 	{
 		if (x == map->coins.coin_t_x && y == map->coins.coin_t_y)
 		{
 			if (map->anim.frame_chest == 0)
-				tx = mlx_load_png("sprites/c_c.png");
+				return (mlx_load_png("sprites/c_c.png"));
 			else if (map->anim.frame_chest == 2)
-				tx = mlx_load_png("sprites/c_h1.png");
+				return (mlx_load_png("sprites/c_h1.png"));
 			else if (map->anim.frame_chest == 4)
-				tx = mlx_load_png("sprites/c_h1.png");
+				return (mlx_load_png("sprites/c_h1.png"));
 			else if (map->anim.frame_chest == 6)
-				tx = mlx_load_png("sprites/c_h2.png");
+				return (mlx_load_png("sprites/c_h2.png"));
 			else if (map->anim.frame_chest == 8)
-				tx = mlx_load_png("sprites/c_o.png");
+				return (mlx_load_png("sprites/c_o.png"));
 			else
-				tx = mlx_load_png("sprites/coins.png");
+				return (mlx_load_png("sprites/coins.png"));
 		}
-		else
-			tx = mlx_load_png("sprites/c_c.png");
 	}
-	return (tx);
+	return (mlx_load_png("sprites/c_c.png"));
 }
 
 void	create_extra_image(t_map *map, size_t x, size_t y)
@@ -157,13 +149,25 @@ void	create_extra_image(t_map *map, size_t x, size_t y)
 	mlx_texture_t	*tx;
 	mlx_image_t		*img;
 	char			c;
+	char			*s;
 
 	c = map->structure[y][x];
 	img = mlx_new_image(map->mlx, IMG_W, IMG_H);
 	memset(img->pixels, 255, img->width * img->height * sizeof(int));
-	tx = extra_selector(map, c, x, y);
-	mlx_draw_texture(img, tx, 0, 0);
-	mlx_delete_texture(tx);
+	if (!x && !y)
+		img = mlx_put_string(map->mlx, "Moves:", 0, 0);
+	else if (x == 1 && !y)
+	{
+		s = new_itoa((int)map->mv_count);
+		img = mlx_put_string(map->mlx, s, 0, 0);
+		free (s);
+	}
+	else
+	{
+		tx = extra_selector(map, c, x, y);
+		mlx_draw_texture(img, tx, 0, 0);
+		mlx_delete_texture(tx);
+	}
 	map->image[map->n_images + map->n_extra] = img;
 	map->n_extra++;
 }
@@ -182,7 +186,7 @@ void	map_to_window(t_map *map)
 			mlx_image_to_window(map->mlx, map->image[(i * map->n_chars) + j],
 				j * IMG_W, i * IMG_H);
 			if (map->structure[i][j] == 'P' || map->structure[i][j] == 'V'
-				|| map->structure[i][j] == 'C')
+				|| map->structure[i][j] == 'C' || (!j && !i) || (j == 1 && !i))
 			{
 				mlx_image_to_window(map->mlx,
 					map->image[(map->n_images + map->n_extra_count)],
@@ -208,7 +212,7 @@ void	generate_map(t_map *map)
 		{
 			generate_image(map, j, i, map->structure[i][j]);
 			if (map->structure[i][j] == 'P' || map->structure[i][j] == 'V'
-				|| map->structure[i][j] == 'C')
+				|| map->structure[i][j] == 'C' || (!j && !i) || (j == 1 && !i))
 				create_extra_image(map, j, i);
 		}
 	}
@@ -218,7 +222,10 @@ void	generate_map(t_map *map)
 //	Adaptar textura invisible, obligar a pillar moneda, ventana win and lose
 //	Progrmar sprites con condiciones
 //	IMPORTANTE: ADMINISTRAR IMAGENES EXTRA AL FINAL DEL ARRAY
-
+void	show_leaks(void)
+{
+	system("leaks -q so_long");
+}
 int	main(int argc, char **argv)
 {
 	t_map	m;
@@ -238,6 +245,7 @@ int	main(int argc, char **argv)
 	mlx_loop(m.mlx);
 	delete_map(&m);
 	mlx_terminate(m.mlx);
+	show_leaks();
 	return (EXIT_SUCCESS);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:58 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/23 01:18:29 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/23 12:10:42 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_anim
 typedef struct s_coins
 {
 	size_t		n_coins;
+	size_t		c_count;
 	size_t		coin_taked;
 	size_t		coin_t_x;
 	size_t		coin_t_y;
@@ -77,7 +78,6 @@ typedef struct s_map
 	int			error;
 	size_t		p_x;
 	size_t		p_y;
-	int			c_count;
 	int			game_over;
 	int			map_finished;
 	size_t		mv_count;

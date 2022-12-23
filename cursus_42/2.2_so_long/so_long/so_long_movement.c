@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long_movement.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/23 02:23:10 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/23 12:46:11 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,13 +126,24 @@ void	move_left(t_map *map)
 
 void	move(int dir, t_map *map)
 {
-	if (dir == 1 && map->structure[map->p_y - 1][map->p_x] != '1')
+	char	**s;
+	size_t	x;
+	size_t	y;
+
+	s = map->structure;
+	x = map->p_x;
+	y = map->p_y;
+	if (dir == 1 && ((((s[y - 1][x] != '1') && s[y - 1][x] != 'E'))
+		|| ((s[y - 1][x] == 'E' && map->coins.c_count == map->coins.n_coins))))
 		move_up(map);
-	else if (dir == 2 && map->structure[map->p_y][map->p_x + 1] != '1')
+	else if (dir == 2 && ((((s[y][x + 1] != '1') && s[y][x + 1] != 'E'))
+		|| ((s[y][x + 1] == 'E' && map->coins.c_count == map->coins.n_coins))))
 		move_right(map);
-	else if (dir == 3 && map->structure[map->p_y + 1][map->p_x] != '1')
+	else if (dir == 3 && ((((s[y + 1][x] != '1') && s[y + 1][x] != 'E'))
+		|| ((s[y + 1][x] == 'E' && map->coins.c_count == map->coins.n_coins))))
 		move_down(map);
-	else if (dir == 4 && map->structure[map->p_y][map->p_x - 1] != '1')
+	else if (dir == 4 && ((((s[y][x - 1] != '1') && s[y][x - 1] != 'E'))
+		|| ((s[y][x - 1] == 'E' && map->coins.c_count == map->coins.n_coins))))
 		move_left(map);
 	if (map->game_over || map->map_finished)
 		map->move = 0;

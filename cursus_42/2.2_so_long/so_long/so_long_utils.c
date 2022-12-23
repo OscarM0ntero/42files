@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/23 01:56:43 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/23 14:05:57 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	print_map(t_map *map)
 	size_t	j;
 
 	generate_map(map);
-	error_handler(map->error);
+	//error_handler(map->error);
 	i = -1;
 	write(1, "\n\n\n\n", 4);
 	while (++i < map->n_lines)
@@ -26,15 +26,15 @@ void	print_map(t_map *map)
 		j = -1;
 		while (++j < map->n_chars)
 			write(1, &map->structure[i][j], 1);
-		if (!i)
+		/*if (!i)
 		{
 			write(1, "\t\tCoins: ", 9);
-			write(1, new_itoa(map->c_count), 1);
+			write(1, new_itoa(map->coins.c_count), 1);
 			write(1, " Win: ", 6);
 			write(1, new_itoa(map->map_finished), 1);
 			write(1, " GameOver: ", 11);
 			write(1, new_itoa(map->game_over), 1);
-		}
+		}*/
 		write(1, "\n", 1);
 	}
 	printf("\n\nA=%ld\nx=%ld y=%ld\n", map->anim.frame_chest, map->coins.coin_t_x, map->coins.coin_t_y);
