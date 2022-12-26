@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/23 14:05:17 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/26 22:46:18 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ void	animhook(void *param)
 	t_map	*map;
 
 	map = param;
-	if (map->coins.coin_taked && map->anim.frame_chest < 13 && map->anim.frame_chest % 2 == 0)
+	if (map->coins.coin_taked && map->anim.frame_chest < 11 && map->anim.frame_chest % 2 == 0)
 	{
 		print_map(map);
 		usleep (200000);
 	}
-	if (map->coins.coin_taked && map->anim.frame_chest++ == 14)
+	if (map->coins.coin_taked && map->anim.frame_chest++ == 11)
 	{
 		map->anim.frame_chest = 0;
 		map->coins.coin_taked = 0;
@@ -56,97 +56,138 @@ void	animhook(void *param)
 		map->coins.coin_t_y = 0;
 		map->move = 1;
 	}
+	//	???
+	if (map->time != time(NULL))
+	{
+		print_map(map);
+		usleep(20000);
+		time(&map->time);
+	}
 }
 
-mlx_texture_t	*temp_flor_select(size_t x, size_t y)
+xpm_t	*temp_flor_select(t_map *map, size_t x, size_t y)
 {
 	if (x < 1 || y < 1)
-		return (mlx_load_png("sprites/floor1.png"));
+		return (map->sprites.floor_1);
 	if (x % 2 == 0 && y % 2 == 0)
-		return (mlx_load_png("sprites/floor4.png"));
+		return (map->sprites.floor_2);
 	else if (x % 2 == 1 && y % 2 == 0)
-		return (mlx_load_png("sprites/floor1.png"));
+		return (map->sprites.floor_3);
 	else if (x % 2 == 0 && y % 2 == 1)
-		return (mlx_load_png("sprites/floor3.png"));
+		return (map->sprites.floor_4);
 	else
-		return (mlx_load_png("sprites/floor2.png"));
+		return (map->sprites.floor_1);
 }
 
-mlx_texture_t	*texture(char c, size_t x, size_t y, t_map *map)
+xpm_t	*exterior_select(t_map *map, size_t x, size_t y)
+{
+	if (x == 0 && y == 0)
+		return (map->sprites.corner_t_l);
+	else if (x == 0 && y == map->n_lines - 1)
+		return (map->sprites.corner_b_l);
+	else if (x == map->n_chars - 1 && y == 0)
+		return (map->sprites.corner_t_r);
+	else if (x == map->n_chars - 1 && y == map->n_lines - 1)
+		return (map->sprites.corner_b_r);
+	else if (x == 0)
+		return (map->sprites.wall_l);
+	else if (y == 0)
+		return (map->sprites.wall_t);
+	else if (x == map->n_chars - 1)
+		return (map->sprites.wall_r);
+	else if (y == map->n_lines - 1)
+		return (map->sprites.wall_b);
+	return (map->sprites.wall);
+}
+
+xpm_t	*texture(char c, size_t x, size_t y, t_map *map)
 {
 	(void)map;
 	if (c == '1')
-		return (mlx_load_png("sprites/wall_brick1.png"));
+		return (exterior_select(map, x, y));
 	else if (c == 'E')
-		return (mlx_load_png("sprites/exit_floor.png"));
+		return (map->sprites.exit);
 	else if (map->structure[y][x] == 'P' && !map->move && map->map_finished)
-		return (mlx_load_png("sprites/exit_floor.png"));
+		return (map->sprites.exit);
 	else if (x > 0 && y > 0)
-		return (temp_flor_select(x, y));
+		return (temp_flor_select(map, x, y));
 	else
-		return (mlx_load_png("sprites/floor5.png"));
+		return (map->sprites.wall);
 	return (0);
 }
 
 void	generate_image(t_map *map, int32_t x, int32_t y, char c)
 {
-	mlx_texture_t	*tx;
+	xpm_t			*tx;
 	mlx_image_t		*g_img;
 
 	g_img = mlx_new_image(map->mlx, IMG_W, IMG_H);
 	memset(g_img->pixels, 255, g_img->width * g_img->height * sizeof(int));
 	tx = texture(c, x, y, map);
-	mlx_draw_texture(g_img, tx, 0, 0);
+	g_img = mlx_texture_to_image(map->mlx, &tx->texture);
+	//mlx_delete_xpm42(tx);
+	//mlx_draw_texture(g_img, tx, 0, 0);
+	//mlx_delete_texture(tx);
 	//mlx_image_to_window(map->mlx, g_img, x * IMG_W, y * IMG_H);
-	mlx_delete_texture(tx);
 	if (!map->img_assigned)
 		map->img_assigned = 1;
 	map->image[(y * map->n_chars) + x] = g_img;
 }
 
-void	delete_map(t_map *map)
+void	delete_map(mlx_t *mlx, mlx_image_t **image, size_t size, size_t *extra)
 {
 	size_t	i;
 
 	i = 0;
-	while (i< map->n_total)
+	while (i < size)
 	{
-		mlx_delete_image(map->mlx, map->image[i]);
+		mlx_delete_image(mlx, image[i]);
 		i++;
 	}
-	map->n_extra = 0;
+	*extra = 0;
 }
 
-mlx_texture_t	*extra_selector(t_map *map, char c, size_t x, size_t y)
+xpm_t	*extra_selector(t_map *map, char c, size_t x, size_t y)
 {
 	if (c == 'P')
-		return (mlx_load_png("sprites/capybara.png"));
+		return (map->sprites.player);
 	else if (c == 'V')
-		return (mlx_load_png("sprites/g1.png"));
+		return (map->sprites.enemy);
 	else if (c == 'C')
 	{
-		if (x == map->coins.coin_t_x && y == map->coins.coin_t_y)
+		/*if (x == map->coins.coin_t_x && y == map->coins.coin_t_y)
 		{
 			if (map->anim.frame_chest == 0)
 				return (mlx_load_png("sprites/c_c.png"));
 			else if (map->anim.frame_chest == 2)
 				return (mlx_load_png("sprites/c_h1.png"));
 			else if (map->anim.frame_chest == 4)
-				return (mlx_load_png("sprites/c_h1.png"));
-			else if (map->anim.frame_chest == 6)
 				return (mlx_load_png("sprites/c_h2.png"));
-			else if (map->anim.frame_chest == 8)
+			else if (map->anim.frame_chest == 6)
 				return (mlx_load_png("sprites/c_o.png"));
 			else
 				return (mlx_load_png("sprites/coins.png"));
+		}*/
+		if (x == map->coins.coin_t_x && y == map->coins.coin_t_y)
+		{
+			if (map->anim.frame_chest == 0)
+				return (map->sprites.collect_1);
+			else if (map->anim.frame_chest == 2)
+				return (map->sprites.collect_1);
+			else if (map->anim.frame_chest == 4)
+				return (map->sprites.collect_2);
+			else if (map->anim.frame_chest == 6)
+				return (map->sprites.collect_2);
+			else
+				return (map->sprites.collect_2);
 		}
 	}
-	return (mlx_load_png("sprites/c_c.png"));
+	return (mlx_load_xpm42("pixelart/flower_mid.xpm42"));
 }
 
 void	create_extra_image(t_map *map, size_t x, size_t y)
 {
-	mlx_texture_t	*tx;
+	xpm_t			*tx;
 	mlx_image_t		*img;
 	char			c;
 	char			*s;
@@ -155,7 +196,7 @@ void	create_extra_image(t_map *map, size_t x, size_t y)
 	img = mlx_new_image(map->mlx, IMG_W, IMG_H);
 	memset(img->pixels, 255, img->width * img->height * sizeof(int));
 	if (!x && !y)
-		img = mlx_put_string(map->mlx, "Moves:", 0, 0);
+		img = mlx_put_string(map->mlx, map->f_text, 0, 0);
 	else if (x == 1 && !y)
 	{
 		s = new_itoa((int)map->mv_count);
@@ -165,8 +206,10 @@ void	create_extra_image(t_map *map, size_t x, size_t y)
 	else
 	{
 		tx = extra_selector(map, c, x, y);
-		mlx_draw_texture(img, tx, 0, 0);
-		mlx_delete_texture(tx);
+		img = mlx_texture_to_image(map->mlx, &tx->texture);
+		//mlx_delete_xpm42(tx);
+		//mlx_draw_texture(img, tx, 0, 0);
+		//mlx_delete_texture(tx);
 	}
 	map->image[map->n_images + map->n_extra] = img;
 	map->n_extra++;
@@ -198,12 +241,26 @@ void	map_to_window(t_map *map)
 	map->n_extra_count = 0;
 }
 
+void	assign_old_map(t_map *map)
+{
+	size_t	i;
+
+	i = -1;
+	while (++i < map->n_total)
+	{
+		map->image_old[i] = map->image[i];
+	}
+}
+
 void	generate_map(t_map *map)
 {
 	size_t	i;
 	size_t	j;
 
-	delete_map(map);
+	if (map->img_assigned)
+	{
+		delete_map(map->mlx, map->image_old, map->n_total, &map->n_extra);
+	}
 	i = -1;
 	while (++i < map->n_lines)
 	{
@@ -217,6 +274,8 @@ void	generate_map(t_map *map)
 		}
 	}
 	map_to_window(map);
+	assign_old_map(map);
+	map->total_frames++;
 }
 
 //	Adaptar textura invisible, obligar a pillar moneda, ventana win and lose
@@ -243,7 +302,7 @@ int	main(int argc, char **argv)
 	mlx_key_hook(m.mlx, &keyhook, &m);
 	mlx_loop_hook(m.mlx, &animhook, &m);
 	mlx_loop(m.mlx);
-	delete_map(&m);
+	delete_map(m.mlx, m.image_old, m.n_total, &m.n_extra);
 	mlx_terminate(m.mlx);
 	show_leaks();
 	return (EXIT_SUCCESS);

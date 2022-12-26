@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 00:33:01 by W2Wizard          #+#    #+#             */
-/*   Updated: 2022/12/23 01:14:57 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/24 13:05:25 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,7 +287,6 @@ void mlx_close_window(mlx_t* mlx);
  * @param[in] mlx The MLX instance handle.
  */
 void mlx_loop(mlx_t* mlx);
-void mlx_render_images(mlx_t* mlx);
 
 
 /**

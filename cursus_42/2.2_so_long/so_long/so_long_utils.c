@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/23 14:05:57 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/26 20:23:16 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	print_map(t_map *map)
 		}*/
 		write(1, "\n", 1);
 	}
-	printf("\n\nA=%ld\nx=%ld y=%ld\n", map->anim.frame_chest, map->coins.coin_t_x, map->coins.coin_t_y);
+	printf("\n\nA=%ld\nx=%ld y=%ld\nFrames=%ld\n", map->anim.frame_chest,
+		map->coins.coin_t_x, map->coins.coin_t_y, map->total_frames);
 }
 
 size_t	count_lines(char *p)

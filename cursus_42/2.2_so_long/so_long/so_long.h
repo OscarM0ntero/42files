@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:58 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/23 12:10:42 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/26 21:34:49 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <memory.h>
+# include <time.h>
 # define IMG_W 64
 # define IMG_H 64
 //# include "MLX42/include/MLX42/MLX42.h"
@@ -52,6 +53,28 @@ typedef struct s_coins
 	size_t		coin_t_y;
 }			t_coins;
 
+typedef struct s_sprites
+{
+	xpm_t	*player;
+	xpm_t	*enemy;
+	xpm_t	*corner_t_r;
+	xpm_t	*corner_t_l;
+	xpm_t	*corner_b_r;
+	xpm_t	*corner_b_l;
+	xpm_t	*wall_t;
+	xpm_t	*wall_b;
+	xpm_t	*wall_r;
+	xpm_t	*wall_l;
+	xpm_t	*wall;
+	xpm_t	*floor_1;
+	xpm_t	*floor_2;
+	xpm_t	*floor_3;
+	xpm_t	*floor_4;
+	xpm_t	*collect_1;
+	xpm_t	*collect_2;
+	xpm_t	*exit;
+}			t_sprites;
+
 /**
  * @brief Esta estructura guarda toda la informacion del mapa
  * Siendo path la ruta, structure el mapa en forma de array, 
@@ -61,13 +84,17 @@ typedef struct s_coins
 typedef struct s_map
 {
 	mlx_t		*mlx;
+	time_t		time;
 	mlx_image_t	**image;
+	mlx_image_t	**image_old;
+	t_sprites	sprites;
 	t_anim		anim;
 	t_coins		coins;
 	t_enemy		**enemy;
 	int			img_assigned;
 	char		*path;
 	char		**structure;
+	char		*f_text;
 	size_t		n_chars;
 	size_t		n_lines;
 	size_t		n_images;
@@ -82,10 +109,11 @@ typedef struct s_map
 	int			map_finished;
 	size_t		mv_count;
 	int			move;
+	size_t		total_frames;
 }			t_map;
 
 //	so_long.c
-void	delete_map(t_map *map);
+void	delete_map(mlx_t *mlx, mlx_image_t **image, size_t size, size_t *extra);
 void	map_to_window(t_map *map);
 void	generate_image(t_map *map, int32_t x, int32_t y, char c);
 void	generate_map(t_map *map);

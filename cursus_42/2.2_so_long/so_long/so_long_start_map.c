@@ -3,18 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   so_long_start_map.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/23 13:20:46 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/26 21:33:23 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+void	assign_sprites(t_sprites *s)
+{
+	s->player = mlx_load_xpm42("pixelart/duck.xpm42");
+	s->enemy = mlx_load_xpm42("pixelart/shark.xpm42");
+	s->corner_t_r = mlx_load_xpm42("pixelart/corner_top_right.xpm42");
+	s->corner_t_l = mlx_load_xpm42("pixelart/corner_top_left.xpm42");
+	s->corner_b_r = mlx_load_xpm42("pixelart/corner_bot_right.xpm42");
+	s->corner_b_l = mlx_load_xpm42("pixelart/corner_bot_left.xpm42");
+	s->wall_t = mlx_load_xpm42("pixelart/grass_top.xpm42");
+	s->wall_b = mlx_load_xpm42("pixelart/grass_bot.xpm42");
+	s->wall_r = mlx_load_xpm42("pixelart/grass_right.xpm42");
+	s->wall_l = mlx_load_xpm42("pixelart/grass_left.xpm42");
+	s->wall = mlx_load_xpm42("pixelart/grass.xpm42");
+	s->floor_1 = mlx_load_xpm42("pixelart/water.xpm42");
+	s->floor_2 = mlx_load_xpm42("pixelart/water.xpm42");
+	s->floor_3 = mlx_load_xpm42("pixelart/water.xpm42");
+	s->floor_4 = mlx_load_xpm42("pixelart/water.xpm42");
+	s->collect_1 = mlx_load_xpm42("pixelart/flower_mid.xpm42");
+	s->collect_2 = mlx_load_xpm42("pixelart/flower_open.xpm42");
+	s->exit = mlx_load_xpm42("pixelart/exit_basket.xpm42");
+}
+
 void	assign_to_map(t_map *map, char *path)
 {
 	map->move = 1;
+	time(&map->time);
 	map->n_extra = 0;
 	map->n_extra_count = 0;
 	map->img_assigned = 0;
@@ -34,6 +57,9 @@ void	assign_to_map(t_map *map, char *path)
 	map->game_over = 0;
 	map->map_finished = 0;
 	map->mv_count = 0;
+	map->f_text = ft_strdup("Moves:");
+	map->total_frames = 0;
+	assign_sprites(&map->sprites);
 	if (!map->n_lines)
 		map->error = 1;
 }
@@ -79,4 +105,6 @@ void	start(t_map *map, char *p)
 	check_enemies(map);
 	map->n_total = map->n_images + map->coins.n_coins + map->n_enemies + 3;
 	map->image = (mlx_image_t **)malloc((map->n_total) * sizeof(mlx_image_t *));
+	map->image_old = (mlx_image_t **)malloc((map->n_total)
+			* sizeof(mlx_image_t *));
 }
