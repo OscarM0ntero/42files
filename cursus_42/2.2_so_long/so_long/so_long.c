@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/26 22:46:18 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/27 03:13:27 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,19 @@ void	animhook(void *param)
 		map->move = 1;
 	}
 	//	???
-	if (map->time != time(NULL))
+	/*if (map->time != time(NULL))
 	{
 		print_map(map);
+		sleep(1);
 		usleep(20000);
 		time(&map->time);
+	}*/
+	if (clock() > map->clock + 160000)
+	{
+		print_map(map);
+		map->clock = clock();
+		//usleep(20000);
+		//time(&map->time);
 	}
 }
 
