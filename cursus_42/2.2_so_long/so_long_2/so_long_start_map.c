@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/28 01:43:34 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/28 02:32:19 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,9 @@ t_map	read_map(char *p)
 }
 
 /**
- * @brief Asigna los valores a cada chunk
+ * @brief Assigns the values to the matrix, 0 if its an object
  * 
- * @param map mapa
- * @param p path of the .ber file
+ * @param map Pointer to the map
  */
 void	assign_mtrx(t_map *map)
 {

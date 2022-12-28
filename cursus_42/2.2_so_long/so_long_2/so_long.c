@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/27 21:27:40 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/28 02:35:31 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,13 @@ void	animhook(void *param)
 	}*/
 }
 
+/**
+ * @brief Generate the background images
+ * 
+ * @param map Map pointer
+ * @param x X position of the chunk we are generating the image of
+ * @param y Y pos
+ */
 void	generate_image(t_map *map, int32_t x, int32_t y)
 {
 	xpm_t			*tx;
@@ -199,6 +206,7 @@ void	generate_map(t_map *map)
 		while (++j < map->n_chars)
 		{
 			generate_image(map, j, i);
+			//AQui//////////////////////////////////////////////////////////
 		}
 	}
 	create_extra_images(map);
