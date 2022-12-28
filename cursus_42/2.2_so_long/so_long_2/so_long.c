@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/27 03:19:21 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/27 21:27:40 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,90 +61,25 @@ void	animhook(void *param)
 		map->coins.coin_t_y = 0;
 		map->move = 1;
 	}
-	//	???
-	/*if (map->time != time(NULL))
-	{
-		print_map(map);
-		sleep(1);
-		usleep(20000);
-		time(&map->time);
-	}*/
-	if (clock() > map->clock + 160000)
+	/*if (clock() > map->clock + 160000)
 	{
 		print_map(map);
 		map->clock = clock();
 		//usleep(20000);
 		//time(&map->time);
-	}
+	}*/
 }
 
-xpm_t	*temp_flor_select(t_map *map, size_t x, size_t y)
-{
-	if (x < 1 || y < 1)
-		return (map->sprites.floor_1);
-	if (x % 2 == 0 && y % 2 == 0)
-		return (map->sprites.floor_2);
-	else if (x % 2 == 1 && y % 2 == 0)
-		return (map->sprites.floor_3);
-	else if (x % 2 == 0 && y % 2 == 1)
-		return (map->sprites.floor_4);
-	else
-		return (map->sprites.floor_1);
-}
-
-xpm_t	*exterior_select(t_map *map, size_t x, size_t y)
-{
-	if (x == 0 && y == 0)
-		return (map->sprites.corner_t_l);
-	else if (x == 0 && y == map->n_lines - 1)
-		return (map->sprites.corner_b_l);
-	else if (x == map->n_chars - 1 && y == 0)
-		return (map->sprites.corner_t_r);
-	else if (x == map->n_chars - 1 && y == map->n_lines - 1)
-		return (map->sprites.corner_b_r);
-	else if (x == 0)
-		return (map->sprites.wall_l);
-	else if (y == 0)
-		return (map->sprites.wall_t);
-	else if (x == map->n_chars - 1)
-		return (map->sprites.wall_r);
-	else if (y == map->n_lines - 1)
-		return (map->sprites.wall_b);
-	return (map->sprites.wall);
-}
-
-xpm_t	*texture(char c, size_t x, size_t y, t_map *map)
-{
-	(void)map;
-	if (c == '1')
-		return (exterior_select(map, x, y));
-	else if (c == 'E')
-		return (map->sprites.exit);
-	else if (map->structure[y][x] == 'P' && !map->move && map->map_finished)
-		return (map->sprites.exit);
-	else if (x > 0 && y > 0)
-		return (temp_flor_select(map, x, y));
-	else
-		return (map->sprites.wall);
-	return (0);
-}
-
-void	generate_image(t_map *map, int32_t x, int32_t y, char c)
+void	generate_image(t_map *map, int32_t x, int32_t y)
 {
 	xpm_t			*tx;
 	mlx_image_t		*g_img;
 
-	g_img = mlx_new_image(map->mlx, IMG_W, IMG_H);
-	memset(g_img->pixels, 255, g_img->width * g_img->height * sizeof(int));
-	tx = texture(c, x, y, map);
+	tx = texture(map, x, y);
 	g_img = mlx_texture_to_image(map->mlx, &tx->texture);
-	//mlx_delete_xpm42(tx);
-	//mlx_draw_texture(g_img, tx, 0, 0);
-	//mlx_delete_texture(tx);
-	//mlx_image_to_window(map->mlx, g_img, x * IMG_W, y * IMG_H);
 	if (!map->img_assigned)
 		map->img_assigned = 1;
-	map->image[(y * map->n_chars) + x] = g_img;
+	map->mtrx[(y * map->n_chars) + x].img = g_img;
 }
 
 void	delete_map(mlx_t *mlx, mlx_image_t **image, size_t size, size_t *extra)
@@ -168,19 +103,6 @@ xpm_t	*extra_selector(t_map *map, char c, size_t x, size_t y)
 		return (map->sprites.enemy);
 	else if (c == 'C')
 	{
-		/*if (x == map->coins.coin_t_x && y == map->coins.coin_t_y)
-		{
-			if (map->anim.frame_chest == 0)
-				return (mlx_load_png("sprites/c_c.png"));
-			else if (map->anim.frame_chest == 2)
-				return (mlx_load_png("sprites/c_h1.png"));
-			else if (map->anim.frame_chest == 4)
-				return (mlx_load_png("sprites/c_h2.png"));
-			else if (map->anim.frame_chest == 6)
-				return (mlx_load_png("sprites/c_o.png"));
-			else
-				return (mlx_load_png("sprites/coins.png"));
-		}*/
 		if (x == map->coins.coin_t_x && y == map->coins.coin_t_y)
 		{
 			if (map->anim.frame_chest == 0)
@@ -198,8 +120,23 @@ xpm_t	*extra_selector(t_map *map, char c, size_t x, size_t y)
 	return (mlx_load_xpm42("pixelart/flower_mid.xpm42"));
 }
 
-void	create_extra_image(t_map *map, size_t x, size_t y)
+void	create_extra_images(t_map *map)
 {
+	size_t	i;
+	size_t	j;
+
+	i = -1;
+	while (++i < map->n_lines)
+	{
+		j = -1;
+		while (++j < map->n_chars)
+		{
+			if (map->structure[i][j] == 'P')
+			{
+				map->mx_add[map->n_extra_count].img;
+			}
+		}
+	}
 	xpm_t			*tx;
 	mlx_image_t		*img;
 	char			c;
@@ -209,7 +146,7 @@ void	create_extra_image(t_map *map, size_t x, size_t y)
 	img = mlx_new_image(map->mlx, IMG_W, IMG_H);
 	memset(img->pixels, 255, img->width * img->height * sizeof(int));
 	if (!x && !y)
-		img = mlx_put_string(map->mlx, map->f_text, 0, 0);
+		img = mlx_put_string(map->mlx, "Moves: ", 0, 0);
 	else if (x == 1 && !y)
 	{
 		s = new_itoa((int)map->mv_count);
@@ -220,12 +157,8 @@ void	create_extra_image(t_map *map, size_t x, size_t y)
 	{
 		tx = extra_selector(map, c, x, y);
 		img = mlx_texture_to_image(map->mlx, &tx->texture);
-		//mlx_delete_xpm42(tx);
-		//mlx_draw_texture(img, tx, 0, 0);
-		//mlx_delete_texture(tx);
 	}
 	map->image[map->n_images + map->n_extra] = img;
-	map->n_extra++;
 }
 
 void	map_to_window(t_map *map)
@@ -254,38 +187,21 @@ void	map_to_window(t_map *map)
 	map->n_extra_count = 0;
 }
 
-void	assign_old_map(t_map *map)
-{
-	size_t	i;
-
-	i = -1;
-	while (++i < map->n_total)
-	{
-		map->image_old[i] = map->image[i];
-	}
-}
-
 void	generate_map(t_map *map)
 {
 	size_t	i;
 	size_t	j;
 
-	if (map->img_assigned)
-	{
-		delete_map(map->mlx, map->image_old, map->n_total, &map->n_extra);
-	}
 	i = -1;
 	while (++i < map->n_lines)
 	{
 		j = -1;
 		while (++j < map->n_chars)
 		{
-			generate_image(map, j, i, map->structure[i][j]);
-			if (map->structure[i][j] == 'P' || map->structure[i][j] == 'V'
-				|| map->structure[i][j] == 'C' || (!j && !i) || (j == 1 && !i))
-				create_extra_image(map, j, i);
+			generate_image(map, j, i);
 		}
 	}
+	create_extra_images(map);
 	map_to_window(map);
 	assign_old_map(map);
 	map->total_frames++;
@@ -298,6 +214,29 @@ void	show_leaks(void)
 {
 	system("leaks -q so_long");
 }
+
+void	delete_txs(t_map *map)
+{
+	mlx_delete_xpm42(map->sprites.player);
+	mlx_delete_xpm42(map->sprites.enemy);
+	mlx_delete_xpm42(map->sprites.exit);
+	mlx_delete_xpm42(map->sprites.collect_1);
+	mlx_delete_xpm42(map->sprites.collect_2);
+	mlx_delete_xpm42(map->sprites.corner_b_l);
+	mlx_delete_xpm42(map->sprites.corner_b_r);
+	mlx_delete_xpm42(map->sprites.corner_t_l);
+	mlx_delete_xpm42(map->sprites.corner_t_r);
+	mlx_delete_xpm42(map->sprites.wall);
+	mlx_delete_xpm42(map->sprites.wall_b);
+	mlx_delete_xpm42(map->sprites.wall_l);
+	mlx_delete_xpm42(map->sprites.wall_r);
+	mlx_delete_xpm42(map->sprites.wall_t);
+	mlx_delete_xpm42(map->sprites.floor_1);
+	mlx_delete_xpm42(map->sprites.floor_2);
+	mlx_delete_xpm42(map->sprites.floor_3);
+	mlx_delete_xpm42(map->sprites.floor_4);
+}
+
 int	main(int argc, char **argv)
 {
 	t_map	m;
@@ -316,6 +255,7 @@ int	main(int argc, char **argv)
 	mlx_loop_hook(m.mlx, &animhook, &m);
 	mlx_loop(m.mlx);
 	delete_map(m.mlx, m.image_old, m.n_total, &m.n_extra);
+	delete_txs(&m);
 	mlx_terminate(m.mlx);
 	show_leaks();
 	return (EXIT_SUCCESS);

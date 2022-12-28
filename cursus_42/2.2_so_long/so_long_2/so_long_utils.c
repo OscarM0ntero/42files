@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/26 20:23:16 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/27 19:29:35 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	print_map(t_map *map)
 	size_t	i;
 	size_t	j;
 
-	generate_map(map);
+	if (!map->img_assigned)
+		generate_map(map);
 	//error_handler(map->error);
 	i = -1;
 	write(1, "\n\n\n\n", 4);
@@ -25,7 +26,7 @@ void	print_map(t_map *map)
 	{
 		j = -1;
 		while (++j < map->n_chars)
-			write(1, &map->structure[i][j], 1);
+			write(1, &map->mtrx[i * map->n_chars + j].c, 1);
 		/*if (!i)
 		{
 			write(1, "\t\tCoins: ", 9);

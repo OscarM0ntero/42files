@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/27 03:13:27 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/27 20:23:46 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	animhook(void *param)
 		usleep(20000);
 		time(&map->time);
 	}*/
-	if (clock() > map->clock + 160000)
+	if (clock() > map->clock + 16000)
 	{
 		print_map(map);
 		map->clock = clock();
@@ -129,8 +129,6 @@ void	generate_image(t_map *map, int32_t x, int32_t y, char c)
 	xpm_t			*tx;
 	mlx_image_t		*g_img;
 
-	g_img = mlx_new_image(map->mlx, IMG_W, IMG_H);
-	memset(g_img->pixels, 255, g_img->width * g_img->height * sizeof(int));
 	tx = texture(c, x, y, map);
 	g_img = mlx_texture_to_image(map->mlx, &tx->texture);
 	//mlx_delete_xpm42(tx);

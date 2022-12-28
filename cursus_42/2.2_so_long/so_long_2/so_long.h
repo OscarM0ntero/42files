@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:58 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/27 02:57:22 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/27 20:26:55 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,14 @@ typedef struct s_sprites
 	xpm_t	*exit;
 }			t_sprites;
 
+typedef struct s_matrix_sq
+{
+	char		*c;
+	mlx_image_t	*img;
+	size_t		x;
+	size_t		y;
+}			t_matrix_sq;
+
 /**
  * @brief Esta estructura guarda toda la informacion del mapa
  * Siendo path la ruta, structure el mapa en forma de array, 
@@ -83,11 +91,11 @@ typedef struct s_sprites
  */
 typedef struct s_map
 {
+	t_matrix_sq	*mtrx;
+	t_matrix_sq	*mx_add;
 	clock_t		clock;
 	mlx_t		*mlx;
 	time_t		time;
-	mlx_image_t	**image;
-	mlx_image_t	**image_old;
 	t_sprites	sprites;
 	t_anim		anim;
 	t_coins		coins;
@@ -95,7 +103,6 @@ typedef struct s_map
 	int			img_assigned;
 	char		*path;
 	char		**structure;
-	char		*f_text;
 	size_t		n_chars;
 	size_t		n_lines;
 	size_t		n_images;
@@ -116,7 +123,7 @@ typedef struct s_map
 //	so_long.c
 void	delete_map(mlx_t *mlx, mlx_image_t **image, size_t size, size_t *extra);
 void	map_to_window(t_map *map);
-void	generate_image(t_map *map, int32_t x, int32_t y, char c);
+void	generate_image(t_map *map, int32_t x, int32_t y);
 void	generate_map(t_map *map);
 
 //	so_long_new_itoa.c
@@ -142,4 +149,10 @@ int		error_handler(int error);
 void	check_player_coords(t_map *map);
 void	check_exit_and_coin(t_map *map);
 void	check_enemies(t_map *map);
+
+//	so_long_textures.c
+xpm_t	*floor_select(t_map *map, size_t x, size_t y);
+xpm_t	*walls_select(t_map *map, size_t x, size_t y);
+xpm_t	*texture(t_map *map, size_t x, size_t y);
+xpm_t	*extra_selector(t_map *map, char c, size_t x, size_t y);
 #endif

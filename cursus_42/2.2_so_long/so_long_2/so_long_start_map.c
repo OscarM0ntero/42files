@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/27 02:59:57 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/28 01:43:34 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ void	assign_sprites(t_sprites *s)
 	s->exit = mlx_load_xpm42("pixelart/exit_basket.xpm42");
 }
 
+/**
+ * @brief Assigns default values to map
+ * @param map map pointer
+ * @param p path to .ber file
+ */
 void	assign_to_map(t_map *map, char *path)
 {
 	map->clock = clock();
@@ -58,7 +63,6 @@ void	assign_to_map(t_map *map, char *path)
 	map->game_over = 0;
 	map->map_finished = 0;
 	map->mv_count = 0;
-	map->f_text = ft_strdup("Moves:");
 	map->total_frames = 0;
 	assign_sprites(&map->sprites);
 	if (!map->n_lines)
@@ -66,10 +70,10 @@ void	assign_to_map(t_map *map, char *path)
 }
 
 /**
- * @brief Esta funcion lee el mapa
+ * @brief Reads a .ber file and saves the map on a strings array
  * 
-* @param p argv[1] -> Path al archivo mapa.ber
- * @return t_map El mapa devuelto en forma de estructura.
+* @param p path to .ber file
+ * @return New map created
  */
 t_map	read_map(char *p)
 {
@@ -98,6 +102,49 @@ t_map	read_map(char *p)
 	return (new_map);
 }
 
+/**
+ * @brief Asigna los valores a cada chunk
+ * 
+ * @param map mapa
+ * @param p path of the .ber file
+ */
+void	assign_mtrx(t_map *map)
+{
+	size_t	i;
+	size_t	j;
+	size_t	count;
+
+	i = -1;
+	count = 0;
+	while (++i < map->n_lines)
+	{
+		j = -1;
+		while (++j < map->n_chars)
+		{
+			if (map->structure[i][j] == ('P') || map->structure[i][j] == ('C')
+				|| map->structure[i][j] == ('V'))
+			{
+				map->mtrx[i * map->n_chars + j].c = '0';
+				map->mx_add[count].c = map->structure[i][j];
+				map->mx_add[count].x = j;
+				map->mx_add[count].y = i;
+				count++;
+				continue ;
+			}
+			map->mtrx[i * map->n_chars + j].c = map->structure[i][j];
+			map->mtrx->x = j;
+			map->mtrx->y = i;
+		}
+	}
+}
+
+/**
+ * @brief Starts the assignation of values, reading the map and 
+ * checking the coords of the props, assigning the size of the arrays
+ * 
+ * @param map mapa
+ * @param p path of the .ber file
+ */
 void	start(t_map *map, char *p)
 {
 	*map = read_map(p);
@@ -105,7 +152,9 @@ void	start(t_map *map, char *p)
 	check_exit_and_coin(map);
 	check_enemies(map);
 	map->n_total = map->n_images + map->coins.n_coins + map->n_enemies + 3;
-	map->image = (mlx_image_t **)malloc((map->n_total) * sizeof(mlx_image_t *));
-	map->image_old = (mlx_image_t **)malloc((map->n_total)
-			* sizeof(mlx_image_t *));
+	map->n_extra = map->coins.n_coins + map->n_enemies + 3;
+	map->mtrx = (t_matrix_sq **)malloc((map->n_images) * sizeof(t_matrix_sq *));
+	map->mx_add = (t_matrix_sq **)malloc((map->n_extra)
+			* sizeof(t_matrix_sq *));
+	assign_mtrx(map);
 }
