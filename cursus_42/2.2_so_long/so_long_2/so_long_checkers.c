@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long_checkers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/23 00:26:29 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/28 12:28:28 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	check_player_coords(t_map *map)
 		j = -1;
 		while (++j < (int)map->n_chars && !map->error)
 		{
-			if (map->structure[i][j] == 'P' && !map->error)
+			if (map->str[i][j] == 'P' && !map->error)
 			{
 				if (++count == 1)
 				{
@@ -93,9 +93,9 @@ void	check_exit_and_coin(t_map *map)
 		j = -1;
 		while (++j < (int)map->n_chars && !map->error)
 		{
-			if (map->structure[i][j] == 'E' && !map->error)
+			if (map->str[i][j] == 'E' && !map->error)
 				c_exit++;
-			if (map->structure[i][j] == 'C' && !map->error)
+			if (map->str[i][j] == 'C' && !map->error)
 				c_coin++;
 		}
 	}
@@ -117,7 +117,7 @@ void	check_enemies(t_map *map)
 		j = -1;
 		while (++j < (int)map->n_chars)
 		{
-			if (map->structure[i][j] == 'V')
+			if (map->str[i][j] == 'V')
 				map->n_enemies++;
 		}
 	}

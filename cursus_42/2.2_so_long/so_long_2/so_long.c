@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/28 02:35:31 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/28 17:01:11 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	animhook(void *param)
 	{
 		map->anim.frame_chest = 0;
 		map->coins.coin_taked = 0;
-		map->structure[map->coins.coin_t_y][map->coins.coin_t_x] = '0';
+		map->str[map->coins.coin_t_y][map->coins.coin_t_x] = '0';
 		print_map(map);
 		map->coins.c_count++;
 		map->coins.coin_t_x = 0;
@@ -80,124 +80,70 @@ void	animhook(void *param)
 void	generate_image(t_map *map, int32_t x, int32_t y)
 {
 	xpm_t			*tx;
-	mlx_image_t		*g_img;
 
 	tx = texture(map, x, y);
-	g_img = mlx_texture_to_image(map->mlx, &tx->texture);
+	map->mtrx[(y * map->n_chars) + x].img
+		= mlx_texture_to_image(map->mlx, &tx->texture);
 	if (!map->img_assigned)
 		map->img_assigned = 1;
-	map->mtrx[(y * map->n_chars) + x].img = g_img;
 }
 
-void	delete_map(mlx_t *mlx, mlx_image_t **image, size_t size, size_t *extra)
+void	delete_map(t_map *map)
 {
 	size_t	i;
 
 	i = 0;
-	while (i < size)
+	while (i < map->n_images)
 	{
-		mlx_delete_image(mlx, image[i]);
+		mlx_delete_image(map->mlx, map->mtrx[i].img);
 		i++;
 	}
-	*extra = 0;
-}
-
-xpm_t	*extra_selector(t_map *map, char c, size_t x, size_t y)
-{
-	if (c == 'P')
-		return (map->sprites.player);
-	else if (c == 'V')
-		return (map->sprites.enemy);
-	else if (c == 'C')
+	i = 0;
+	while (i < map->n_extra)
 	{
-		if (x == map->coins.coin_t_x && y == map->coins.coin_t_y)
-		{
-			if (map->anim.frame_chest == 0)
-				return (map->sprites.collect_1);
-			else if (map->anim.frame_chest == 2)
-				return (map->sprites.collect_1);
-			else if (map->anim.frame_chest == 4)
-				return (map->sprites.collect_2);
-			else if (map->anim.frame_chest == 6)
-				return (map->sprites.collect_2);
-			else
-				return (map->sprites.collect_2);
-		}
+		mlx_delete_image(map->mlx, map->mx_add[i].img);
+		i++;
 	}
-	return (mlx_load_xpm42("pixelart/flower_mid.xpm42"));
 }
 
 void	create_extra_images(t_map *map)
 {
-	size_t	i;
-	size_t	j;
+	size_t		i;
+	xpm_t		*tx;
 
 	i = -1;
-	while (++i < map->n_lines)
+	while (++i < map->n_extra)
 	{
-		j = -1;
-		while (++j < map->n_chars)
-		{
-			if (map->structure[i][j] == 'P')
-			{
-				map->mx_add[map->n_extra_count].img;
-			}
-		}
+		tx = extra_selector(map, map->mx_add[i].c, map->mx_add[i].x,
+				map->mx_add[i].y);
+		map->mx_add[i].img = mlx_texture_to_image(map->mlx, &tx->texture);
 	}
-	xpm_t			*tx;
-	mlx_image_t		*img;
-	char			c;
-	char			*s;
-
-	c = map->structure[y][x];
-	img = mlx_new_image(map->mlx, IMG_W, IMG_H);
-	memset(img->pixels, 255, img->width * img->height * sizeof(int));
-	if (!x && !y)
-		img = mlx_put_string(map->mlx, "Moves: ", 0, 0);
-	else if (x == 1 && !y)
-	{
-		s = new_itoa((int)map->mv_count);
-		img = mlx_put_string(map->mlx, s, 0, 0);
-		free (s);
-	}
-	else
-	{
-		tx = extra_selector(map, c, x, y);
-		img = mlx_texture_to_image(map->mlx, &tx->texture);
-	}
-	map->image[map->n_images + map->n_extra] = img;
 }
 
 void	map_to_window(t_map *map)
 {
 	size_t			i;
-	size_t			j;
 
 	i = -1;
-	while (++i < map->n_lines)
+	while (++i < map->n_images)
 	{
-		j = -1;
-		while (++j < map->n_chars)
-		{
-			mlx_image_to_window(map->mlx, map->image[(i * map->n_chars) + j],
-				j * IMG_W, i * IMG_H);
-			if (map->structure[i][j] == 'P' || map->structure[i][j] == 'V'
-				|| map->structure[i][j] == 'C' || (!j && !i) || (j == 1 && !i))
-			{
-				mlx_image_to_window(map->mlx,
-					map->image[(map->n_images + map->n_extra_count)],
-					j * IMG_W, i * IMG_H);
-				map->n_extra_count++;
-			}
-		}
+		mlx_image_to_window(map->mlx, map->mtrx[i].img, map->mtrx[i].x * IMG_W,
+			map->mtrx[i].y * IMG_H);
+		printf("Hola:%ld x%ld y%ld c%c\n", i, map->mtrx[i].x, map->mtrx[i].y, map->mtrx[i].c);
 	}
-	map->n_extra_count = 0;
+	i = -1;
+	while (++i < map->n_extra)
+	{
+		mlx_image_to_window(map->mlx, map->mx_add[i].img, map->mx_add[i].x
+			* IMG_W, map->mx_add[i].y * IMG_H);
+	}
 }
 
 void	generate_map(t_map *map)
 {
 	size_t	i;
 	size_t	j;
+	char	*c;
 
 	i = -1;
 	while (++i < map->n_lines)
@@ -206,12 +152,14 @@ void	generate_map(t_map *map)
 		while (++j < map->n_chars)
 		{
 			generate_image(map, j, i);
-			//AQui//////////////////////////////////////////////////////////
 		}
 	}
 	create_extra_images(map);
 	map_to_window(map);
-	assign_old_map(map);
+	map->mtrx[0].img = mlx_put_string(map->mlx, "Moves:", 0, 0);
+	c = new_itoa(map->mv_count);
+	map->mtrx[0].img = mlx_put_string(map->mlx, c, IMG_W, 0);
+	free(c);
 	map->total_frames++;
 }
 
@@ -262,9 +210,9 @@ int	main(int argc, char **argv)
 	mlx_key_hook(m.mlx, &keyhook, &m);
 	mlx_loop_hook(m.mlx, &animhook, &m);
 	mlx_loop(m.mlx);
-	delete_map(m.mlx, m.image_old, m.n_total, &m.n_extra);
-	delete_txs(&m);
+	delete_map(&m);
 	mlx_terminate(m.mlx);
+	delete_txs(&m);
 	show_leaks();
 	return (EXIT_SUCCESS);
 }

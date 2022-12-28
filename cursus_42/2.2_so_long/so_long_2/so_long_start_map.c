@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long_start_map.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/28 02:32:19 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/28 17:13:44 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	assign_sprites(t_sprites *s)
 	s->wall_l = mlx_load_xpm42("pixelart/grass_left.xpm42");
 	s->wall = mlx_load_xpm42("pixelart/grass.xpm42");
 	s->floor_1 = mlx_load_xpm42("pixelart/water.xpm42");
-	s->floor_2 = mlx_load_xpm42("pixelart/water.xpm42");
-	s->floor_3 = mlx_load_xpm42("pixelart/water.xpm42");
-	s->floor_4 = mlx_load_xpm42("pixelart/water.xpm42");
+	s->floor_2 = mlx_load_xpm42("pixelart/water2.xpm42");
+	s->floor_3 = mlx_load_xpm42("pixelart/water3.xpm42");
+	s->floor_4 = mlx_load_xpm42("pixelart/water4.xpm42");
 	s->collect_1 = mlx_load_xpm42("pixelart/flower_mid.xpm42");
 	s->collect_2 = mlx_load_xpm42("pixelart/flower_open.xpm42");
 	s->exit = mlx_load_xpm42("pixelart/exit_basket.xpm42");
@@ -45,7 +45,6 @@ void	assign_to_map(t_map *map, char *path)
 	map->move = 1;
 	time(&map->time);
 	map->n_extra = 0;
-	map->n_extra_count = 0;
 	map->img_assigned = 0;
 	map->anim.frame_chest = 0;
 	map->anim.frame_enemy = 0;
@@ -90,11 +89,11 @@ t_map	read_map(char *p)
 	line = get_next_line(fd);
 	new_map.n_chars = ft_strlen(line);
 	new_map.n_images = new_map.n_lines * new_map.n_chars;
-	new_map.structure = (char **)malloc(new_map.n_lines * sizeof(char *));
+	new_map.str = (char **)malloc(new_map.n_lines * sizeof(char *));
 	while (n_lin < new_map.n_lines && !new_map.error)
 	{
 		check_line(line, n_lin, &new_map);
-		new_map.structure[n_lin] = line;
+		new_map.str[n_lin] = line;
 		line = get_next_line(fd);
 		n_lin++;
 	}
@@ -120,19 +119,25 @@ void	assign_mtrx(t_map *map)
 		j = -1;
 		while (++j < map->n_chars)
 		{
-			if (map->structure[i][j] == ('P') || map->structure[i][j] == ('C')
-				|| map->structure[i][j] == ('V'))
+			/*if ((!i && !j) || (!i && j == 1))
+			{
+				map->mx_add[count].c = 'T';
+				map->mx_add[count].x = j;
+				map->mx_add[count].y = i;
+			}*/
+			if (map->str[i][j] == ('P') || map->str[i][j] == ('C')
+				|| map->str[i][j] == ('V'))
 			{
 				map->mtrx[i * map->n_chars + j].c = '0';
-				map->mx_add[count].c = map->structure[i][j];
+				map->mx_add[count].c = map->str[i][j];
 				map->mx_add[count].x = j;
 				map->mx_add[count].y = i;
 				count++;
-				continue ;
 			}
-			map->mtrx[i * map->n_chars + j].c = map->structure[i][j];
-			map->mtrx->x = j;
-			map->mtrx->y = i;
+			else
+				map->mtrx[i * map->n_chars + j].c = map->str[i][j];
+			map->mtrx[i * map->n_chars + j].x = j;
+			map->mtrx[i * map->n_chars + j].y = i;
 		}
 	}
 }
@@ -150,10 +155,9 @@ void	start(t_map *map, char *p)
 	check_player_coords(map);
 	check_exit_and_coin(map);
 	check_enemies(map);
-	map->n_total = map->n_images + map->coins.n_coins + map->n_enemies + 3;
-	map->n_extra = map->coins.n_coins + map->n_enemies + 3;
-	map->mtrx = (t_matrix_sq **)malloc((map->n_images) * sizeof(t_matrix_sq *));
-	map->mx_add = (t_matrix_sq **)malloc((map->n_extra)
-			* sizeof(t_matrix_sq *));
+	map->n_extra = map->coins.n_coins + map->n_enemies + 1;	//2 if added counter
+	map->n_total = map->n_images + map->n_extra;
+	map->mtrx = (t_matrix_sq *)malloc(map->n_images * sizeof(t_matrix_sq));
+	map->mx_add = (t_matrix_sq *)malloc((map->n_extra * sizeof(t_matrix_sq)));
 	assign_mtrx(map);
 }

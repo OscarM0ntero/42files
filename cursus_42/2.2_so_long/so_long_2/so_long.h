@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:58 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/27 20:26:55 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/28 16:24:06 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct s_sprites
 
 typedef struct s_matrix_sq
 {
-	char		*c;
+	char		c;
 	mlx_image_t	*img;
 	size_t		x;
 	size_t		y;
@@ -102,13 +102,12 @@ typedef struct s_map
 	t_enemy		**enemy;
 	int			img_assigned;
 	char		*path;
-	char		**structure;
+	char		**str;
 	size_t		n_chars;
 	size_t		n_lines;
 	size_t		n_images;
 	size_t		n_total;
 	size_t		n_extra;
-	size_t		n_extra_count;
 	size_t		n_enemies;
 	int			error;
 	size_t		p_x;
@@ -121,7 +120,7 @@ typedef struct s_map
 }			t_map;
 
 //	so_long.c
-void	delete_map(mlx_t *mlx, mlx_image_t **image, size_t size, size_t *extra);
+void	delete_map(t_map *map);
 void	map_to_window(t_map *map);
 void	generate_image(t_map *map, int32_t x, int32_t y);
 void	generate_map(t_map *map);

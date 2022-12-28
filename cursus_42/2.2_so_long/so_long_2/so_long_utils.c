@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/27 19:29:35 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/28 16:26:14 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	print_map(t_map *map)
 	{
 		j = -1;
 		while (++j < map->n_chars)
-			write(1, &map->mtrx[i * map->n_chars + j].c, 1);
+			write(1, &map->str[i][j], 1);
 		/*if (!i)
 		{
 			write(1, "\t\tCoins: ", 9);

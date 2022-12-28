@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/27 20:23:46 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/28 14:11:01 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,13 @@ void	animhook(void *param)
 		usleep(20000);
 		time(&map->time);
 	}*/
-	if (clock() > map->clock + 16000)
+	/*if (clock() > map->clock + 16000)
 	{
 		print_map(map);
 		map->clock = clock();
 		//usleep(20000);
 		//time(&map->time);
-	}
+	}*/
 }
 
 xpm_t	*temp_flor_select(t_map *map, size_t x, size_t y)
@@ -313,7 +313,7 @@ int	main(int argc, char **argv)
 	show_leaks();
 	return (EXIT_SUCCESS);
 }
-
+mlx_delete_texture(map.)
 /*
 int	main(int argc, char **argv)
 {

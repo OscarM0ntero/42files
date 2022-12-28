@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long_movement.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/27 03:10:03 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/28 13:58:15 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,5 +147,6 @@ void	move(int dir, t_map *map)
 		move_left(map);
 	if (map->game_over || map->map_finished)
 		map->move = 0;
-	//print_map(map);
+	print_map(map);
+	mlx_load_xpm42()
 }
