@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/28 16:26:14 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/29 17:33:01 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	print_map(t_map *map)
 	size_t	i;
 	size_t	j;
 
-	if (!map->img_assigned)
-		generate_map(map);
+	//if (!map->img_assigned)
+	//	generate_map(map);
 	//error_handler(map->error);
 	i = -1;
 	write(1, "\n\n\n\n", 4);
@@ -38,6 +38,7 @@ void	print_map(t_map *map)
 		}*/
 		write(1, "\n", 1);
 	}
+	map->total_frames++;
 	printf("\n\nA=%ld\nx=%ld y=%ld\nFrames=%ld\n", map->anim.frame_chest,
 		map->coins.coin_t_x, map->coins.coin_t_y, map->total_frames);
 }

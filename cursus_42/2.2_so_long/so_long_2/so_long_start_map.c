@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/28 17:13:44 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/29 17:58:32 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	assign_to_map(t_map *map, char *path)
 	map->clock = clock();
 	map->move = 1;
 	time(&map->time);
+	map->time *= 100;
 	map->n_extra = 0;
 	map->img_assigned = 0;
 	map->anim.frame_chest = 0;
@@ -63,6 +64,7 @@ void	assign_to_map(t_map *map, char *path)
 	map->map_finished = 0;
 	map->mv_count = 0;
 	map->total_frames = 0;
+	map->anim.frame_water = 0;
 	assign_sprites(&map->sprites);
 	if (!map->n_lines)
 		map->error = 1;
@@ -101,6 +103,24 @@ t_map	read_map(char *p)
 	return (new_map);
 }
 
+void	found_c(t_map *map, size_t i, size_t j, size_t *c)
+{
+	map->mtrx[i * map->n_chars + j].c = '0';
+	map->mx_add[*c].c = map->str[i][j];
+	map->mx_add[*c].x = j;
+	map->mx_add[*c].y = i;
+	(*c)++;
+}
+
+void	found_v(t_map *map, size_t i, size_t j, size_t *c)
+{
+	map->mtrx[i * map->n_chars + j].c = '0';
+	map->mx_add[*c].c = map->str[i][j];
+	map->mx_add[*c].x = j;
+	map->mx_add[*c].y = i;
+	(*c)--;
+}
+
 /**
  * @brief Assigns the values to the matrix, 0 if its an object
  * 
@@ -111,29 +131,20 @@ void	assign_mtrx(t_map *map)
 	size_t	i;
 	size_t	j;
 	size_t	count;
+	size_t	count_rev;
 
 	i = -1;
-	count = 0;
+	count = 1;
+	count_rev = map->n_extra - 1;
 	while (++i < map->n_lines)
 	{
 		j = -1;
 		while (++j < map->n_chars)
 		{
-			/*if ((!i && !j) || (!i && j == 1))
-			{
-				map->mx_add[count].c = 'T';
-				map->mx_add[count].x = j;
-				map->mx_add[count].y = i;
-			}*/
-			if (map->str[i][j] == ('P') || map->str[i][j] == ('C')
-				|| map->str[i][j] == ('V'))
-			{
-				map->mtrx[i * map->n_chars + j].c = '0';
-				map->mx_add[count].c = map->str[i][j];
-				map->mx_add[count].x = j;
-				map->mx_add[count].y = i;
-				count++;
-			}
+			if (map->str[i][j] == ('C'))
+				found_c(map, i, j, &count);
+			else if (map->str[i][j] == ('V'))
+				found_v(map, i, j, &count_rev);
 			else
 				map->mtrx[i * map->n_chars + j].c = map->str[i][j];
 			map->mtrx[i * map->n_chars + j].x = j;
@@ -160,4 +171,7 @@ void	start(t_map *map, char *p)
 	map->mtrx = (t_matrix_sq *)malloc(map->n_images * sizeof(t_matrix_sq));
 	map->mx_add = (t_matrix_sq *)malloc((map->n_extra * sizeof(t_matrix_sq)));
 	assign_mtrx(map);
+	map->mx_add[0].c = 'P';
+	map->mx_add[0].x = map->p_x;
+	map->mx_add[0].y = map->p_y;
 }

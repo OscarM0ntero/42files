@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:58 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/28 16:24:06 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/29 18:11:37 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_anim
 	size_t	frame_chest;
 	size_t	frame_enemy;
 	size_t	frame_player;
+	size_t	frame_water;
 }			t_anim;
 
 typedef struct s_coins
@@ -150,8 +151,9 @@ void	check_exit_and_coin(t_map *map);
 void	check_enemies(t_map *map);
 
 //	so_long_textures.c
-xpm_t	*floor_select(t_map *map, size_t x, size_t y);
+xpm_t	*floor_select(t_map *map, size_t x, size_t y, size_t frame);
 xpm_t	*walls_select(t_map *map, size_t x, size_t y);
 xpm_t	*texture(t_map *map, size_t x, size_t y);
 xpm_t	*extra_selector(t_map *map, char c, size_t x, size_t y);
+void	regenerate_water(t_map *map);
 #endif

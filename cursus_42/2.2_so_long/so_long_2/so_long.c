@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/28 17:01:11 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/29 18:21:22 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,20 @@ void	keyhook(mlx_key_data_t keydata, void *param)
 		mlx_close_window(map->mlx);
 }
 
+void	timer(void *param)
+{
+	t_map	*map;
+
+	map = param;
+	if (map->time)
+	{
+		print_map(map);
+		printf("Reloj: %lu\n", map->time);
+		usleep(10000);
+		map->time += 1;
+	}
+}
+
 void	animhook(void *param)
 {
 	t_map	*map;
@@ -61,13 +75,13 @@ void	animhook(void *param)
 		map->coins.coin_t_y = 0;
 		map->move = 1;
 	}
-	/*if (clock() > map->clock + 160000)
+	if (map->time % 33 == 0)
 	{
-		print_map(map);
-		map->clock = clock();
-		//usleep(20000);
-		//time(&map->time);
-	}*/
+		map->anim.frame_water++;
+		regenerate_water(map);
+		if (map->time % 132 == 0)
+			map->anim.frame_water = 0;
+	}
 }
 
 /**
@@ -129,7 +143,6 @@ void	map_to_window(t_map *map)
 	{
 		mlx_image_to_window(map->mlx, map->mtrx[i].img, map->mtrx[i].x * IMG_W,
 			map->mtrx[i].y * IMG_H);
-		printf("Hola:%ld x%ld y%ld c%c\n", i, map->mtrx[i].x, map->mtrx[i].y, map->mtrx[i].c);
 	}
 	i = -1;
 	while (++i < map->n_extra)
@@ -206,9 +219,10 @@ int	main(int argc, char **argv)
 	if (!m.mlx)
 		exit(EXIT_FAILURE);
 	if (!m.error)
-		print_map(&m);
+		generate_map(&m);
 	mlx_key_hook(m.mlx, &keyhook, &m);
 	mlx_loop_hook(m.mlx, &animhook, &m);
+	mlx_loop_hook(m.mlx, &timer, &m);
 	mlx_loop(m.mlx);
 	delete_map(&m);
 	mlx_terminate(m.mlx);
