@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long_textures.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/28 17:42:45 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/28 23:18:15 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ xpm_t	*floor_select(t_map *map, size_t x, size_t y)
 		return (map->sprites.floor_4);
 }
 
- xpm_t	*inner_walls_select(t_map *map, size_t x, size_t y)
+ /*xpm_t	*inner_walls_select(t_map *map, size_t x, size_t y)
  {
 	char	**s;
 
@@ -111,6 +111,7 @@ xpm_t	*floor_select(t_map *map, size_t x, size_t y)
 		//	 0
 	return (map->sprites.wall);
  }
+ */
 
 xpm_t	*walls_select(t_map *map, size_t x, size_t y)
 {
@@ -133,7 +134,8 @@ xpm_t	*walls_select(t_map *map, size_t x, size_t y)
 	else if (x == 0 || y == 0 || x == map->n_chars - 1
 		|| y == map->n_lines - 1)
 		return (map->sprites.wall);
-	return (inner_walls_select(map, x, y));
+	return (map->sprites.wall);
+	//return (inner_walls_select(map, x, y));
 }
 
 xpm_t	*texture(t_map *map, size_t x, size_t y)
