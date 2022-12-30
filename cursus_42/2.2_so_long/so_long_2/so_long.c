@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/30 01:45:04 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/30 13:46:44 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,20 @@ void	timer(void *param)
 {
 	t_map	*map;
 	char	*c;
+	char	*tmp;
 
 	map = param;
 	if (map->time)
 	{
 		print_map(map);
 		c = new_itoa(map->mv_count);
-		map->mtrx[0].img = mlx_put_string(map->mlx, c, IMG_W, 0);
+		tmp = c;
+		c = ft_strjoin("Moves: ", c);
+		mlx_delete_image(map->mlx, map->mtrx[0].img);
+		//map->mtrx[0].img = mlx_put_string(map->mlx, "MOVES", 0, 0);
+		map->mtrx[0].img = mlx_put_string(map->mlx, c, 0, 0);
 		free(c);
+		free(tmp);
 		usleep(10000);
 		map->time += 1;
 	}
@@ -62,21 +68,21 @@ void	animhook(void *param)
 	t_map	*map;
 
 	map = param;
-	if (map->time % 50 == 0)
+	
+	if (map->time % 25 == 0)
 	{
 		map->anim.frame_water++;
 		regenerate_water(map);
-		if (map->time % 200 == 0)
+		if (map->time % 100 == 0)
 			map->anim.frame_water = 0;
 	}
-	if (map->time % 100 == 0)
+	/*if (map->time % 100 == 0 && map->coins.coin_taked)
 	{
-		//HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-		map->anim.frame_water++;
-		regenerate_water(map);
+		map->anim.frame_flower++;
+		reload_flower(map);
 		if (map->time % 200 == 0)
 			map->anim.frame_flower = 0;
-	}
+	}*/
 }
 
 /**

@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/29 17:28:29 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/30 13:53:18 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,13 @@ void	coin_taken(t_map *map, size_t x, size_t y)
 {
 	map->coins.coin_t_x = x;
 	map->coins.coin_t_y = y;
-	map->move = 0;
-	map->coins.coin_taked++;
+	map->str[map->p_y][map->p_x] = '0';
+	map->p_y = x;
+	map->p_y = y;
+	map->str[map->p_y][map->p_x] = 'P';
+	//map->move = 0;
+	//map->coins.coin_taked++;
+	map->coins.c_count++;
 }
 
 void	refresh_player(t_map *map, int dir)
@@ -50,7 +55,10 @@ void	move_up(t_map *map)
 		refresh_player(map, 1);
 	}
 	else if (map->str[map->p_y - 1][map->p_x] == 'C')
+	{
 		coin_taken(map, map->p_x, map->p_y - 1);
+		refresh_player(map, 1);
+	}
 	else if (map->str[map->p_y - 1][map->p_x] == 'V')
 	{
 		map->str[map->p_y][map->p_x] = '0';
@@ -74,7 +82,10 @@ void	move_right(t_map *map)
 		refresh_player(map, 2);
 	}
 	else if (map->str[map->p_y][map->p_x + 1] == 'C')
+	{
 		coin_taken(map, map->p_x + 1, map->p_y);
+		refresh_player(map, 2);
+	}
 	else if (map->str[map->p_y][map->p_x + 1] == 'V')
 	{
 		map->str[map->p_y][map->p_x] = '0';
@@ -97,7 +108,10 @@ void	move_down(t_map *map)
 		refresh_player(map, 3);
 	}
 	else if (map->str[map->p_y + 1][map->p_x] == 'C')
+	{
 		coin_taken(map, map->p_x, map->p_y + 1);
+		refresh_player(map, 3);
+	}
 	else if (map->str[map->p_y + 1][map->p_x] == 'V')
 	{
 		map->str[map->p_y][map->p_x] = '0';
@@ -120,7 +134,10 @@ void	move_left(t_map *map)
 		refresh_player(map, 4);
 	}
 	else if (map->str[map->p_y][map->p_x - 1] == 'C')
+	{
 		coin_taken(map, map->p_x - 1, map->p_y);
+		refresh_player(map, 4);
+	}
 	else if (map->str[map->p_y][map->p_x - 1] == 'V')
 	{
 		map->str[map->p_y][map->p_x] = '0';

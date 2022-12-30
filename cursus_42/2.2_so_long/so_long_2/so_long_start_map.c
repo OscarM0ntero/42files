@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long_start_map.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/30 00:21:18 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/30 10:57:09 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	assign_to_map(t_map *map, char *path)
 	map->time *= 100;
 	map->n_extra = 0;
 	map->img_assigned = 0;
-	map->anim.frame_chest = 0;
+	map->anim.frame_flower = 0;
 	map->anim.frame_enemy = 0;
 	map->anim.frame_player = 0;
 	map->error = 0;

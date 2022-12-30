@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long_textures.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/30 00:36:42 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/30 12:41:22 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,13 +198,13 @@ xpm_t	*extra_selector(t_map *map, char c, size_t x, size_t y)
 	{
 		if (x == map->coins.coin_t_x && y == map->coins.coin_t_y)
 		{
-			if (map->anim.frame_chest == 0)
+			if (map->anim.frame_flower == 0)
 				return (map->sprites.collect_1);
-			else if (map->anim.frame_chest == 2)
+			else if (map->anim.frame_flower == 2)
 				return (map->sprites.collect_1);
-			else if (map->anim.frame_chest == 4)
+			else if (map->anim.frame_flower == 4)
 				return (map->sprites.collect_2);
-			else if (map->anim.frame_chest == 6)
+			else if (map->anim.frame_flower == 6)
 				return (map->sprites.collect_2);
 			else
 				return (map->sprites.collect_2);
