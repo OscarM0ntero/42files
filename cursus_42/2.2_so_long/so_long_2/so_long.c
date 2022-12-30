@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/29 18:21:22 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/30 01:45:04 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,15 @@ void	keyhook(mlx_key_data_t keydata, void *param)
 void	timer(void *param)
 {
 	t_map	*map;
+	char	*c;
 
 	map = param;
 	if (map->time)
 	{
 		print_map(map);
-		printf("Reloj: %lu\n", map->time);
+		c = new_itoa(map->mv_count);
+		map->mtrx[0].img = mlx_put_string(map->mlx, c, IMG_W, 0);
+		free(c);
 		usleep(10000);
 		map->time += 1;
 	}
@@ -59,28 +62,20 @@ void	animhook(void *param)
 	t_map	*map;
 
 	map = param;
-	if (map->coins.coin_taked && map->anim.frame_chest < 11 && map->anim.frame_chest % 2 == 0)
-	{
-		print_map(map);
-		usleep (200000);
-	}
-	if (map->coins.coin_taked && map->anim.frame_chest++ == 11)
-	{
-		map->anim.frame_chest = 0;
-		map->coins.coin_taked = 0;
-		map->str[map->coins.coin_t_y][map->coins.coin_t_x] = '0';
-		print_map(map);
-		map->coins.c_count++;
-		map->coins.coin_t_x = 0;
-		map->coins.coin_t_y = 0;
-		map->move = 1;
-	}
-	if (map->time % 33 == 0)
+	if (map->time % 50 == 0)
 	{
 		map->anim.frame_water++;
 		regenerate_water(map);
-		if (map->time % 132 == 0)
+		if (map->time % 200 == 0)
 			map->anim.frame_water = 0;
+	}
+	if (map->time % 100 == 0)
+	{
+		//HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+		map->anim.frame_water++;
+		regenerate_water(map);
+		if (map->time % 200 == 0)
+			map->anim.frame_flower = 0;
 	}
 }
 
@@ -156,7 +151,6 @@ void	generate_map(t_map *map)
 {
 	size_t	i;
 	size_t	j;
-	char	*c;
 
 	i = -1;
 	while (++i < map->n_lines)
@@ -170,9 +164,6 @@ void	generate_map(t_map *map)
 	create_extra_images(map);
 	map_to_window(map);
 	map->mtrx[0].img = mlx_put_string(map->mlx, "Moves:", 0, 0);
-	c = new_itoa(map->mv_count);
-	map->mtrx[0].img = mlx_put_string(map->mlx, c, IMG_W, 0);
-	free(c);
 	map->total_frames++;
 }
 
@@ -191,15 +182,6 @@ void	delete_txs(t_map *map)
 	mlx_delete_xpm42(map->sprites.exit);
 	mlx_delete_xpm42(map->sprites.collect_1);
 	mlx_delete_xpm42(map->sprites.collect_2);
-	mlx_delete_xpm42(map->sprites.corner_b_l);
-	mlx_delete_xpm42(map->sprites.corner_b_r);
-	mlx_delete_xpm42(map->sprites.corner_t_l);
-	mlx_delete_xpm42(map->sprites.corner_t_r);
-	mlx_delete_xpm42(map->sprites.wall);
-	mlx_delete_xpm42(map->sprites.wall_b);
-	mlx_delete_xpm42(map->sprites.wall_l);
-	mlx_delete_xpm42(map->sprites.wall_r);
-	mlx_delete_xpm42(map->sprites.wall_t);
 	mlx_delete_xpm42(map->sprites.floor_1);
 	mlx_delete_xpm42(map->sprites.floor_2);
 	mlx_delete_xpm42(map->sprites.floor_3);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long_checkers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/29 16:38:59 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/30 00:04:23 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

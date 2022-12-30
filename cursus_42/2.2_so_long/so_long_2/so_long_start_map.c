@@ -3,35 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   so_long_start_map.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/29 17:58:32 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/30 00:21:18 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+void	assign_grass(t_sprites *s)
+{
+	s->grass.corner_b_l = mlx_load_xpm42("pixelart/corner_b_l.xpm42");
+	s->grass.corner_b_r = mlx_load_xpm42("pixelart/corner_b_r.xpm42");
+	s->grass.corner_t_l = mlx_load_xpm42("pixelart/corner_t_l.xpm42");
+	s->grass.corner_t_r = mlx_load_xpm42("pixelart/corner_t_r.xpm42");
+	s->grass.grass_b = mlx_load_xpm42("pixelart/grass_b.xpm42");
+	s->grass.grass_l = mlx_load_xpm42("pixelart/grass_l.xpm42");
+	s->grass.grass_r = mlx_load_xpm42("pixelart/grass_r.xpm42");
+	s->grass.grass_to = mlx_load_xpm42("pixelart/grass_t.xpm42");
+	s->grass.grass_corner_b_l
+		= mlx_load_xpm42("pixelart/grass_corner_b_l.xpm42");
+	s->grass.grass_corner_b_r
+		= mlx_load_xpm42("pixelart/grass_corner_b_r.xpm42");
+	s->grass.grass_corner_t_l
+		= mlx_load_xpm42("pixelart/grass_corner_t_l.xpm42");
+	s->grass.grass_corner_t_r
+		= mlx_load_xpm42("pixelart/grass_corner_t_r.xpm42");
+	s->grass.grass_corridor_r_l
+		= mlx_load_xpm42("pixelart/grass_corridor_r_l.xpm42");
+	s->grass.grass_corridor_t_b
+		= mlx_load_xpm42("pixelart/grass_corridor_t_b.xpm42");
+	s->grass.grass_end_b = mlx_load_xpm42("pixelart/grass_end_b.xpm42");
+	s->grass.grass_end_l = mlx_load_xpm42("pixelart/grass_end_l.xpm42");
+	s->grass.grass_end_r = mlx_load_xpm42("pixelart/grass_end_r.xpm42");
+	s->grass.grass_end_to = mlx_load_xpm42("pixelart/grass_end_t.xpm42");
+	s->grass.grass_island = mlx_load_xpm42("pixelart/grass_island.xpm42");
+}
+
 void	assign_sprites(t_sprites *s)
 {
 	s->player = mlx_load_xpm42("pixelart/duck.xpm42");
 	s->enemy = mlx_load_xpm42("pixelart/shark.xpm42");
-	s->corner_t_r = mlx_load_xpm42("pixelart/corner_top_right.xpm42");
-	s->corner_t_l = mlx_load_xpm42("pixelart/corner_top_left.xpm42");
-	s->corner_b_r = mlx_load_xpm42("pixelart/corner_bot_right.xpm42");
-	s->corner_b_l = mlx_load_xpm42("pixelart/corner_bot_left.xpm42");
-	s->wall_t = mlx_load_xpm42("pixelart/grass_top.xpm42");
-	s->wall_b = mlx_load_xpm42("pixelart/grass_bot.xpm42");
-	s->wall_r = mlx_load_xpm42("pixelart/grass_right.xpm42");
-	s->wall_l = mlx_load_xpm42("pixelart/grass_left.xpm42");
-	s->wall = mlx_load_xpm42("pixelart/grass.xpm42");
-	s->floor_1 = mlx_load_xpm42("pixelart/water.xpm42");
+	s->floor_1 = mlx_load_xpm42("pixelart/water1.xpm42");
 	s->floor_2 = mlx_load_xpm42("pixelart/water2.xpm42");
 	s->floor_3 = mlx_load_xpm42("pixelart/water3.xpm42");
 	s->floor_4 = mlx_load_xpm42("pixelart/water4.xpm42");
 	s->collect_1 = mlx_load_xpm42("pixelart/flower_mid.xpm42");
 	s->collect_2 = mlx_load_xpm42("pixelart/flower_open.xpm42");
-	s->exit = mlx_load_xpm42("pixelart/exit_basket.xpm42");
+	s->exit = mlx_load_xpm42("pixelart/basket.xpm42");
+	s->grass.grass = mlx_load_xpm42("pixelart/grass.xpm42");
+	assign_grass(s);
 }
 
 /**
@@ -121,6 +143,14 @@ void	found_v(t_map *map, size_t i, size_t j, size_t *c)
 	(*c)--;
 }
 
+void	found_e(t_map *map, size_t i, size_t j)
+{
+	map->mtrx[i * map->n_chars + j].c = '0';
+	map->mx_add[1].c = map->str[i][j];
+	map->mx_add[1].x = j;
+	map->mx_add[1].y = i;
+}
+
 /**
  * @brief Assigns the values to the matrix, 0 if its an object
  * 
@@ -134,7 +164,7 @@ void	assign_mtrx(t_map *map)
 	size_t	count_rev;
 
 	i = -1;
-	count = 1;
+	count = 2;
 	count_rev = map->n_extra - 1;
 	while (++i < map->n_lines)
 	{
@@ -145,6 +175,8 @@ void	assign_mtrx(t_map *map)
 				found_c(map, i, j, &count);
 			else if (map->str[i][j] == ('V'))
 				found_v(map, i, j, &count_rev);
+			else if (map->str[i][j] == ('E'))
+				found_e(map, i, j);
 			else
 				map->mtrx[i * map->n_chars + j].c = map->str[i][j];
 			map->mtrx[i * map->n_chars + j].x = j;
@@ -166,12 +198,13 @@ void	start(t_map *map, char *p)
 	check_player_coords(map);
 	check_exit_and_coin(map);
 	check_enemies(map);
-	map->n_extra = map->coins.n_coins + map->n_enemies + 1;	//2 if added counter
+	map->n_extra = map->coins.n_coins + map->n_enemies + 2;	//2 if added counter
 	map->n_total = map->n_images + map->n_extra;
 	map->mtrx = (t_matrix_sq *)malloc(map->n_images * sizeof(t_matrix_sq));
 	map->mx_add = (t_matrix_sq *)malloc((map->n_extra * sizeof(t_matrix_sq)));
 	assign_mtrx(map);
 	map->mx_add[0].c = 'P';
+	map->mtrx[map->p_y * map->n_chars + map->p_x].c = '0';
 	map->mx_add[0].x = map->p_x;
 	map->mx_add[0].y = map->p_y;
 }

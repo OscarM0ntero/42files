@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:58 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/29 18:11:37 by omontero         ###   ########.fr       */
+/*   Updated: 2022/12/30 01:31:40 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_enemy
 
 typedef struct s_anim
 {
-	size_t	frame_chest;
+	size_t	frame_flower;
 	size_t	frame_enemy;
 	size_t	frame_player;
 	size_t	frame_water;
@@ -54,26 +54,42 @@ typedef struct s_coins
 	size_t		coin_t_y;
 }			t_coins;
 
+typedef struct s_sprites_grass
+{
+	xpm_t	*corner_b_l;
+	xpm_t	*corner_b_r;
+	xpm_t	*corner_t_l;
+	xpm_t	*corner_t_r;
+	xpm_t	*grass;
+	xpm_t	*grass_b;
+	xpm_t	*grass_l;
+	xpm_t	*grass_r;
+	xpm_t	*grass_to;
+	xpm_t	*grass_corner_b_l;
+	xpm_t	*grass_corner_b_r;
+	xpm_t	*grass_corner_t_l;
+	xpm_t	*grass_corner_t_r;
+	xpm_t	*grass_corridor_r_l;
+	xpm_t	*grass_corridor_t_b;
+	xpm_t	*grass_end_b;
+	xpm_t	*grass_end_l;
+	xpm_t	*grass_end_r;
+	xpm_t	*grass_end_to;
+	xpm_t	*grass_island;
+}			t_sprites_grass;
+
 typedef struct s_sprites
 {
-	xpm_t	*player;
-	xpm_t	*enemy;
-	xpm_t	*corner_t_r;
-	xpm_t	*corner_t_l;
-	xpm_t	*corner_b_r;
-	xpm_t	*corner_b_l;
-	xpm_t	*wall_t;
-	xpm_t	*wall_b;
-	xpm_t	*wall_r;
-	xpm_t	*wall_l;
-	xpm_t	*wall;
-	xpm_t	*floor_1;
-	xpm_t	*floor_2;
-	xpm_t	*floor_3;
-	xpm_t	*floor_4;
-	xpm_t	*collect_1;
-	xpm_t	*collect_2;
-	xpm_t	*exit;
+	t_sprites_grass	grass;
+	xpm_t			*player;
+	xpm_t			*enemy;
+	xpm_t			*floor_1;
+	xpm_t			*floor_2;
+	xpm_t			*floor_3;
+	xpm_t			*floor_4;
+	xpm_t			*collect_1;
+	xpm_t			*collect_2;
+	xpm_t			*exit;
 }			t_sprites;
 
 typedef struct s_matrix_sq
