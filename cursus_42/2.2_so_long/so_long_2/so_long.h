@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:58 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/30 01:31:40 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/03 21:01:04 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,6 @@ typedef struct s_coins
 {
 	size_t		n_coins;
 	size_t		c_count;
-	size_t		coin_taked;
-	size_t		coin_t_x;
-	size_t		coin_t_y;
 }			t_coins;
 
 typedef struct s_sprites_grass
@@ -82,7 +79,10 @@ typedef struct s_sprites
 {
 	t_sprites_grass	grass;
 	xpm_t			*player;
-	xpm_t			*enemy;
+	xpm_t			*player_back;
+	xpm_t			*enemy1;
+	xpm_t			*enemy2;
+	xpm_t			*enemy3;
 	xpm_t			*floor_1;
 	xpm_t			*floor_2;
 	xpm_t			*floor_3;
@@ -129,6 +129,7 @@ typedef struct s_map
 	int			error;
 	size_t		p_x;
 	size_t		p_y;
+	size_t		p_look;
 	int			game_over;
 	int			map_finished;
 	size_t		mv_count;
@@ -140,7 +141,7 @@ typedef struct s_map
 void	delete_map(t_map *map);
 void	map_to_window(t_map *map);
 void	generate_image(t_map *map, int32_t x, int32_t y);
-void	generate_map(t_map *map);
+int		generate_map(t_map *map);
 
 //	so_long_new_itoa.c
 char	*new_itoa(int n);
@@ -167,9 +168,11 @@ void	check_exit_and_coin(t_map *map);
 void	check_enemies(t_map *map);
 
 //	so_long_textures.c
+xpm_t	*enemy_selector(t_map *map);
 xpm_t	*floor_select(t_map *map, size_t x, size_t y, size_t frame);
 xpm_t	*walls_select(t_map *map, size_t x, size_t y);
 xpm_t	*texture(t_map *map, size_t x, size_t y);
-xpm_t	*extra_selector(t_map *map, char c, size_t x, size_t y);
+xpm_t	*extra_selector(t_map *map, char c);
 void	regenerate_water(t_map *map);
+void	regenerate_enemies(t_map *map);
 #endif

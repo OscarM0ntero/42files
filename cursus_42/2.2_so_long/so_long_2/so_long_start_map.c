@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long_start_map.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/30 10:57:09 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/03 18:48:18 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,10 @@ void	assign_grass(t_sprites *s)
 void	assign_sprites(t_sprites *s)
 {
 	s->player = mlx_load_xpm42("pixelart/duck.xpm42");
-	s->enemy = mlx_load_xpm42("pixelart/shark.xpm42");
+	s->player_back = mlx_load_xpm42("pixelart/duck_back.xpm42");
+	s->enemy1 = mlx_load_xpm42("pixelart/shark1.xpm42");
+	s->enemy2 = mlx_load_xpm42("pixelart/shark2.xpm42");
+	s->enemy3 = mlx_load_xpm42("pixelart/shark3.xpm42");
 	s->floor_1 = mlx_load_xpm42("pixelart/water1.xpm42");
 	s->floor_2 = mlx_load_xpm42("pixelart/water2.xpm42");
 	s->floor_3 = mlx_load_xpm42("pixelart/water3.xpm42");
@@ -77,9 +80,6 @@ void	assign_to_map(t_map *map, char *path)
 	map->path = ft_strdup(path);
 	map->n_lines = count_lines(map->path);
 	map->coins.n_coins = 0;
-	map->coins.coin_taked = 0;
-	map->coins.coin_t_x = 0;
-	map->coins.coin_t_y = 0;
 	map->n_enemies = 0;
 	map->coins.c_count = 0;
 	map->game_over = 0;
@@ -87,9 +87,9 @@ void	assign_to_map(t_map *map, char *path)
 	map->mv_count = 0;
 	map->total_frames = 0;
 	map->anim.frame_water = 0;
+	map->anim.frame_enemy = 0;
 	assign_sprites(&map->sprites);
-	if (!map->n_lines)
-		map->error = 1;
+	map->p_look = 1;
 }
 
 /**
@@ -107,6 +107,8 @@ t_map	read_map(char *p)
 
 	n_lin = 0;
 	assign_to_map(&new_map, p);
+	if (!new_map.n_lines)
+		new_map.error = 1;
 	if (new_map.error)
 		return (new_map);
 	fd = open(new_map.path, O_RDONLY);

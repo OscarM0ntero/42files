@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   so_long_textures.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/30 12:41:22 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/03 20:49:08 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-xpm_t	*floor_select(t_map *map, size_t x, size_t y, size_t frame)
+/*xpm_t	*floor_select(t_map *map, size_t x, size_t y, size_t frame)
 {
 	if (x % 2 == 0 && y % 2 == 0)
 		frame += 1;
@@ -27,6 +27,23 @@ xpm_t	*floor_select(t_map *map, size_t x, size_t y, size_t frame)
 	else if (frame % 4 == 1)
 		return (map->sprites.floor_2);
 	else if (frame % 4 == 2)
+		return (map->sprites.floor_3);
+	return (map->sprites.floor_4);
+}*/
+
+xpm_t	*floor_select(t_map *map, size_t x, size_t y, size_t frame)
+{
+	int	a;
+
+	a = rand();
+	(void)frame;
+	(void)x;
+	(void)y;
+	if (a % 4 == 0)
+		return (map->sprites.floor_1);
+	else if (a % 4 == 1)
+		return (map->sprites.floor_2);
+	else if (a % 4 == 2)
 		return (map->sprites.floor_3);
 	return (map->sprites.floor_4);
 }
@@ -62,6 +79,23 @@ void	regenerate_water(t_map *map)
 		{
 			tx = texture(map, map->mtrx[i].x, map->mtrx[i].y);
 			mlx_draw_texture(map->mtrx[i].img, &tx->texture, 0, 0);
+		}
+		i++;
+	}
+}
+
+void	regenerate_enemies(t_map *map)
+{
+	size_t	i;
+	xpm_t	*tx;
+
+	i = 0;
+	while (i < map->n_extra)
+	{
+		if (map->mx_add[i].c == 'V')
+		{
+			tx = enemy_selector(map);
+			mlx_draw_texture(map->mx_add[i].img, &tx->texture, 0, 0);
 		}
 		i++;
 	}
@@ -175,40 +209,24 @@ xpm_t	*texture(t_map *map, size_t x, size_t y)
 	return (0);
 }
 
-xpm_t	*extra_selector(t_map *map, char c, size_t x, size_t y)
+xpm_t	*enemy_selector(t_map *map)
+{
+	if (map->anim.frame_enemy == 0)
+		return (map->sprites.enemy1);
+	else if (map->anim.frame_enemy == 2)
+		return (map->sprites.enemy3);
+	return (map->sprites.enemy2);
+}
+
+xpm_t	*extra_selector(t_map *map, char c)
 {
 	if (c == 'P')
 		return (map->sprites.player);
 	else if (c == 'V')
-		return (map->sprites.enemy);
+		return (enemy_selector(map));
 	else if (c == 'E')
 		return (map->sprites.exit);
-	/*else if (c == 'T')
-	{
-		if (!x && !y)
-		img = mlx_put_string(map->mlx, "Moves: ", 0, 0);
-		else if (x == 1 && !y)
-		{
-			s = new_itoa((int)map->mv_count);
-			img = mlx_put_string(map->mlx, s, 0, 0);
-			free (s);
-		}
-	}*/
 	else if (c == 'C')
-	{
-		if (x == map->coins.coin_t_x && y == map->coins.coin_t_y)
-		{
-			if (map->anim.frame_flower == 0)
-				return (map->sprites.collect_1);
-			else if (map->anim.frame_flower == 2)
-				return (map->sprites.collect_1);
-			else if (map->anim.frame_flower == 4)
-				return (map->sprites.collect_2);
-			else if (map->anim.frame_flower == 6)
-				return (map->sprites.collect_2);
-			else
-				return (map->sprites.collect_2);
-		}
-	}
+		return (map->sprites.collect_1);
 	return (map->sprites.collect_1);
 }

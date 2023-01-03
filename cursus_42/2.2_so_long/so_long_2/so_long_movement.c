@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long_movement.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/30 13:53:18 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/03 18:52:14 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,34 @@
 
 void	coin_taken(t_map *map, size_t x, size_t y)
 {
-	map->coins.coin_t_x = x;
-	map->coins.coin_t_y = y;
+	size_t	i;
+
+	i = 0;
 	map->str[map->p_y][map->p_x] = '0';
-	map->p_y = x;
+	map->p_x = x;
 	map->p_y = y;
 	map->str[map->p_y][map->p_x] = 'P';
-	//map->move = 0;
-	//map->coins.coin_taked++;
+	while (i < map->n_extra)
+	{
+		if (map->mx_add[i].c == 'C' && map->mx_add[i].x == map->p_x
+			&& map->mx_add[i].y == map->p_y)
+			mlx_draw_texture(map->mx_add[i].img, &map->sprites.collect_2->texture, 0, 0);
+		i++;
+	}
 	map->coins.c_count++;
 }
 
 void	refresh_player(t_map *map, int dir)
 {
+	if (!map->p_look)
+		mlx_draw_texture(map->mx_add[0].img,
+			&map->sprites.player_back->texture, 0, 0);
+	else
+		mlx_draw_texture(map->mx_add[0].img,
+			&map->sprites.player->texture, 0, 0);
 	map->mx_add[0].x = map->p_x;
 	map->mx_add[0].y = map->p_y;
+	
 	if (dir == 1)
 		map->mx_add[0].img->instances[0].y -= IMG_H;
 	else if (dir == 2)
@@ -45,13 +58,15 @@ void	move_up(t_map *map)
 {
 	map->mv_count++;
 	if (map->str[map->p_y - 1][map->p_x] == '0'
-		|| map->str[map->p_y - 1][map->p_x] == 'E')
+		|| (map->str[map->p_y - 1][map->p_x] == 'E'
+		&& map->coins.n_coins == map->coins.c_count))
 	{
+		if (map->str[map->p_y - 1][map->p_x] == 'E'
+			&& map->coins.n_coins == map->coins.c_count)
+			map->map_finished = 1;
 		map->str[map->p_y][map->p_x] = '0';
 		map->p_y--;
 		map->str[map->p_y][map->p_x] = 'P';
-		if (map->str[map->p_y - 1][map->p_x] == 'E')
-			map->map_finished = 1;
 		refresh_player(map, 1);
 	}
 	else if (map->str[map->p_y - 1][map->p_x] == 'C')
@@ -72,13 +87,15 @@ void	move_right(t_map *map)
 {
 	map->mv_count++;
 	if (map->str[map->p_y][map->p_x + 1] == '0'
-		|| map->str[map->p_y][map->p_x + 1] == 'E')
+		|| (map->str[map->p_y][map->p_x + 1] == 'E'
+		&& map->coins.n_coins == map->coins.c_count))
 	{
+		if ((map->str[map->p_y][map->p_x + 1] == 'E'
+			&& map->coins.n_coins == map->coins.c_count))
+			map->map_finished = 1;
 		map->str[map->p_y][map->p_x] = '0';
 		map->p_x++;
 		map->str[map->p_y][map->p_x] = 'P';
-		if (map->str[map->p_y][map->p_x + 1] == 'E')
-			map->map_finished = 1;
 		refresh_player(map, 2);
 	}
 	else if (map->str[map->p_y][map->p_x + 1] == 'C')
@@ -98,13 +115,15 @@ void	move_down(t_map *map)
 {
 	map->mv_count++;
 	if (map->str[map->p_y + 1][map->p_x] == '0'
-		|| map->str[map->p_y + 1][map->p_x] == 'E')
+		|| (map->str[map->p_y + 1][map->p_x] == 'E'
+		&& map->coins.n_coins == map->coins.c_count))
 	{
+		if (map->str[map->p_y + 1][map->p_x] == 'E'
+			&& map->coins.n_coins == map->coins.c_count)
+			map->map_finished = 1;
 		map->str[map->p_y][map->p_x] = '0';
 		map->p_y++;
 		map->str[map->p_y][map->p_x] = 'P';
-		if (map->str[map->p_y + 1][map->p_x] == 'E')
-			map->map_finished = 1;
 		refresh_player(map, 3);
 	}
 	else if (map->str[map->p_y + 1][map->p_x] == 'C')
@@ -124,13 +143,15 @@ void	move_left(t_map *map)
 {
 	map->mv_count++;
 	if (map->str[map->p_y][map->p_x - 1] == '0'
-		|| map->str[map->p_y][map->p_x - 1] == 'E')
+		|| (map->str[map->p_y][map->p_x - 1] == 'E'
+		&& map->coins.n_coins == map->coins.c_count))
 	{
+		if (map->str[map->p_y][map->p_x - 1] == 'E'
+			&& map->coins.n_coins == map->coins.c_count)
+			map->map_finished = 1;
 		map->str[map->p_y][map->p_x] = '0';
 		map->p_x--;
 		map->str[map->p_y][map->p_x] = 'P';
-		if (map->str[map->p_y][map->p_x - 1] == 'E')
-			map->map_finished = 1;
 		refresh_player(map, 4);
 	}
 	else if (map->str[map->p_y][map->p_x - 1] == 'C')
@@ -155,6 +176,10 @@ void	move(int dir, t_map *map)
 	s = map->str;
 	x = map->p_x;
 	y = map->p_y;
+	if (dir == 2)
+		map->p_look = 1;
+	else if (dir == 4)
+		map->p_look = 0;
 	if (dir == 1 && ((((s[y - 1][x] != '1') && s[y - 1][x] != 'E'))
 		|| ((s[y - 1][x] == 'E' && map->coins.c_count == map->coins.n_coins))))
 		move_up(map);
@@ -169,5 +194,6 @@ void	move(int dir, t_map *map)
 		move_left(map);
 	if (map->game_over || map->map_finished)
 		map->move = 0;
+	refresh_player(map, 0);
 	//print_map(map);
 }
