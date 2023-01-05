@@ -6,16 +6,11 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/03 21:01:42 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/05 01:30:04 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-/*
-	Continuar pensando el hacer 1 sola imagen y tratar las cosas como objetos con prioridades
-	(Arrays de collectables y enemigos con propiedades y coordenadas)
-*/
 
 void	keyhook(mlx_key_data_t keydata, void *param)
 {
@@ -70,20 +65,71 @@ void	print_counters(t_map *map)
 	free(c);
 }
 
+mlx_texture_t	*fade_selector(t_map *map)
+{
+	if (!map->anim.frame_fade)
+		return (&map->sprites.fade1->texture);
+	else if (map->anim.frame_fade == 1)
+		return (&map->sprites.fade2->texture);
+	else if (map->anim.frame_fade == 2)
+		return (&map->sprites.fade3->texture);
+	else if (map->anim.frame_fade == 3)
+		return (&map->sprites.fade4->texture);
+	return (&map->sprites.fade5->texture);
+	map->anim.frame_enemy++;
+}
+
+void	fade_black(t_map *map)
+{
+	mlx_image_t		*b_screen;
+	size_t			i;
+	size_t			j;
+	mlx_texture_t	*tx;
+
+	tx = fade_selector(map);
+	b_screen = mlx_new_image(map->mlx, map->n_chars * IMG_W,
+			map->n_lines * IMG_H);
+	memset(b_screen->pixels, 255, b_screen->width * b_screen->height
+		* sizeof(int));
+	i = -1;
+	while (++i < map->n_lines)
+	{
+		j = -1;
+		while (++j < map->n_chars)
+		{
+			mlx_draw_texture(b_screen, tx, j * IMG_W, i * IMG_H);
+		}
+	}
+	mlx_image_to_window(map->mlx, b_screen, 0, 0);
+}
+
 void	timer(void *param)
 {
 	t_map	*map;
 
 	map = param;
-	if (map->time)
+	if (map->time && map->anim.frame_fade != 6)
 	{
 		print_map(map);
 		print_counters(map);
 		usleep(10000);
 		map->time += 1;
 	}
-	if (map->map_finished)
-			map->move = 0;
+	if ((map->map_finished || map->game_over) && map->anim.frame_fade < 5
+		&& map->time % 5 == 0)
+	{
+		map->move = 0;
+		fade_black(map);
+		map->anim.frame_fade++;
+	}
+	if (map->anim.frame_fade == 5 && map->map_finished)
+		mlx_put_string(map->mlx, "YOU WON!", map->n_chars * (IMG_W / 2)
+			- (IMG_W / 2), map->n_lines * (IMG_H / 2) - (IMG_H / 2));
+	else if (map->anim.frame_fade == 5 && map->game_over)
+		mlx_put_string(map->mlx, "YOU LOST...", map->n_chars * (IMG_W / 2)
+			- (IMG_W / 2), map->n_lines * (IMG_H / 2) - (IMG_H / 2));
+	if (map->anim.frame_fade == 5)
+		map->anim.frame_fade++;
 }
 
 void	animhook(void *param)

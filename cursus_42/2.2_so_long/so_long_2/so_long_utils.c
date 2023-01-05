@@ -6,20 +6,41 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/03 18:24:01 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/04 17:20:37 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+char	*ft_strnjoin(char *s1, char *s2, int n)
+{
+	size_t	i;
+	size_t	j;
+	char	*str;
+	int		k;
+
+	k = 0;
+	j = ft_strlen(s1) + ft_strlen(s2) - (ft_strlen(s2) - n);
+	str = (char *)malloc(sizeof(char) * (j + 1));
+	if (!str)
+		return (NULL);
+	i = -1;
+	while (++i < ft_strlen(s1))
+		str[i] = s1[i];
+	while (i <= j && s2[k])
+	{
+		str[i++] = s2[k++];
+	}
+	str[i] = '\0';
+	return (str);
+}
 
 void	print_map(t_map *map)
 {
 	size_t	i;
 	size_t	j;
 
-	//if (!map->img_assigned)
-	//	generate_map(map);
-	//error_handler(map->error);
+	system("clear");
 	i = -1;
 	write(1, "\n\n\n\n", 4);
 	while (++i < map->n_lines)
@@ -27,15 +48,6 @@ void	print_map(t_map *map)
 		j = -1;
 		while (++j < map->n_chars)
 			write(1, &map->str[i][j], 1);
-		/*if (!i)
-		{
-			write(1, "\t\tCoins: ", 9);
-			write(1, new_itoa(map->coins.c_count), 1);
-			write(1, " Win: ", 6);
-			write(1, new_itoa(map->map_finished), 1);
-			write(1, " GameOver: ", 11);
-			write(1, new_itoa(map->game_over), 1);
-		}*/
 		write(1, "\n", 1);
 	}
 	map->total_frames++;

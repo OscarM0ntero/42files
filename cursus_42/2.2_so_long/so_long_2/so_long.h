@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:58 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/03 21:01:04 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/04 21:33:37 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_anim
 	size_t	frame_enemy;
 	size_t	frame_player;
 	size_t	frame_water;
+	size_t	frame_fade;
 }			t_anim;
 
 typedef struct s_coins
@@ -90,6 +91,11 @@ typedef struct s_sprites
 	xpm_t			*collect_1;
 	xpm_t			*collect_2;
 	xpm_t			*exit;
+	xpm_t			*fade1;
+	xpm_t			*fade2;
+	xpm_t			*fade3;
+	xpm_t			*fade4;
+	xpm_t			*fade5;
 }			t_sprites;
 
 typedef struct s_matrix_sq
@@ -141,7 +147,7 @@ typedef struct s_map
 void	delete_map(t_map *map);
 void	map_to_window(t_map *map);
 void	generate_image(t_map *map, int32_t x, int32_t y);
-int		generate_map(t_map *map);
+void		generate_map(t_map *map);
 
 //	so_long_new_itoa.c
 char	*new_itoa(int n);

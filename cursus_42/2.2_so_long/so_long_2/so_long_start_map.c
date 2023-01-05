@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/03 18:48:18 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/04 23:05:01 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,11 @@ void	assign_sprites(t_sprites *s)
 	s->collect_1 = mlx_load_xpm42("pixelart/flower_mid.xpm42");
 	s->collect_2 = mlx_load_xpm42("pixelart/flower_open.xpm42");
 	s->exit = mlx_load_xpm42("pixelart/basket.xpm42");
+	s->fade1 = mlx_load_xpm42("pixelart/fade1.xpm42");
+	s->fade2 = mlx_load_xpm42("pixelart/fade2.xpm42");
+	s->fade3 = mlx_load_xpm42("pixelart/fade3.xpm42");
+	s->fade4 = mlx_load_xpm42("pixelart/fade4.xpm42");
+	s->fade5 = mlx_load_xpm42("pixelart/fade5.xpm42");
 	s->grass.grass = mlx_load_xpm42("pixelart/grass.xpm42");
 	assign_grass(s);
 }
@@ -75,6 +80,7 @@ void	assign_to_map(t_map *map, char *path)
 	map->anim.frame_flower = 0;
 	map->anim.frame_enemy = 0;
 	map->anim.frame_player = 0;
+	map->anim.frame_fade = 0;
 	map->error = 0;
 	map->n_chars = 0;
 	map->path = ft_strdup(path);
