@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/05 01:30:04 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/07 21:32:50 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,21 @@ void	fade_black(t_map *map)
 		}
 	}
 	mlx_image_to_window(map->mlx, b_screen, 0, 0);
+	map->black[map->anim.frame_fade] = b_screen;
+}
+
+void	end_string(t_map *map)
+{
+	if (map->anim.frame_fade == 5 && map->map_finished)
+		map->end = mlx_put_string(map->mlx, "YOU WON!", map->n_chars
+				* (IMG_W / 2) - (IMG_W / 2), map->n_lines
+				* (IMG_H / 2) - (IMG_H / 2));
+	else if (map->anim.frame_fade == 5 && map->game_over)
+	{
+		map->end = mlx_put_string(map->mlx, "YOU DIED...", map->n_chars
+				* (IMG_W / 2) - (IMG_W / 2), map->n_lines
+				* (IMG_H / 2) - (IMG_H / 2));
+	}
 }
 
 void	timer(void *param)
@@ -122,12 +137,8 @@ void	timer(void *param)
 		fade_black(map);
 		map->anim.frame_fade++;
 	}
-	if (map->anim.frame_fade == 5 && map->map_finished)
-		mlx_put_string(map->mlx, "YOU WON!", map->n_chars * (IMG_W / 2)
-			- (IMG_W / 2), map->n_lines * (IMG_H / 2) - (IMG_H / 2));
-	else if (map->anim.frame_fade == 5 && map->game_over)
-		mlx_put_string(map->mlx, "YOU LOST...", map->n_chars * (IMG_W / 2)
-			- (IMG_W / 2), map->n_lines * (IMG_H / 2) - (IMG_H / 2));
+	if (map->anim.frame_fade == 5)
+		end_string(map);
 	if (map->anim.frame_fade == 5)
 		map->anim.frame_fade++;
 }
@@ -187,6 +198,15 @@ void	delete_map(t_map *map)
 		mlx_delete_image(map->mlx, map->mx_add[i].img);
 		i++;
 	}
+	mlx_delete_image(map->mlx, map->black[0]);
+	mlx_delete_image(map->mlx, map->black[1]);
+	mlx_delete_image(map->mlx, map->black[2]);
+	mlx_delete_image(map->mlx, map->black[3]);
+	mlx_delete_image(map->mlx, map->black[4]);
+	mlx_delete_image(map->mlx, map->end);
+	free(map->mtrx);
+	free(map->mx_add);
+	free(map->path);
 }
 
 void	create_extra_images(t_map *map)
@@ -248,19 +268,53 @@ void	show_leaks(void)
 	system("leaks -q so_long");
 }
 
+void	delete_grass_tx(t_sprites *s)
+{
+	mlx_delete_xpm42(s->grass.corner_b_l);
+	mlx_delete_xpm42(s->grass.corner_b_r);
+	mlx_delete_xpm42(s->grass.corner_t_l);
+	mlx_delete_xpm42(s->grass.corner_t_r);
+	mlx_delete_xpm42(s->grass.grass_b);
+	mlx_delete_xpm42(s->grass.grass_l);
+	mlx_delete_xpm42(s->grass.grass_r);
+	mlx_delete_xpm42(s->grass.grass_to);
+	mlx_delete_xpm42(s->grass.grass_corner_b_l);
+	mlx_delete_xpm42(s->grass.grass_corner_b_r);
+	mlx_delete_xpm42(s->grass.grass_corner_t_l);
+	mlx_delete_xpm42(s->grass.grass_corner_t_r);
+	mlx_delete_xpm42(s->grass.grass_corridor_r_l);
+	mlx_delete_xpm42(s->grass.grass_corridor_t_b);
+	mlx_delete_xpm42(s->grass.grass_end_b);
+	mlx_delete_xpm42(s->grass.grass_end_l);
+	mlx_delete_xpm42(s->grass.grass_end_r);
+	mlx_delete_xpm42(s->grass.grass_end_to);
+	mlx_delete_xpm42(s->grass.grass_island);
+}
+
 void	delete_txs(t_map *map)
 {
-	mlx_delete_xpm42(map->sprites.player);
-	mlx_delete_xpm42(map->sprites.enemy1);
-	mlx_delete_xpm42(map->sprites.enemy2);
-	mlx_delete_xpm42(map->sprites.enemy3);
-	mlx_delete_xpm42(map->sprites.exit);
-	mlx_delete_xpm42(map->sprites.collect_1);
-	mlx_delete_xpm42(map->sprites.collect_2);
-	mlx_delete_xpm42(map->sprites.floor_1);
-	mlx_delete_xpm42(map->sprites.floor_2);
-	mlx_delete_xpm42(map->sprites.floor_3);
-	mlx_delete_xpm42(map->sprites.floor_4);
+	t_sprites	*s;
+
+	s = &map->sprites;
+	mlx_delete_xpm42(s->player);
+	mlx_delete_xpm42(s->player_back);
+	mlx_delete_xpm42(s->enemy1);
+	mlx_delete_xpm42(s->enemy2);
+	mlx_delete_xpm42(s->enemy3);
+	mlx_delete_xpm42(s->floor_1);
+	mlx_delete_xpm42(s->floor_2);
+	mlx_delete_xpm42(s->floor_3);
+	mlx_delete_xpm42(s->floor_4);
+	mlx_delete_xpm42(s->collect_1);
+	mlx_delete_xpm42(s->collect_2);
+	mlx_delete_xpm42(s->exit);
+	mlx_delete_xpm42(s->fade1);
+	mlx_delete_xpm42(s->fade2);
+	mlx_delete_xpm42(s->fade3);
+	mlx_delete_xpm42(s->fade4);
+	mlx_delete_xpm42(s->fade5);
+	mlx_delete_xpm42(s->grass.grass);
+	delete_grass_tx(s);
 }
 
 int	main(int argc, char **argv)
@@ -281,9 +335,9 @@ int	main(int argc, char **argv)
 	mlx_loop_hook(m.mlx, &animhook, &m);
 	mlx_loop_hook(m.mlx, &timer, &m);
 	mlx_loop(m.mlx);
-	delete_map(&m);
 	mlx_terminate(m.mlx);
 	delete_txs(&m);
+	delete_map(&m);
 	show_leaks();
 	return (EXIT_SUCCESS);
 }

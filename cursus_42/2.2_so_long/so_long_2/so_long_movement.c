@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/03 18:52:14 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/07 20:29:31 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	move_up(t_map *map)
 		map->str[map->p_y][map->p_x] = '0';
 		map->p_y--;
 		map->game_over = 1;
-		//player_killed(map);
+		map->mx_add[0].img->enabled = 0;
 	}
 }
 
@@ -108,6 +108,7 @@ void	move_right(t_map *map)
 		map->str[map->p_y][map->p_x] = '0';
 		map->p_x++;
 		map->game_over = 1;
+		map->mx_add[0].img->enabled = 0;
 	}
 }
 
@@ -136,6 +137,7 @@ void	move_down(t_map *map)
 		map->str[map->p_y][map->p_x] = '0';
 		map->p_y++;
 		map->game_over = 1;
+		map->mx_add[0].img->enabled = 0;
 	}
 }
 
@@ -164,6 +166,7 @@ void	move_left(t_map *map)
 		map->str[map->p_y][map->p_x] = '0';
 		map->p_x--;
 		map->game_over = 1;
+		map->mx_add[0].img->enabled = 0;
 	}
 }
 

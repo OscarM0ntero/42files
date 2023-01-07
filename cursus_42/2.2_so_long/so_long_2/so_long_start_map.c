@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/04 23:05:01 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/07 21:27:37 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,10 +203,14 @@ void	assign_mtrx(t_map *map)
 void	start(t_map *map, char *p)
 {
 	*map = read_map(p);
+	if (map->error)
+		return ;
 	check_player_coords(map);
+	if (map->error)
+		return ;
 	check_exit_and_coin(map);
 	check_enemies(map);
-	map->n_extra = map->coins.n_coins + map->n_enemies + 2;	//2 if added counter
+	map->n_extra = map->coins.n_coins + map->n_enemies + 2;
 	map->n_total = map->n_images + map->n_extra;
 	map->mtrx = (t_matrix_sq *)malloc(map->n_images * sizeof(t_matrix_sq));
 	map->mx_add = (t_matrix_sq *)malloc((map->n_extra * sizeof(t_matrix_sq)));
@@ -215,4 +219,5 @@ void	start(t_map *map, char *p)
 	map->mtrx[map->p_y * map->n_chars + map->p_x].c = '0';
 	map->mx_add[0].x = map->p_x;
 	map->mx_add[0].y = map->p_y;
+	map->black = (mlx_image_t **)malloc(5 * sizeof(mlx_image_t *));
 }

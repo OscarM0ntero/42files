@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2022/12/30 00:04:23 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/07 21:31:31 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,20 @@ int	error_handler(int error)
 	if (error == 1)
 		return (write(1, "Error. Empty file.\n", 19), 1);
 	else if (error == 2)
-		return (printf("Error. Different lines lenghts.\n"), 1);
+		return (write(1, "Error. Different lines lenghts.\n", 32), 1);
 	else if (error == 3)
-		return (printf("Error. Invalid char in map (Allowed: 01PEC).\n"), 1);
+		return (write(1, "Error. Invalid char in map (Allowed: 01PEC).\n",
+				45), 1);
 	else if (error == 4)
-		return (printf("Error. Map not surrounded by 1's.\n"), 1);
+		return (write(1, "Error. Map not surrounded by 1's.\n", 34), 1);
 	else if (error == 5)
-		return (printf("Error. Player (P) not found in map.\n"), 1);
+		return (write(1, "Error. Player (P) not found in map.\n", 36), 1);
 	else if (error == 6)
-		return (printf("Error. More than 1 player in map.\n"), 1);
+		return (write(1, "Error. More than 1 player in map.\n", 34), 1);
 	else if (error == 7)
-		return (printf("Error. Exit (E) not found in map.\n"), 1);
+		return (write(1, "Error. Exit (E) not found in map.\n", 34), 1);
 	else if (error == 8)
-		return (printf("Error. Coin (C) not found in map.\n"), 1);
-	else if (error == 9)
-		return (printf("Fallo aqui xd\n"), 1);
-	else
-		printf("No fallo\n");
+		return (write(1, "Error. Coin (C) not found in map.\n", 34), 1);
 	return (0);
 }
 

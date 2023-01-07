@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:58 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/04 21:33:37 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/07 21:13:37 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,13 +141,15 @@ typedef struct s_map
 	size_t		mv_count;
 	int			move;
 	size_t		total_frames;
+	mlx_image_t	*end;
+	mlx_image_t	**black;
 }			t_map;
 
 //	so_long.c
 void	delete_map(t_map *map);
 void	map_to_window(t_map *map);
 void	generate_image(t_map *map, int32_t x, int32_t y);
-void		generate_map(t_map *map);
+void	generate_map(t_map *map);
 
 //	so_long_new_itoa.c
 char	*new_itoa(int n);
