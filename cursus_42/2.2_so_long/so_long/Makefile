@@ -6,7 +6,7 @@
 #    By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/07 11:03:12 by omontero          #+#    #+#              #
-#    Updated: 2023/01/09 13:00:24 by omontero         ###   ########.fr        #
+#    Updated: 2023/01/09 15:19:47 by omontero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,13 +41,5 @@ clean:
 
 fclean:			clean
 				$(RM) $(NAME) so_long
-
-exe:			all
-				@./$(NAME)
-
-re:				fclean $(NAME)
-
-run:
-				./so_long
 
 .PHONY: all clean fclean re

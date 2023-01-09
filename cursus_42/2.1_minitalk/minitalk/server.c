@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/10/19 18:03:56 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/09 15:53:05 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	action(int sig, siginfo_t *info, void *context)
 		}
 		ft_putchar_fd((message.char_val), 1);
 		kill(message.pid, SIGUSR2);
-		var_init(&message);
+		var_initialize(&message);
 	}
 	else
 		(message.char_val) = (message.char_val) << 1;
@@ -56,7 +56,7 @@ int	main(void)
 	sigact.sa_flags = SA_SIGINFO | SA_RESTART;
 	sigaction(SIGUSR1, &sigact, NULL);
 	sigaction(SIGUSR2, &sigact, NULL);
-	ft_putchar_fd('\n', 1);
+	write(1, "\n", 1);
 	while (1)
 		pause();
 	return (0);
