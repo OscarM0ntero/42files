@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/10 13:05:14 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/10 19:11:38 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,13 @@ int	main(void)
 {
 	struct sigaction	sigact;
 	pid_t				pid_sv;
+	char				*c;
 
 	pid_sv = getpid();
+	c = ft_itoa(pid_sv);
 	write(1, "PID: ", 5);
-	ft_putnbr_fd(pid_sv, 1);
+	write(1, c, ft_strlen(c));
+	free (c);
 	write(1, "\n", 1);
 	sigact.sa_sigaction = action;
 	sigact.sa_flags = SA_SIGINFO | SA_RESTART;

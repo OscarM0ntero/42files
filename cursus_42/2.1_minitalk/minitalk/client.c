@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/10/19 17:01:35 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/10 19:12:37 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,18 @@ void	send_signal(pid_t pid, char *str)
 int	main(int argc, char **argv)
 {
 	size_t	str_len;
+	char	*c;
 
 	if (argc != 3)
 		ft_exit_error();
 	str_len = ft_strlen(argv[2]);
 	if (!str_len || !ft_atoi(argv[1]))
 		ft_exit_error();
-	ft_putstr_fd("Bytes sent        : ", STDOUT_FILENO);
-	ft_putnbr_fd(str_len, STDOUT_FILENO);
-	ft_putchar_fd('\n', STDOUT_FILENO);
-	ft_putstr_fd("Bytes received    : ", STDOUT_FILENO);
+	write(1, "Bytes sent        : ", 20);
+	c = ft_itoa(str_len);
+	write(1, c, ft_strlen(c));
+	free (c);
+	write(1, "\nBytes received    : ", 21);
 	signal(SIGUSR1, action);
 	signal(SIGUSR2, action);
 	send_signal(ft_atoi(argv[1]), argv[2]);
