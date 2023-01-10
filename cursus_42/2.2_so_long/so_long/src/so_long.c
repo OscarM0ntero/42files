@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/09 15:24:28 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/10 13:49:44 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,7 @@ int	main(int argc, char **argv)
 	mlx_terminate(m.mlx);
 	delete_tx(&m);
 	delete_map(&m);
-	//show_leaks();
 	return (EXIT_SUCCESS);
 }
 
-//show_leaks();
+show_leaks();

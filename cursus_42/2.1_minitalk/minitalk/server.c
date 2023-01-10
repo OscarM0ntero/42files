@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/09 15:53:05 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/10 13:05:14 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ int	main(void)
 	pid_t				pid_sv;
 
 	pid_sv = getpid();
-	ft_putstr_fd("PID: ", STDOUT_FILENO);
-	ft_putnbr_fd(pid_sv, STDOUT_FILENO);
-	ft_putchar_fd('\n', STDOUT_FILENO);
+	write(1, "PID: ", 5);
+	ft_putnbr_fd(pid_sv, 1);
+	write(1, "\n", 1);
 	sigact.sa_sigaction = action;
 	sigact.sa_flags = SA_SIGINFO | SA_RESTART;
 	sigaction(SIGUSR1, &sigact, NULL);
