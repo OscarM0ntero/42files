@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/11 13:17:31 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/11 14:47:50 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_exit_error(void)
 	exit(EXIT_FAILURE);
 }
 
-void	action(int signal)
+void	handler(int signal)
 {
 	static int	bytes_received = 0;
 	char		*c;
@@ -76,8 +76,8 @@ int	main(int argc, char **argv)
 	write(1, c, ft_strlen(c));
 	free (c);
 	write(1, "\nBytes received    : ", 21);
-	signal(SIGUSR1, action);
-	signal(SIGUSR2, action);
+	signal(SIGUSR1, handler);
+	signal(SIGUSR2, handler);
 	send_msg(ft_atoi(argv[1]), argv[2]);
 	while (1)
 		pause();
