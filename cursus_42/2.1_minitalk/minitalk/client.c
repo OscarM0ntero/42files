@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/10 19:12:37 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/11 13:17:31 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,45 +14,47 @@
 
 void	ft_exit_error(void)
 {
-	ft_putstr_fd("Wrong Input.\n", STDOUT_FILENO);
-	ft_putstr_fd("Must be: $ ./client (PID_NUMBER) (string) \n.", STDOUT_FILENO);
+	write(1, "Wrong Input.\n", 13);
+	write(1, "Must be: $ ./client (PID_NUMBER) (string) \n.", 43);
 	exit(EXIT_FAILURE);
 }
 
 void	action(int signal)
 {
 	static int	bytes_received = 0;
+	char		*c;
 
 	if (signal == SIGUSR2)
 		bytes_received++;
 	else
 	{
-		ft_putnbr_fd(bytes_received, STDOUT_FILENO);
-		ft_putchar_fd('\n', STDOUT_FILENO);
+		c = ft_itoa(bytes_received);
+		write(1, c, ft_strlen(c));
+		write(1, "\n", 1);
 		exit(EXIT_SUCCESS);
 	}
 }
 
-void	send_signal(pid_t pid, char *str)
+void	send_msg(pid_t pid, char *msg)
 {
 	int		i;
 	int		j;
 
-	j = -1;
-	while (str[++j])
+	i = -1;
+	while (msg[++i])
 	{
-		i = 8;
-		while (i--)
+		j = -1;
+		while (j++ < 8)
 		{
-			if (str[j] >> i & 1)
+			if (msg[i] >> j & 1)
 				kill(pid, SIGUSR1);
 			else
 				kill(pid, SIGUSR2);
 			usleep(100);
 		}
 	}
-	i = 8;
-	while (i--)
+	i = -1;
+	while (i++ < 8)
 	{
 		kill(pid, SIGUSR2);
 		usleep(100);
@@ -61,22 +63,22 @@ void	send_signal(pid_t pid, char *str)
 
 int	main(int argc, char **argv)
 {
-	size_t	str_len;
+	size_t	msg_len;
 	char	*c;
 
 	if (argc != 3)
 		ft_exit_error();
-	str_len = ft_strlen(argv[2]);
-	if (!str_len || !ft_atoi(argv[1]))
+	msg_len = ft_strlen(argv[2]);
+	if (!msg_len || !ft_atoi(argv[1]))
 		ft_exit_error();
 	write(1, "Bytes sent        : ", 20);
-	c = ft_itoa(str_len);
+	c = ft_itoa(msg_len);
 	write(1, c, ft_strlen(c));
 	free (c);
 	write(1, "\nBytes received    : ", 21);
 	signal(SIGUSR1, action);
 	signal(SIGUSR2, action);
-	send_signal(ft_atoi(argv[1]), argv[2]);
+	send_msg(ft_atoi(argv[1]), argv[2]);
 	while (1)
 		pause();
 	return (0);

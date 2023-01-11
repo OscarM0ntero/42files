@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: omontero <omontero@student.42.fr>          +#+  +:+       +#+         #
+#    By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/02 19:05:48 by omontero          #+#    #+#              #
-#    Updated: 2022/10/19 12:15:29 by omontero         ###   ########.fr        #
+#    Updated: 2023/01/11 12:13:17 by omontero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ FLAGS    = -Wall -Werror -Wextra
 LIBS	 = -L./libft -lft
 LIBFT	 = libft.a
 
-all : fclean $(LIBFT) $(SERVER) $(CLIENT)
+all : fclean $(LIBFT) $(SERVER) $(CLIENT) clean
 
 $(LIBFT) : 
 	@make -C libft

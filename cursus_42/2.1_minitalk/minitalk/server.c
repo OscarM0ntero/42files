@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/10 19:11:38 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/11 11:41:58 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	var_initialize(t_message *var)
 {
-	var->char_val = 0;
-	var->bit_pos = 0;
+	var->c_val = 0;
+	var->b_pos = 0;
 }
 
 void	action(int sig, siginfo_t *info, void *context)
@@ -27,20 +27,20 @@ void	action(int sig, siginfo_t *info, void *context)
 		var_initialize(&message);
 	if (info->si_pid)
 		message.pid = info->si_pid;
-	(message.char_val) = (message.char_val) | (sig == SIGUSR1);
-	if (++(message.bit_pos) == 8)
+	(message.c_val) = (message.c_val) | (sig == SIGUSR1);
+	if (++(message.b_pos) == 8)
 	{
-		if (!(message.char_val))
+		if (!(message.c_val))
 		{
 			kill(message.pid, SIGUSR1);
 			return ;
 		}
-		ft_putchar_fd((message.char_val), 1);
+		write(1, &message.c_val, 1);
 		kill(message.pid, SIGUSR2);
 		var_initialize(&message);
 	}
 	else
-		(message.char_val) = (message.char_val) << 1;
+		(message.c_val) = (message.c_val) << 1;
 }
 
 int	main(void)

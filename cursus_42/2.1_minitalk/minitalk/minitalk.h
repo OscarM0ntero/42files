@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   minitalk.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/10 18:06:01 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/11 12:55:22 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINITALK_H
 # define MINITALK_H
 # include "libft/libft.h"
-# include <signal.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <signal.h>
 
 typedef struct s_message
 {
-	int		char_val;
-	int		bit_pos;
+	int		c_val;
+	int		b_pos;
 	pid_t	pid;
 }	t_message;
 
