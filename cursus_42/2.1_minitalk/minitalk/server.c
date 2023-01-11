@@ -6,13 +6,13 @@
 /*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/11 14:47:37 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/11 15:55:21 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-void	var_initialvar_initize(t_message *var)
+void	var_init(t_message *var)
 {
 	var->c_val = 0;
 	var->b_pos = 0;

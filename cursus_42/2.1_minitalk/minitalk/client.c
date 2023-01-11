@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/11 14:47:50 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/11 15:57:39 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 void	ft_exit_error(void)
 {
-	write(1, "Wrong Input.\n", 13);
-	write(1, "Must be: $ ./client (PID_NUMBER) (string) \n.", 43);
+	write(1, "Error. Debe introducir: $ ./client (PID_NUMBER) (string) \n.", 58);
 	exit(EXIT_FAILURE);
 }
 
@@ -43,8 +42,8 @@ void	send_msg(pid_t pid, char *msg)
 	i = -1;
 	while (msg[++i])
 	{
-		j = -1;
-		while (j++ < 8)
+		j = 8;
+		while (j--)
 		{
 			if (msg[i] >> j & 1)
 				kill(pid, SIGUSR1);
@@ -54,7 +53,7 @@ void	send_msg(pid_t pid, char *msg)
 		}
 	}
 	i = -1;
-	while (i++ < 8)
+	while (i++ <= 8)
 	{
 		kill(pid, SIGUSR2);
 		usleep(100);
