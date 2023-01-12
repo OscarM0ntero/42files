@@ -21,6 +21,7 @@
 		"vector": "c",
 		"stdlib.h": "c",
 		"numbers": "c",
-		"sstream": "c"
+		"sstream": "c",
+		"system_error": "c"
 	}
 }

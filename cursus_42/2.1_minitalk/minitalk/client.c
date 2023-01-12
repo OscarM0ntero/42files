@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/11 15:57:39 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/12 13:52:16 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ void	handler(int signal)
 	}
 }
 
+/*	Envia todo el mensaje, una vez enviado envia 8 bits vacios,
+	para que el servidor nos responda con la comprobacion de que
+	ha recibido todos los Bytes correctamente
+*/
 void	send_msg(pid_t pid, char *msg)
 {
 	int		i;
@@ -49,26 +53,28 @@ void	send_msg(pid_t pid, char *msg)
 				kill(pid, SIGUSR1);
 			else
 				kill(pid, SIGUSR2);
-			usleep(100);
+			usleep(50);
 		}
 	}
 	i = -1;
-	while (i++ <= 8)
+	while (i++ < 7)
 	{
 		kill(pid, SIGUSR2);
-		usleep(100);
+		usleep(50);
 	}
 }
 
 int	main(int argc, char **argv)
 {
 	size_t	msg_len;
+	pid_t	pid;
 	char	*c;
 
 	if (argc != 3)
 		ft_exit_error();
 	msg_len = ft_strlen(argv[2]);
-	if (!msg_len || !ft_atoi(argv[1]))
+	pid = ft_atoi(argv[1]);
+	if (!msg_len || !pid)
 		ft_exit_error();
 	write(1, "Bytes sent        : ", 20);
 	c = ft_itoa(msg_len);
@@ -77,7 +83,7 @@ int	main(int argc, char **argv)
 	write(1, "\nBytes received    : ", 21);
 	signal(SIGUSR1, handler);
 	signal(SIGUSR2, handler);
-	send_msg(ft_atoi(argv[1]), argv[2]);
+	send_msg(pid, argv[2]);
 	while (1)
 		pause();
 	return (0);
