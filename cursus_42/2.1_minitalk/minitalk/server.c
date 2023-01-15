@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/12 13:45:15 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/12 19:26:49 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	showleaks(void)
 }
 
 //	Reorganiza como se administran las señales SIGUSR1 y SIGUSR2
-//	 
 void	handler(int sig, siginfo_t *info, void *context)
 {
 	static t_message	msg;
@@ -38,11 +37,11 @@ void	handler(int sig, siginfo_t *info, void *context)
 	{
 		if (!(msg.c_val))
 		{
-			kill(msg.pid, SIGUSR1);
+			kill(msg.pid, SIGUSR2);
 			return ;
 		}
 		write(1, &msg.c_val, 1);
-		kill(msg.pid, SIGUSR2);
+		kill(msg.pid, SIGUSR1);
 		msg.c_val = 0;
 		msg.b_pos = 0;
 	}
@@ -76,8 +75,9 @@ int	main(int argc, char **argv)
 	pid_t				pid_sv;
 
 	argv = NULL;
+	(void)argv;
 	if (argc != 1)
-		return (write(1, "Only <./server>, no arguments needed.\n", 38), 1);
+		return (write(2, "Only <./server>, no arguments needed.\n", 38), 1);
 	pid_sv = getpid();
 	print_pid(pid_sv);
 	sigact.sa_sigaction = handler;

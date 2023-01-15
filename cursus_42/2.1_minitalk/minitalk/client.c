@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/12 13:52:16 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/12 19:27:46 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,19 @@
 
 void	ft_exit_error(void)
 {
-	write(1, "Error. Debe introducir: $ ./client (PID_NUMBER) (string) \n.", 58);
+	write(2, "Error. Debe introducir: ./client (PID) (string) \n.", 51);
 	exit(EXIT_FAILURE);
 }
 
+//	Reorganiza como se administran las señales SIGUSR1 y SIGUSR2
+//	SIGUSR1 -> Suma 1 al contados de Bytes recibidos
+//	SIGUSR2 -> Imprime la confirmacion de los Bytes recibidos
 void	handler(int signal)
 {
 	static int	bytes_received = 0;
 	char		*c;
 
-	if (signal == SIGUSR2)
+	if (signal == SIGUSR1)
 		bytes_received++;
 	else
 	{
@@ -36,8 +39,7 @@ void	handler(int signal)
 
 /*	Envia todo el mensaje, una vez enviado envia 8 bits vacios,
 	para que el servidor nos responda con la comprobacion de que
-	ha recibido todos los Bytes correctamente
-*/
+	ha recibido todos los Bytes correctamente */
 void	send_msg(pid_t pid, char *msg)
 {
 	int		i;
@@ -76,11 +78,11 @@ int	main(int argc, char **argv)
 	pid = ft_atoi(argv[1]);
 	if (!msg_len || !pid)
 		ft_exit_error();
-	write(1, "Bytes sent        : ", 20);
+	write(1, "Bytes enviados        : ", 24);
 	c = ft_itoa(msg_len);
 	write(1, c, ft_strlen(c));
 	free (c);
-	write(1, "\nBytes received    : ", 21);
+	write(1, "\nBytes recibidos       : ", 25);
 	signal(SIGUSR1, handler);
 	signal(SIGUSR2, handler);
 	send_msg(pid, argv[2]);
