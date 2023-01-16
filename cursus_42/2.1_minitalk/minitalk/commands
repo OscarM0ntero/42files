@@ -1,2 +1,0 @@
-gcc -Wall -Werror -Wextra client.c libft/*.c -o client
-gcc -Wall -Werror -Wextra server.c libft/*.c -o server

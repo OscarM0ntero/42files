@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/15 21:20:40 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/16 15:47:46 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	loop(t_agora *agora)
 	}
 }
 
-void	*philo_rotine(void *arg)
+void	*philo_routine(void *arg)
 {
 	t_agora	*agora;
 
@@ -32,9 +32,10 @@ void	*philo_rotine(void *arg)
 	}
 	agora->philos[0].action = 1;
 	printf("AAAAAAAA\n");
+	return (NULL);
 }
 
-void	start_philos(t_agora *agora)
+void	init_philos(t_agora *agora)
 {
 	int	i;
 
@@ -44,7 +45,7 @@ void	start_philos(t_agora *agora)
 		agora->philos[i].num = i + 1;
 		agora->philos[i].is_alive = 1;
 		agora->philos[i].action = 0;
-		pthread_create(&agora->philos[i].thread, NULL, philo_rotine, agora);
+		pthread_create(&agora->philos[i].thread, NULL, philo_routine, agora);
 	}
 }
 
@@ -75,7 +76,7 @@ int	main(int argc, char **argv)
 	t_agora	agora;
 
 	init_agora(&agora, argv);
-	start_philos(&agora);
+	init_philos(&agora);
 	loop(&agora);
 	print_philos(&agora);
 	return (EXIT_SUCCESS);

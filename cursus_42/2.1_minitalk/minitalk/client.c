@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:05:48 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/12 19:27:46 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/16 13:12:12 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_exit_error(void)
 {
-	write(2, "Error. Debe introducir: ./client (PID) (string) \n.", 51);
+	write(2, "Error. Debe introducir: ./client (PID) (string).\n", 51);
 	exit(EXIT_FAILURE);
 }
 
