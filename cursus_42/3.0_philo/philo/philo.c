@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/17 13:40:38 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/17 23:30:33 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include "signal.h"
+#include "wait.h"
 
 //	Checks the pulse of all philosophers, if everyone is OK, returns 1, else 0
 int	check_pulse(t_agora *agora)
@@ -68,10 +70,10 @@ void	print_action(t_philo *philo, t_agora *agora)
 	char	*s;
 
 	s = get_time_and_philo(philo);
-	write (1, "		Free forks : ", 15);
-	write (1, ft_itoa(agora->n_philos - agora->forks_in_use),
-		ft_strlen(ft_itoa(agora->n_philos - agora->forks_in_use)));
-	write (1, "\n", 1);
+	//write (1, "		Free forks : ", 15);
+	//write (1, ft_itoa(agora->n_philos - agora->forks_in_use),
+	//	ft_strlen(ft_itoa(agora->n_philos - agora->forks_in_use)));
+	//write (1, "\n", 1);
 	if (philo->action == 1)
 	{
 		write (1, s, ft_strlen(s));
@@ -120,6 +122,7 @@ void	loop(t_agora *agora)
 	s = get_time_and_philo(&agora->philos[check_dead_body(agora)]);
 	write (1, s, ft_strlen(s));
 	write (1, " is dead\n", 9);
+	free (s);
 }
 //	Should print the death when happens
 
@@ -133,10 +136,19 @@ void	keep_philo_alive(t_philo *philo)
 	agora = philo->agora;
 	if (philo->action == 3 && agora->n_philos - agora->forks_in_use >= 2)
 	{
+		//if (philo->num % 2 == 0)
+		//	usleep(1);
+		while (!philo->right_fork->avaliable)
+		{
+		}
+		philo->right_fork->avaliable = 0;
+		while (!philo->left_fork->avaliable)
+		{
+		}
+		philo->left_fork->avaliable = 0;
 		philo->action = 1;
 		philo->need_print = 1;
 		philo->times_eaten++;
-		agora->forks_in_use += 2;
 	}
 	else if (philo->action == 1 && philo->time_eating == agora->time_to_eat)
 	{
@@ -144,7 +156,8 @@ void	keep_philo_alive(t_philo *philo)
 		philo->time_eating = 0;
 		philo->time_since_eat = 0;
 		philo->need_print = 1;
-		agora->forks_in_use -= 2;
+		philo->right_fork->avaliable = 1;
+		philo->left_fork->avaliable = 1;
 	}
 	else if (philo->action == 2 && philo->time_sleeping == agora->time_to_sleep)
 	{
@@ -178,6 +191,8 @@ void	readjust_philo(t_philo *philo)
 		philo->is_alive = 0;
 }
 
+//	Checks how many times did a philosopher ate, if there is a limit and he
+//	achieved it, it returns 1, else returns 0
 int	check_times_eaten(t_philo *philo)
 {
 	t_agora	*agora;
@@ -230,6 +245,12 @@ void	init_philos(t_agora *agora)
 		agora->philos[i].last_time_check = agora->time;
 		agora->philos[i].forks_in_hand = 0;
 		agora->philos[i].need_print = 0;
+		agora->forks[i].avaliable = 1;
+		agora->philos[i].right_fork = &agora->forks[i];
+		if (i == 0)
+			agora->philos[i].left_fork = &agora->forks[agora->n_philos - 1];
+		else
+			agora->philos[i].left_fork = &agora->forks[i - 1];
 		pthread_create(&agora->philos[i].thread, NULL, philo_routine,
 			&agora->philos[i]);
 	}
@@ -249,7 +270,7 @@ void	init_agora(t_agora *agora, char **argv)
 	else
 		agora->n_times_must_eat = 0;
 	agora->philos = (t_philo *)malloc(agora->n_philos * sizeof(t_philo));
-	agora->forks = (sem_t *)malloc(agora->n_philos * sizeof(sem_t));
+	agora->forks = (t_fork *)malloc(agora->n_philos * sizeof(t_fork));
 }
 
 //	Print philosophers status
