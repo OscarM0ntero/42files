@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:58 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/17 00:12:12 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/17 13:39:48 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@
 # include <memory.h>
 # include <time.h>
 # include <pthread.h>
+# include <semaphore.h>
+
+typedef struct s_fork
+{
+	int  ;
+}			t_fork;
 
 typedef struct s_philo
 {
@@ -29,6 +35,7 @@ typedef struct s_philo
 	int			time_since_eat;
 	int			time_eating;
 	int			time_sleeping;
+	int			times_eaten;
 	int			forks_in_hand;
 	int			need_print;
 	void		*agora;
@@ -40,6 +47,7 @@ typedef struct s_agora
 {
 	time_t	time;
 	t_philo	*philos;
+	sem_t	*forks;
 	int		n_philos;
 	int		time_to_die;
 	int		time_to_eat;
