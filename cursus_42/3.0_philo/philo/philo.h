@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:58 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/17 22:54:48 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/18 15:55:00 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,40 +21,32 @@
 # include <time.h>
 # include <pthread.h>
 
-typedef struct s_fork
-{
-	int	avaliable;
-}			t_fork;
+typedef struct s_agora	t_agora;
 
 typedef struct s_philo
 {
-	int			num;
-	int			action;
-	int			is_alive;
-	int			time_since_eat;
-	int			time_eating;
-	int			time_sleeping;
-	int			times_eaten;
-	int			forks_in_hand;
-	int			need_print;
-	t_fork		*left_fork;
-	t_fork		*right_fork;
-	void		*agora;
-	time_t		last_time_check;
-	pthread_t	thread;
+	int				num;
+	int				action;
+	int				is_alive;
+	int				last_meal_time;
+	int				times_eaten;
+	t_agora			*agora;
+	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	fork;
+	uint64_t		last_time_check;
+	pthread_t		thread;
 }			t_philo;
 
 typedef struct s_agora
 {
-	time_t	time;
-	t_philo	*philos;
-	t_fork	*forks;
-	int		n_philos;
-	int		time_to_die;
-	int		time_to_eat;
-	int		time_to_sleep;
-	int		n_times_must_eat;
-	int		forks_in_use;
+	uint64_t		time;
+	t_philo			*philos;
+	int				n_philos;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				n_times_must_eat;
+	pthread_mutex_t	print;
 }			t_agora;
 
 #endif

@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/17 23:30:33 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/18 15:57:50 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include "signal.h"
-#include "wait.h"
 
 //	Checks the pulse of all philosophers, if everyone is OK, returns 1, else 0
 int	check_pulse(t_agora *agora)
@@ -46,10 +44,8 @@ char	*get_time_and_philo(t_philo *philo)
 	char	*s1;
 	char	*s2;
 	char	*tmp;
-	t_agora	*agora;
 
-	agora = philo->agora;
-	s1 = ft_itoa(agora->time);
+	s1 = ft_itoa(philo->agora->time);
 	s2 = ft_itoa(philo->num);
 	tmp = s1;
 	s1 = ft_strjoin(s1, "  ms ");
@@ -131,20 +127,15 @@ void	loop(t_agora *agora)
 //	1 - eat		2- sleep	3 - think
 void	keep_philo_alive(t_philo *philo)
 {
-	t_agora	*agora;
-
-	agora = philo->agora;
-	if (philo->action == 3 && agora->n_philos - agora->forks_in_use >= 2)
+	//	CHECK HERE AND IMPLEMENT EAT WITH USLEEP FOR EAT AND SLEEP< MAYBE REMOVE ACTION COUNTER
+	if (philo->action == 3)
 	{
-		//if (philo->num % 2 == 0)
-		//	usleep(1);
-		while (!philo->right_fork->avaliable)
-		{
-		}
+		if (philo->num % 2 == 0)
+			usleep(500);
+		pthread_mutex_lock(&philo->fork);
+		print_msg(philo, "fork");
 		philo->right_fork->avaliable = 0;
-		while (!philo->left_fork->avaliable)
-		{
-		}
+		pthread_mutex_lock(&philo->left_fork);
 		philo->left_fork->avaliable = 0;
 		philo->action = 1;
 		philo->need_print = 1;
@@ -167,42 +158,12 @@ void	keep_philo_alive(t_philo *philo)
 	}
 }
 
-//	Philosophers actions:
-//	1 - eat		2- sleep	3 - think
-void	readjust_philo(t_philo *philo)
-{
-	t_agora	*agora;
-
-	agora = philo->agora;
-	while (philo->last_time_check == agora->time)
-	{		
-	}
-	philo->last_time_check = agora->time;
-	if (philo->action == 1)
-		philo->time_eating++;
-	else if (philo->action == 2)
-	{
-		philo->time_sleeping++;
-		philo->time_since_eat++;
-	}
-	else if (philo->action == 3)
-		philo->time_since_eat++;
-	if (philo->time_since_eat >= agora->time_to_die)
-		philo->is_alive = 0;
-}
-
 //	Checks how many times did a philosopher ate, if there is a limit and he
 //	achieved it, it returns 1, else returns 0
 int	check_times_eaten(t_philo *philo)
 {
-	t_agora	*agora;
-
-	agora = philo->agora;
-	if (philo->times_eaten == agora->n_times_must_eat)
-	{
-		//printf("%i ha comido %i veces \n", philo->num, philo->times_eaten);
+	if (philo->times_eaten == philo->agora->n_times_must_eat)
 		return (1);
-	}
 	return (0);
 }
 
@@ -210,20 +171,18 @@ int	check_times_eaten(t_philo *philo)
 void	*philo_routine(void *arg)
 {
 	t_philo	*philo;
-	t_agora	*agora;
 
 	philo = arg;
-	agora = philo->agora;
+	if (philo->num % 2 == 0)
+		usleep(500);
 	while (philo->is_alive)
 	{
-		if (agora->n_times_must_eat)
+		if (philo->agora->n_times_must_eat)
 			if (check_times_eaten(philo))
-				exit(EXIT_SUCCESS);
-		readjust_philo(philo);
-		//usleep(philo->num * 10);
+				break ;
 		keep_philo_alive(philo);
 	}
-	return (NULL);
+	return (0);
 }
 
 //	Initializes all the philosophers with basic values
@@ -238,19 +197,13 @@ void	init_philos(t_agora *agora)
 		agora->philos[i].is_alive = 1;
 		agora->philos[i].action = 3;
 		agora->philos[i].agora = agora;
-		agora->philos[i].time_since_eat = 0;
-		agora->philos[i].time_eating = 0;
-		agora->philos[i].time_sleeping = 0;
 		agora->philos[i].times_eaten = 0;
 		agora->philos[i].last_time_check = agora->time;
-		agora->philos[i].forks_in_hand = 0;
-		agora->philos[i].need_print = 0;
-		agora->forks[i].avaliable = 1;
-		agora->philos[i].right_fork = &agora->forks[i];
 		if (i == 0)
-			agora->philos[i].left_fork = &agora->forks[agora->n_philos - 1];
+			agora->philos[i].left_fork
+				= &agora->philos[agora->n_philos - 1].fork;
 		else
-			agora->philos[i].left_fork = &agora->forks[i - 1];
+			agora->philos[i].left_fork = &agora->philos[i - 1].fork;
 		pthread_create(&agora->philos[i].thread, NULL, philo_routine,
 			&agora->philos[i]);
 	}
@@ -264,7 +217,6 @@ void	init_agora(t_agora *agora, char **argv)
 	agora->time_to_die = ft_atoi(argv[2]);
 	agora->time_to_eat = ft_atoi(argv[3]);
 	agora->time_to_sleep = ft_atoi(argv[4]);
-	agora->forks_in_use = 0;
 	if (argv[5])
 		agora->n_times_must_eat = ft_atoi(argv[5]);
 	else
