@@ -1,16 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   philo_atoi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omontero <omontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/18 18:58:48 by omontero          #+#    #+#             */
-/*   Updated: 2022/05/20 11:15:54 by omontero         ###   ########.fr       */
+/*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
+/*   Updated: 2023/01/19 13:55:22 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "philo.h"
+
+static int	ft_neg(int num, int x)
+{
+	if (x % 2 == 1)
+	{
+		num = num * -1;
+	}
+	return (num);
+}
+
+int	ft_atoi(const char *nptr)
+{
+	int			x;
+	int			i;
+	long int	num;
+
+	i = 0;
+	num = 0;
+	x = 0;
+	while ((nptr[i] >= '\t' && nptr[i] <= '\r') || nptr[i] == ' ')
+	{
+		i++;
+	}
+	if (nptr[i] == '-' || nptr[i] == '+')
+	{
+		if (nptr[i] == '-')
+			x++;
+		i++;
+	}
+	while (nptr[i] >= '0' && nptr[i] <= '9')
+	{
+		num = num * 10 + (nptr[i] - 48);
+		i++;
+	}
+	return (ft_neg(num, x));
+}
 
 static	int	ft_int_length(int n)
 {
@@ -85,13 +121,3 @@ char	*ft_itoa(int n)
 	s[ft_int_length(n) + is_neg] = '\0';
 	return (s);
 }
-
-/* int	main(void)
-{
-	int	n;
-
-	n = 8124;
-	printf("Num. = %d$\n", n);
-	printf("itoa = %s$\n", ft_itoa(n));
-}
- */

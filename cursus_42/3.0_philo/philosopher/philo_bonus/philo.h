@@ -6,20 +6,20 @@
 /*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:58 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/19 13:47:17 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/20 13:45:43 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include "libft/libft.h"
 # include <stdlib.h>
-# include <stdio.h>
 # include <unistd.h>
 # include <memory.h>
 # include <sys/time.h>
 # include <pthread.h>
+# include <signal.h>
+# include <semaphore.h>
 
 # define COLOUR_GREEN "\033[0;32m"
 # define COLOUR_RED "\033[0;31m"
@@ -31,14 +31,14 @@ typedef struct s_agora	t_agora;
 
 typedef struct s_philo
 {
+	pid_t			pid;
 	int				num;
 	int				is_alive;
 	int				times_eaten;
+	int				enough_meals;
+	sem_t			*status;
 	uint64_t		last_meal_time;
 	t_agora			*agora;
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	fork;
-	pthread_t		thread;
 }			t_philo;
 
 typedef struct s_agora
@@ -49,14 +49,17 @@ typedef struct s_agora
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				n_times_must_eat;
-	int				meals_achieved;
-	int				corpse_found;
+	sem_t			*meals_achieved;
 	uint64_t		init_time;
-	pthread_mutex_t	print;
+	sem_t			*forks;
+	sem_t			*print;
+	sem_t			*dead;
+	sem_t			*finish;
 }			t_agora;
 
 //	philo_inits.c
 
+void		init_semaphores(t_agora *agora);
 void		init_philos(t_agora *agora);
 void		init_agora(t_agora *agora, char **argv);
 void		init_threads(t_agora *agora);
@@ -68,6 +71,7 @@ void		keep_philo_alive(t_philo *philo);
 int			check_times_eaten(t_philo *philo);
 void		take_philo_soul(t_philo *philo);
 void		*philo_routine(void *arg);
+void		routine(t_philo *philo);
 
 //	philo_time.c
 
@@ -80,4 +84,21 @@ char		*get_time_and_philo(t_philo *philo);
 char		*color_selector(char *s, char *action);
 void		print_action(t_philo *philo, char *action);
 
+//	philo_libft.c
+
+size_t		ft_strlen(const char *s);
+char		*ft_strjoin(char const *s1, char const *s2);
+int			ft_strncmp(const char *s1, const char *s2, size_t n);
+
+//	philo_atoi_itoa.c
+
+int			ft_atoi(const char *nptr);
+char		*ft_itoa(int n);
+
+//	philo.c
+
+void		check_on_philo(t_agora *agora);
+
+void		*finish(void *arg);
+void		*meals_control(void *arg);
 #endif

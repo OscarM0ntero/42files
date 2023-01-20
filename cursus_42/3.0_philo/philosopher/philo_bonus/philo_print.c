@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/19 13:50:29 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/20 14:11:02 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ void	print_action(t_philo *philo, char *action)
 	char	*s;
 	char	*f;
 
-	pthread_mutex_lock(&philo->agora->print);
+	if (ft_strncmp(action, "died", 4))
+		sem_wait(philo->agora->print);
 	s = get_time_and_philo(philo);
 	s = color_selector(s, action);
 	if (ft_strncmp(action, "fork", 4) == 0)
@@ -74,10 +75,9 @@ void	print_action(t_philo *philo, char *action)
 		f = ft_strjoin(s, " is thinking\n");
 	else if (ft_strncmp(action, "died", 4) == 0)
 		f = ft_strjoin(s, " died\n");
-	if (!philo->agora->corpse_found || (philo->agora->corpse_found
-			&& !ft_strncmp(action, "died", 4)))
-		write (1, f, ft_strlen(f));
+	write (1, f, ft_strlen(f));
 	free (s);
 	free (f);
-	pthread_mutex_unlock(&philo->agora->print);
+	if (ft_strncmp(action, "died", 4))
+		sem_post(philo->agora->print);
 }
