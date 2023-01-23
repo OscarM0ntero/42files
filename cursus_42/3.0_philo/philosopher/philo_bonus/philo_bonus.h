@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   philo_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:58 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/20 13:45:43 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/23 12:41:48 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PHILO_BONUS_H
+# define PHILO_BONUS_H
 
 # include <stdlib.h>
 # include <unistd.h>
@@ -57,45 +57,49 @@ typedef struct s_agora
 	sem_t			*finish;
 }			t_agora;
 
-//	philo_inits.c
+//	philo_inits_bonus.c
 
 void		init_semaphores(t_agora *agora);
 void		init_philos(t_agora *agora);
 void		init_agora(t_agora *agora, char **argv);
 void		init_threads(t_agora *agora);
 
-//	philo_routine.c
+//	philo_routine_bonus.c
 
 void		eat(t_philo *philo);
-void		keep_philo_alive(t_philo *philo);
-int			check_times_eaten(t_philo *philo);
-void		take_philo_soul(t_philo *philo);
 void		*philo_routine(void *arg);
 void		routine(t_philo *philo);
 
-//	philo_time.c
+//	philo_time_bonus.c
 
 uint64_t	time_now(uint64_t t);
 void		my_sleep(uint64_t ms);
 
-//	philo_print.c
+//	philo_print_bonus.c
 
 char		*get_time_and_philo(t_philo *philo);
 char		*color_selector(char *s, char *action);
 void		print_action(t_philo *philo, char *action);
 
-//	philo_libft.c
+//	philo_libft_bonus.c
 
 size_t		ft_strlen(const char *s);
 char		*ft_strjoin(char const *s1, char const *s2);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 
-//	philo_atoi_itoa.c
+//	philo_atoi_itoa_bonus.c
 
 int			ft_atoi(const char *nptr);
 char		*ft_itoa(int n);
 
-//	philo.c
+//	philo_death_bonus.c
+
+void		keep_philo_alive(t_philo *philo);
+int			check_times_eaten(t_philo *philo);
+void		take_philo_soul(t_philo *philo);
+void		*death_routine(void *arg);
+
+//	philo_bonus.c
 
 void		check_on_philo(t_agora *agora);
 

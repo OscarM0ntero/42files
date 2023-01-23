@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/20 10:11:52 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/23 12:58:54 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	eat(t_philo *philo)
 	print_action(philo, "fork");
 	philo->last_meal_time = time_now(philo->agora->init_time);
 	philo->times_eaten++;
+	usleep(100);
 	print_action(philo, "eat");
 	my_sleep(philo->agora->time_to_eat);
 	pthread_mutex_unlock(&philo->fork);
@@ -62,7 +63,7 @@ int	check_times_eaten(t_philo *philo)
 void	take_philo_soul(t_philo *philo)
 {
 	if (time_now(philo->agora->init_time) - philo->last_meal_time
-		>= philo->agora->time_to_die)
+		>= (uint64_t)philo->agora->time_to_die)
 	{
 		philo->is_alive = 0;
 		philo->agora->corpse_found = philo->num;

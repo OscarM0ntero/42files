@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/19 14:25:39 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/23 12:55:07 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*color_selector(char *s, char *action)
 		f = ft_strjoin(COLOUR_GREY, s);
 	else if (ft_strncmp(action, "think", 5) == 0)
 		f = ft_strjoin(COLOUR_BLUE, s);
-	else if (ft_strncmp(action, "died", 4) == 0)
+	else
 		f = ft_strjoin(COLOUR_RED, s);
 	free (s);
 	return (f);
@@ -74,7 +74,7 @@ void	print_action(t_philo *philo, char *action)
 		f = ft_strjoin(s, " is sleeping\n");
 	else if (ft_strncmp(action, "think", 5) == 0)
 		f = ft_strjoin(s, " is thinking\n");
-	else if (ft_strncmp(action, "died", 4) == 0)
+	else
 		f = ft_strjoin(s, " died\n");
 	if (!philo->agora->meals_achieved && (!philo->agora->corpse_found
 			|| (philo->agora->corpse_found && !ft_strncmp(action, "died", 4))))

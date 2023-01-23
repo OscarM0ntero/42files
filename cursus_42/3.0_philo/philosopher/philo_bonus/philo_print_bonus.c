@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_print.c                                      :+:      :+:    :+:   */
+/*   philo_print_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/20 14:11:02 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/23 12:39:14 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 //	Returns a string with the actual time stamp in ms and
 //	the number of the current philosopher
@@ -49,7 +49,7 @@ char	*color_selector(char *s, char *action)
 		f = ft_strjoin(COLOUR_GREY, s);
 	else if (ft_strncmp(action, "think", 5) == 0)
 		f = ft_strjoin(COLOUR_BLUE, s);
-	else if (ft_strncmp(action, "died", 4) == 0)
+	else
 		f = ft_strjoin(COLOUR_RED, s);
 	free (s);
 	return (f);
@@ -73,7 +73,7 @@ void	print_action(t_philo *philo, char *action)
 		f = ft_strjoin(s, " is sleeping\n");
 	else if (ft_strncmp(action, "think", 5) == 0)
 		f = ft_strjoin(s, " is thinking\n");
-	else if (ft_strncmp(action, "died", 4) == 0)
+	else
 		f = ft_strjoin(s, " died\n");
 	write (1, f, ft_strlen(f));
 	free (s);
