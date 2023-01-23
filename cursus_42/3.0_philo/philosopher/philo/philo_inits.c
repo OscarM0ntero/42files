@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/20 10:35:01 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/23 14:52:43 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	init_philos(t_agora *agora)
 }
 
 //	Initializes the agora for the philosophers to gather arround
-void	init_agora(t_agora *agora, char **argv)
+int	init_agora(t_agora *agora, char **argv)
 {
 	agora->init_time = time_now(0);
 	agora->n_philos = ft_atoi(argv[1]);
@@ -49,8 +49,12 @@ void	init_agora(t_agora *agora, char **argv)
 		agora->n_times_must_eat = ft_atoi(argv[5]);
 	else
 		agora->n_times_must_eat = 0;
+	if (agora->n_philos < 1 || agora->time_to_die < 1 || agora->time_to_eat < 1
+		|| agora->time_to_sleep < 1 || agora->n_times_must_eat < 0)
+		return (write(2, "Invalid agruments.\n", 19), 1);
 	agora->philos = (t_philo *)malloc(agora->n_philos * sizeof(t_philo));
 	pthread_mutex_init(&agora->print, NULL);
+	return (0);
 }
 
 void	init_threads(t_agora *agora)

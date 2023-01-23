@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/20 10:49:50 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/23 15:12:03 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	check_on_philos(t_agora *agora)
 		}
 		if (c == agora->n_philos)
 			agora->meals_achieved = 1;
-		usleep(100);
+		usleep(10);
 	}
 }
 
@@ -55,7 +55,8 @@ int	main(int argc, char **argv)
 
 	if (argc < 5 || argc > 6)
 		return (write(2, "Invalid amount of agruments.\n", 29), EXIT_FAILURE);
-	init_agora(&agora, argv);
+	if (init_agora(&agora, argv))
+		return (1);
 	init_philos(&agora);
 	init_threads(&agora);
 	check_on_philos(&agora);

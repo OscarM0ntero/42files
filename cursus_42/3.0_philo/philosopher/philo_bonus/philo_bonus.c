@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/23 12:35:20 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/23 14:54:54 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int	main(int argc, char **argv)
 
 	if (argc < 5 || argc > 6)
 		return (write(2, "Invalid amount of agruments.\n", 29), EXIT_FAILURE);
-	init_agora(&agora, argv);
+	if (init_agora(&agora, argv))
+		return (1);
 	init_philos(&agora);
 	init_semaphores(&agora);
 	init_threads(&agora);

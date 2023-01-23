@@ -6,7 +6,7 @@
 #    By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/23 12:09:54 by omontero          #+#    #+#              #
-#    Updated: 2023/01/23 14:18:52 by omontero         ###   ########.fr        #
+#    Updated: 2023/01/23 14:35:05 by omontero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,8 +32,6 @@ ${NAME}:	${OBJ}
 			@${RM} *.a
 
 all:	${NAME}
-
-bonus:	all
 
 clean:
 		@${RM} ${OBJS} philo.dSYM

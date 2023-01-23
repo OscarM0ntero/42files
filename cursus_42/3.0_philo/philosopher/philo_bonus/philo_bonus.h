@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:58 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/23 12:41:48 by omontero         ###   ########.fr       */
+/*   Updated: 2023/01/23 15:01:14 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef struct s_agora
 
 void		init_semaphores(t_agora *agora);
 void		init_philos(t_agora *agora);
-void		init_agora(t_agora *agora, char **argv);
+int			init_agora(t_agora *agora, char **argv);
 void		init_threads(t_agora *agora);
 
 //	philo_routine_bonus.c
