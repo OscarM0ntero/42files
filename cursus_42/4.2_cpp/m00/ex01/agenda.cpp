@@ -2,10 +2,14 @@
 
 void	PrintUppercase(char *str)
 {
+	char	c;
+
 	while (*str)
 	{
-		*str = std::toupper(*str);
-		std::cout << *str;
+		c = *str;
+		if (c >= 97 && c <= 122)
+			c -= 32;
+		std::cout << c;
 		str++;
 	}
 }

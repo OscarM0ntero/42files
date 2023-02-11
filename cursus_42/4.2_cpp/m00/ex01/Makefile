@@ -6,13 +6,13 @@
 #    By: omontero <omontero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/03 14:09:22 by omontero          #+#    #+#              #
-#    Updated: 2023/02/03 14:10:25 by omontero         ###   ########.fr        #
+#    Updated: 2023/02/03 20:00:03 by omontero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = megaphone.a
+NAME = agenda.a
 
-SRCS =	megaphone.cpp
+SRCS =	agenda.cpp
 
 OBJ = ${SRCS:.c=.o}
 
@@ -25,20 +25,20 @@ FLAGS = -Wall -Werror -Wextra
 
 ${NAME}:	${OBJ}
 			@ar -rc ${NAME} ${OBJ}
-			${CC} $(FLAGS) ${SRCS} -o megaphone
+			${CC} $(FLAGS) ${SRCS} -o agenda
 			@${RM} *.o
 			@${RM} *.a
 
 all:	${NAME}
 
 clean:
-		@${RM} ${OBJS} megaphone.dSYM
+		@${RM} ${OBJS} agenda.dSYM
 		@${RM} ${NAME}
 		@${RM} *.o
 
 fclean:	clean
 		@${RM} ${NAME}
-		@${RM} megaphone
+		@${RM} agenda
 		@${RM} *.o
 
 re: fclean all

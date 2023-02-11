@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+         #
+#    By: omontero <omontero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/23 12:09:54 by omontero          #+#    #+#              #
-#    Updated: 2023/01/23 14:35:05 by omontero         ###   ########.fr        #
+#    Updated: 2023/02/03 14:10:43 by omontero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ ${NAME}:	${OBJ}
 all:	${NAME}
 
 clean:
-		@${RM} ${OBJS} philo.dSYM
+		@${RM} ${OBJS} philo_bonus.dSYM
 		@${RM} ${NAME}
 		@${RM} *.o
 
