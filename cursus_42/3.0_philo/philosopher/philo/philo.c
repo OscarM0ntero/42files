@@ -6,7 +6,7 @@
 /*   By: omontero <omontero@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:27:53 by omontero          #+#    #+#             */
-/*   Updated: 2023/01/23 15:12:03 by omontero         ###   ########.fr       */
+/*   Updated: 2023/03/20 12:08:53 by omontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	join_threads(t_agora *agora)
 	}
 }
 
+// Checks constantly if the philos are alive
 void	check_on_philos(t_agora *agora)
 {
 	int	i;
