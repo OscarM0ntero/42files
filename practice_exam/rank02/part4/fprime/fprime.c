@@ -35,6 +35,7 @@ int main (int argc, char **argv)
 
 	while (i <= tmp)
 	{
+		printf("%d", i);
 		if (is_prime(i) && tmp % i == 0)
 		{
 			printf("%d", i);
